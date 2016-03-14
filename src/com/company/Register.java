@@ -1,5 +1,7 @@
 package com.company;
 
+import Exceptions.WrongContentSize;
+
 /**
  * Created by Vik on 3/12/2016.
  */
@@ -8,10 +10,23 @@ public class Register {
     int size;
     char[] content;
 
-    Register(String name, int size) {
+    private void init(String name, int size) {
         this.name = name;
         this.size = size;
         this.content = new char[size];
+    }
+
+    Register(String name, int size) {
+        init(name, size);
+    }
+
+    Register(String name, int size, String content) {
+        init(name, size);
+        try {
+            setContent(content);
+        } catch (WrongContentSize e){
+            System.err.println(e.getMessage());
+        }
     }
 
     public String getName() {
@@ -26,14 +41,46 @@ public class Register {
         return content;
     }
 
-    public void setContent(char[] content) {
+    public String getContentStr() {
+        return content.toString();
+    }
+
+    public int getContentInt() {
+        return Integer.parseInt(content.toString());
+    }
+
+    public void setContent(char[] content) throws WrongContentSize {
         if (size == content.toString().length()) {
 
             for (int i = 0; i < size; i++) {
                 this.content[i] = content[i];
             }
         } else {
-            // throw exception
+            throw new WrongContentSize("New content size doesn't match with old one.");
         }
     }
+
+    public void setContent(String content) throws WrongContentSize {
+        if (size == content.length()) {
+
+            for (int i = 0; i < size; i++) {
+                this.content[i] = content.charAt(i);
+            }
+        } else {
+            throw new WrongContentSize("New content size doesn't match with old one.");
+        }
+    }
+
+    public void setContent(int num) throws WrongContentSize {
+        String content = Integer.toString(num);
+        if (size == content.length()) {
+
+            for (int i = 0; i < size; i++) {
+                this.content[i] = content.charAt(i);
+            }
+        } else {
+            throw new WrongContentSize("New content size doesn't match with old one.");
+        }
+    }
+
 }

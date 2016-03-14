@@ -9,4 +9,9 @@ public class Instructions {
         this.machine = machine;
     }
     // instructions list
+    public void addition(int address){
+        Register r =  machine.getRegister("R");
+        // TODO: 3/14/2016 add get value from block in memory
+        r.setContent(machine.getData().getBlock(address) + r.getContentInt());
+    }
 }
