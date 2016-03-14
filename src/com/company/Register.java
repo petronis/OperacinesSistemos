@@ -15,7 +15,9 @@ public class Register {
         this.size = size;
         this.content = new char[size];
     }
-
+    Register(){
+        super();
+    }
     Register(String name, int size) {
         init(name, size);
     }
