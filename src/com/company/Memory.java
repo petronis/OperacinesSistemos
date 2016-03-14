@@ -1,5 +1,7 @@
 package com.company;
 
+import Exceptions.WrongAddress;
+
 /**
  * Created by Vik on 3/12/2016.
  */
@@ -16,7 +18,7 @@ public class Memory {
         this.block = new char[blocks*block_size];
     }
 
-    public String getBlock(int n) {
+    public String getBlock(int n) throws WrongAddress {
         if (n < 0 && n < size) {
             String temp = new String();
             for (int i = 0; i < block_size; i++) {
@@ -24,15 +26,19 @@ public class Memory {
             }
             return  temp;
         } else {
-            return "\0"; // later replace with exception
+            throw new WrongAddress("wrong block address");
         }
     }
 
-    public char getCell(int n) {
+    public int getBlockInt(int n) throws WrongAddress {
+        return Integer.parseInt(getBlock(n));
+    }
+
+    public char getCell(int n) throws WrongAddress {
         if (n < 0 && n < size * block_size) {
             return block[n];
         } else {
-            return '\0'; // later replace with exception
+            throw new WrongAddress("wrong cell address");
         }
     }
 
