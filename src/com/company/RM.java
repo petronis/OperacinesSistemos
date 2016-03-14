@@ -7,6 +7,7 @@ public class RM extends Machine {
 
     private void init() {
         registers.addRegister(new Register("PTR", 4));
+        registers.addRegister(new Register("B", 2));
         registers.addRegister(new Register("IC", 2, "00"));
         registers.addRegister(new Register("C", 1, "0"));
         registers.addRegister(new Register("R", 4));
