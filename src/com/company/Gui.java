@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 
 /**
  * Created by lukas on 2016-03-13.
@@ -12,13 +13,45 @@ public class Gui extends JFrame {
 
     public static RM rm = new RM(20);
 
+    JLabel labelRegisterPTR;
     JLabel labelRegisterB;
     JLabel labelRegisterIC;
+    JLabel labelRegisterC;
     JLabel labelRegisterR;
+    JLabel labelRegisterPI;
+    JLabel labelRegisterSI;
+    JLabel labelRegisterTI;
+    JLabel labelRegisterCH1;
+    JLabel labelRegisterCH2;
+    JLabel labelRegisterCH3;
+    JLabel labelRegisterMODE;
 
+    String[] registersNamesArray = {"PTR","B","IC","C","R","PI","SI","TI","CH1","CH2","CH3","MODE"};
+    
+
+    JLabel[] labelArray = new JLabel[]{ labelRegisterPTR,labelRegisterB,labelRegisterIC,labelRegisterC,
+                                        labelRegisterR,labelRegisterPI,labelRegisterSI,labelRegisterTI,
+                                        labelRegisterCH1,labelRegisterCH2,labelRegisterCH3,labelRegisterMODE};
+
+    JTextField textFieldPTR;
     JTextField textFieldB;
     JTextField textFieldIC;
+    JTextField textFieldC;
     JTextField textFieldR;
+    JTextField textFieldPI;
+    JTextField textFieldSI;
+    JTextField textFieldTI;
+    JTextField textFieldCH1;
+    JTextField textFieldCH2;
+    JTextField textFieldCH3;
+    JTextField textFieldMODE;
+    
+    JTextField[] textFieldArray = new JTextField[]{ textFieldPTR,textFieldB,textFieldIC,textFieldC,
+                                                    textFieldR,textFieldPI,textFieldSI,textFieldTI,
+                                                    textFieldCH1,textFieldCH2,textFieldCH3,textFieldMODE};
+
+
+    
 
     JButton updateButton;
 
@@ -32,45 +65,31 @@ public class Gui extends JFrame {
         pack();
         setResizable(false);
         setLocationRelativeTo(null);
+
     }
 
     private void createView() {
         JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
         getContentPane().add(panel);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(2, 2, 2, 2);
 
-        labelRegisterB = new JLabel();
-//        labelRegisterB.setPreferredSize(new Dimension(75,30));
-        labelRegisterB.setText("Register " + rm.getRegister("B").getName());
-        panel.add(labelRegisterB);
+        for(int i = 1; i < 12; i++){
+            createLabels(i, panel, gbc);
+            gbc.gridx++;
+            createTextFields(i, panel, gbc);
+            gbc.gridx = 0;
+            gbc.gridy++;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+        }
 
-        textFieldB = new JTextField();
-//        textFieldB.setPreferredSize(new Dimension(30,30));
-        textFieldB.setText("value");
-        textFieldB.setEditable(false);
-        panel.add(textFieldB);
-
-        labelRegisterIC = new JLabel();
-//        labelRegisterIC.setPreferredSize(new Dimension(200,30));
-        labelRegisterIC.setText("Register " + rm.getRegister("IC").getName());
-        panel.add(labelRegisterIC);
-
-        textFieldIC = new JTextField();
-//        textFieldIC.setPreferredSize(new Dimension(30,30));
-        textFieldIC.setText("value");
-        textFieldIC.setEditable(false);
-        panel.add(textFieldIC);
-
-        labelRegisterR = new JLabel();
-//        labelRegisterR.setPreferredSize(new Dimension(200,30));
-        labelRegisterR.setText("Register " + rm.getRegister("R").getName());
-        panel.add(labelRegisterR);
-
-        textFieldR = new JTextField();
-//        textFieldR.setPreferredSize(new Dimension(30,30));
-        textFieldR.setText("value");
-        textFieldR.setEditable(false);
-        panel.add(textFieldR);
-
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.gridwidth = 2;
         updateButton = new JButton();
         updateButton.setText("Update");
         updateButton.addActionListener(
@@ -78,14 +97,28 @@ public class Gui extends JFrame {
                     updateTextFields();
                 }
         );
-        panel.add(updateButton);
+        panel.add(updateButton,gbc);
+    }
 
+    private void createLabels(int i, JPanel panel, GridBagConstraints gbc) {
+        labelArray[i] = new JLabel();
+        labelArray[i].setText("Register " + rm.getRegister(registersNamesArray[i]).getName());
+//        labelArray[i].setHorizontalAlignment();
+        panel.add(labelArray[i],gbc);//,BorderLayout.EAST);
+        //labelArray[i].setAlignmentX(Component.LEFT_ALIGNMENT);
+    }
+
+    private void createTextFields(int i, JPanel panel, GridBagConstraints gbc){
+        textFieldArray[i] = new JTextField(4);
+        textFieldArray[i].setText("value");
+        textFieldArray[i].setEditable(false);
+        panel.add(textFieldArray[i], gbc);//,BorderLayout.EAST);
     }
 
     private void updateTextFields() {
-        textFieldR.setText(String.valueOf(rm.getRegister("R").getSize()));
-        textFieldIC.setText(String.valueOf(rm.getRegister("IC").getSize()));
-        textFieldB.setText(String.valueOf(rm.getRegister("B").getSize()));
+        for(int i = 1; i < 12; i++){
+            textFieldArray[i].setText(String.valueOf(rm.getRegister(registersNamesArray[i]).getSize()));
+        }
     }
 
 
