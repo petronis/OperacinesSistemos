@@ -11,18 +11,18 @@ public class Memory {
 
     int size;
     private static final int block_size = 4;
-    char block[] ;
+    char block[];
 
     Memory(int blocks) {
         this.size = blocks;
-        this.block = new char[blocks*block_size];
+        this.block = new char[blocks * block_size];
     }
 
     public String getBlock(int n) throws WrongAddress {
         if (n < 0 && n < size) {
             String temp = new String();
             for (int i = 0; i < block_size; i++) {
-                temp += block[n*block_size+i];
+                temp += block[n * block_size + i];
             }
             return  temp;
         } else {
@@ -46,7 +46,7 @@ public class Memory {
         if (block_size == block.toString().length()) {
 
             for (int i = 0; i < block_size; i++) {
-                this.block[n*block_size+i] = block[i];
+                this.block[n * block_size + i] = block[i];
             }
             return true;
         }

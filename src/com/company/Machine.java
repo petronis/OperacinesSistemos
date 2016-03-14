@@ -16,6 +16,7 @@ public abstract class Machine {
     }
 
     /* runs machine using defined algorithm */
+    // TODO: 3/14/2016 convert address from hex to int when calling instructions use parseInt("Smth", 16)
     abstract boolean run();
 
     public Memory getData() {
