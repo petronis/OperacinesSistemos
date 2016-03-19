@@ -51,6 +51,10 @@ public class Register {
         return Integer.parseInt(content.toString());
     }
 
+    public void inc(int number) throws WrongContentSize{
+        this.setContent(this.getContentInt() + number);
+    }
+
     public void setContent(char[] content) throws WrongContentSize {
         if (size == content.toString().length()) {
 
