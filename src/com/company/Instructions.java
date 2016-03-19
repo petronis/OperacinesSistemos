@@ -15,6 +15,8 @@ public class Instructions {
         this.rm = rm;
         this.vm = vm;
     }
+
+
     // instructions list
     private String IntToHex(int n, int size) throws Error {
         String temp = Integer.toHexString(n);

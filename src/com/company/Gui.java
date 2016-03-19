@@ -11,7 +11,7 @@ import java.lang.reflect.Array;
  */
 public class Gui extends JFrame {
 
-    public static RM rm = new RM(20);
+    public static RM rm = new RM(20,20,20);
 
     JLabel labelRegisterPTR;
     JLabel labelRegisterB;
@@ -73,7 +73,45 @@ public class Gui extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         getContentPane().add(panel);
-        GridBagConstraints gbc = new GridBagConstraints();
+
+        GroupLayout layout = new GroupLayout(panel);
+        //panel.setLayout(layout);
+
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+
+        updateButton = new JButton("Update me");
+        clearButton = new JButton("Clear me");
+        JButton something = new JButton("something");
+        JButton more = new JButton("More");
+
+
+        layout.setHorizontalGroup(layout.createSequentialGroup()
+                .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(
+                                GroupLayout.Alignment.LEADING)
+                                .addComponent(updateButton)
+                                .addComponent(clearButton)
+                                .addComponent(something)
+                        )
+                )
+                .addComponent(more)
+        );
+
+        layout.setVerticalGroup(
+                layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(more)
+                        )
+                        .addComponent(updateButton)
+                        .addComponent(clearButton)
+                        .addComponent(something)
+
+        );
+
+        panel.setLayout(layout);
+
+        /*GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(2, 2, 2, 2);
@@ -151,6 +189,7 @@ public class Gui extends JFrame {
             }
         });
         panel.add(clearButton);
+        */
     }
 
     private void createLabels(int i, JPanel panel, GridBagConstraints gbc) {
