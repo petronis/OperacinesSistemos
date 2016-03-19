@@ -73,7 +73,7 @@ public class Gui extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         getContentPane().add(panel);
-
+/*
         GroupLayout layout = new GroupLayout(panel);
         //panel.setLayout(layout);
 
@@ -110,8 +110,8 @@ public class Gui extends JFrame {
         );
 
         panel.setLayout(layout);
-
-        /*GridBagConstraints gbc = new GridBagConstraints();
+*/
+        GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(2, 2, 2, 2);
@@ -189,7 +189,7 @@ public class Gui extends JFrame {
             }
         });
         panel.add(clearButton);
-        */
+
     }
 
     private void createLabels(int i, JPanel panel, GridBagConstraints gbc) {
