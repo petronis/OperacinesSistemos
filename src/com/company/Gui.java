@@ -51,9 +51,6 @@ public class Gui extends JFrame {
                                                     textFieldCH1,textFieldCH2,textFieldCH3,textFieldMODE};
 
     JButton updateButton, closeButton;
-    JTextArea textArea;
-    JButton clearButton, submitButton;
-    JTextField messageField;
 
 
     public Gui(){
@@ -64,25 +61,34 @@ public class Gui extends JFrame {
         // packs everything
 //        setSize(new Dimension(500, 300));
         pack();
-        setResizable(false);
+//        setResizable(false);
         setLocationRelativeTo(null);
 
     }
 
     private void createView() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
-        getContentPane().add(panel);
+//        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JPanel groupLayoutPanel = new JPanel();
+        JPanel tablePanel = new JPanel();
+
+        groupLayoutPanel.setLayout(new GridBagLayout());
+        getContentPane().add(groupLayoutPanel);
+
+//        tablePanel.setLayout(new GridBagLayout());
+//        getContentPane().add(tablePanel);
 //      Naujas GUI GroupLayout
 
-        GroupLayout layout = new GroupLayout(panel);
-        //panel.setLayout(layout);
+        GroupLayout layout = new GroupLayout(groupLayoutPanel);
+        GroupLayout layout1 = new GroupLayout(tablePanel);
 
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
 
+        layout1.setAutoCreateGaps(true);
+        layout1.setAutoCreateContainerGaps(true);
+
         updateButton = new JButton("Update me");
-        clearButton = new JButton("Clear me");
         for(int i = 0; i < 12; i++) {
             textFieldArray[i] = new JTextField(10);
             textFieldArray[i].setText("value");
@@ -98,7 +104,7 @@ public class Gui extends JFrame {
                     updateTextFields();
                 }
         );
-        //panel.add(updateButton);
+        //groupLayoutPanel.add(updateButton);
 
         closeButton = new JButton();
         closeButton.setText("Close");
@@ -107,6 +113,29 @@ public class Gui extends JFrame {
                     System.exit(0);
                 }
         );
+        Object rowData[][] = new Object[1024][4];
+        int counter = 0;
+        for(int i = 0; i < 1024; i++){
+            for(int j = 0; j < 4;j++){
+                rowData[i][j]= counter;
+                counter++;
+            }
+        }
+        //System.out.println(rowData[1023][3]);
+        //Object rowData[][] = { {"1,1", "1,2", "1,3"},{"2,1","2,2","2,3"}};
+        Object columnNames[] = {"1", "2", "3","4"};
+
+        JTable table = new JTable(rowData,columnNames);
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        layout1.setHorizontalGroup(layout1.createSequentialGroup()
+                        .addComponent(scrollPane)
+        );
+        layout1.setVerticalGroup(
+                layout1.createSequentialGroup()
+                .addComponent(scrollPane)
+        );
+
 
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createSequentialGroup()
@@ -145,12 +174,14 @@ public class Gui extends JFrame {
                                 .addComponent(closeButton)
                         )
                 )
+
         );
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(labelArray[0])
                                 .addComponent(textFieldArray[0])
+//                                .addComponent(scrollPane)
                         )
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(labelArray[1])
@@ -201,22 +232,26 @@ public class Gui extends JFrame {
                                 .addComponent(closeButton)
                         )
         );
-        panel.setLayout(layout);
+        groupLayoutPanel.setLayout(layout);
+        tablePanel.setLayout(layout1);
+        panel.add(groupLayoutPanel);
+        panel.add(tablePanel);
+        this.getContentPane().add(panel);
     }
 
-    private void createLabels(int i, JPanel panel, GridBagConstraints gbc) {
+    private void createLabels(int i, JPanel groupLayoutPanel, GridBagConstraints gbc) {
         labelArray[i] = new JLabel();
         labelArray[i].setText("Register " + rm.getRegister(registersNamesArray[i]).getName());
 //        labelArray[i].setHorizontalAlignment();
-        panel.add(labelArray[i],gbc);//,BorderLayout.EAST);
+        groupLayoutPanel.add(labelArray[i],gbc);//,BorderLayout.EAST);
         //labelArray[i].setAlignmentX(Component.LEFT_ALIGNMENT);
     }
 
-    private void createTextFields(int i, JPanel panel, GridBagConstraints gbc){
+    private void createTextFields(int i, JPanel groupLayoutPanel, GridBagConstraints gbc){
         textFieldArray[i] = new JTextField(10);
         textFieldArray[i].setText("value");
         textFieldArray[i].setEditable(false);
-        panel.add(textFieldArray[i],gbc);//,BorderLayout.EAST);
+        groupLayoutPanel.add(textFieldArray[i],gbc);//,BorderLayout.EAST);
     }
     private void updateTextFields() {
         for(int i = 0; i < 12; i++){
