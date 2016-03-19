@@ -44,11 +44,11 @@ public class Register {
     }
 
     public String getContentStr() {
-        return content.toString();
+        return new String(content);
     }
 
     public int getContentInt() {
-        return Integer.parseInt(content.toString());
+        return Integer.parseInt(getContentStr());
     }
 
     public void inc(int number) throws WrongContentSize{

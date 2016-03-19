@@ -33,6 +33,10 @@ public class RM extends Machine {
         init(vm_blocks, external_blocks);
     }
 
+    public Instructions getInstructions() {
+        return instructions;
+    }
+
     public Memory getExternal() {
         return external;
     }

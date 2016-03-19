@@ -12,12 +12,11 @@ public class Main {
         Memory data = rm.getData();
         try {
             data.put_block(0, "1234");
-        } catch (WrongContentSize wrongContentSize) {
-            wrongContentSize.printStackTrace();
-        }
-        try {
-            System.out.print(data.getBlockInt(0));
-        } catch (WrongAddress wrongAddress) {
+            Instructions in = rm.getInstructions();
+            in.check_machine_mode();
+            in.load_R_from_memory(0);
+            System.out.print(rm.getRegister("R").getContentStr());
+        } catch (Exception wrongAddress) {
             wrongAddress.printStackTrace();
         }
     }
