@@ -73,7 +73,8 @@ public class Gui extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         getContentPane().add(panel);
-/*
+//      Naujas GUI GroupLayout
+
         GroupLayout layout = new GroupLayout(panel);
         //panel.setLayout(layout);
 
@@ -82,35 +83,106 @@ public class Gui extends JFrame {
 
         updateButton = new JButton("Update me");
         clearButton = new JButton("Clear me");
-        JButton something = new JButton("something");
-        JButton more = new JButton("More");
+        for(int i = 0; i < 12; i++) {
+            textFieldArray[i] = new JTextField(10);
+            textFieldArray[i].setText("value");
+            textFieldArray[i].setEditable(false);
+
+            labelArray[i] = new JLabel();
+            labelArray[i].setText("Register " + rm.getRegister(registersNamesArray[i]).getName());
+        }
 
 
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(
                                 GroupLayout.Alignment.LEADING)
-                                .addComponent(updateButton)
-                                .addComponent(clearButton)
-                                .addComponent(something)
+                                .addComponent(labelArray[0])
+                                .addComponent(labelArray[1])
+                                .addComponent(labelArray[2])
+                                .addComponent(labelArray[3])
+                                .addComponent(labelArray[4])
+                                .addComponent(labelArray[5])
+                                .addComponent(labelArray[6])
+                                .addComponent(labelArray[7])
+                                .addComponent(labelArray[8])
+                                .addComponent(labelArray[9])
+                                .addComponent(labelArray[10])
+                                .addComponent(labelArray[11])
                         )
                 )
-                .addComponent(more)
+                .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(
+                                GroupLayout.Alignment.LEADING)
+                                .addComponent(textFieldArray[0])
+                                .addComponent(textFieldArray[1])
+                                .addComponent(textFieldArray[2])
+                                .addComponent(textFieldArray[3])
+                                .addComponent(textFieldArray[4])
+                                .addComponent(textFieldArray[5])
+                                .addComponent(textFieldArray[6])
+                                .addComponent(textFieldArray[7])
+                                .addComponent(textFieldArray[8])
+                                .addComponent(textFieldArray[9])
+                                .addComponent(textFieldArray[10])
+                                .addComponent(textFieldArray[11])
+                        )
+                )
         );
-
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(more)
+                                .addComponent(labelArray[0])
+                                .addComponent(textFieldArray[0])
                         )
-                        .addComponent(updateButton)
-                        .addComponent(clearButton)
-                        .addComponent(something)
-
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelArray[1])
+                                .addComponent(textFieldArray[1])
+                        )
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelArray[2])
+                                .addComponent(textFieldArray[2])
+                        )
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelArray[3])
+                                .addComponent(textFieldArray[3])
+                        )
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelArray[4])
+                                .addComponent(textFieldArray[4])
+                        )
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelArray[5])
+                                .addComponent(textFieldArray[5])
+                        )
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelArray[6])
+                                .addComponent(textFieldArray[6])
+                        )
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelArray[7])
+                                .addComponent(textFieldArray[7])
+                        )
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelArray[8])
+                                .addComponent(textFieldArray[8])
+                        )
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelArray[9])
+                                .addComponent(textFieldArray[9])
+                        )
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelArray[10])
+                                .addComponent(textFieldArray[10])
+                        )
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelArray[11])
+                                .addComponent(textFieldArray[11])
+                        )
         );
 
         panel.setLayout(layout);
-*/
+/* Senas GUI su GridBag'u
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -189,7 +261,7 @@ public class Gui extends JFrame {
             }
         });
         panel.add(clearButton);
-
+*/
     }
 
     private void createLabels(int i, JPanel panel, GridBagConstraints gbc) {
