@@ -7,6 +7,7 @@ public class RM extends Machine {
 
     VM vm;
     Memory external;
+    Instructions instructions;
 
     private void init(int vm_blocks, int external_blocks) {
         registers.addRegister(new Register("PTR", 4));
@@ -23,6 +24,8 @@ public class RM extends Machine {
         registers.addRegister(new Register("MODE", 1));
         vm = new VM(vm_blocks, this);
         external = new Memory(external_blocks);
+        instructions = new Instructions(this, vm);
+        vm.setInstructions(instructions);
     }
 
     RM(int rm_blocks, int vm_blocks, int external_blocks) {

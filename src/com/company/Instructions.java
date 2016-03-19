@@ -73,5 +73,9 @@ public class Instructions {
         }
     }
 
+    public void reset_R_register() throws  Exception {
+        machine.getRegister("R").setContent("0000");
+    }
+
 
 }

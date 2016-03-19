@@ -6,6 +6,7 @@ package com.company;
 public class VM extends Machine {
 
     RM rm;
+    Instructions instructions;
 
     private void init() {
         registers.addRegister(new Register("IC", 2, "00"));
@@ -17,6 +18,10 @@ public class VM extends Machine {
     VM(int blocks, RM rm) {
         super(blocks);
         this.rm = rm;
+    }
+
+    public void setInstructions(Instructions instructions) {
+        this.instructions = instructions;
     }
 
     @Override

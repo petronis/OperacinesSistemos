@@ -7,12 +7,10 @@ package com.company;
 public abstract class Machine {
     Memory data;
     Registers registers;
-    Instructions instructions;
 
     Machine(int blocks) {
         data = new Memory(blocks);
         registers = new Registers();
-        instructions = new Instructions(this);
     }
 
     /* runs machine using defined algorithm */
