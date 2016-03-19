@@ -1,6 +1,7 @@
 package com.company;
 
 import Exceptions.WrongAddress;
+import Exceptions.WrongContentSize;
 
 /**
  * Created by Vik on 3/12/2016.
@@ -19,7 +20,7 @@ public class Memory {
     }
 
     public String getBlock(int n) throws WrongAddress {
-        if (n < 0 && n < size) {
+        if (n <= 0 && n < size) {
             String temp = new String();
             for (int i = 0; i < block_size; i++) {
                 temp += block[n * block_size + i];
@@ -35,7 +36,7 @@ public class Memory {
     }
 
     public char getCell(int n) throws WrongAddress {
-        if (n < 0 && n < size * block_size) {
+        if (n <= 0 && n < size * block_size) {
             return block[n];
         } else {
             throw new WrongAddress("wrong cell address");
@@ -54,8 +55,22 @@ public class Memory {
     }
 
     public void put_block(int n, char[] block) {
-        if (n < 0 && n < size) {
+        if (n <= 0 && n < size) {
             copy_block_to_memory(n, block);
+        }
+    }
+
+
+    public void put_block(int n, String content) throws WrongContentSize {
+        if (n <= 0 && n < size) {
+            if (block_size == content.length()) {
+
+                for (int i = 0; i < block_size; i++) {
+                    this.block[i + n * block_size] = content.charAt(i);
+                }
+            } else {
+                throw new WrongContentSize("New content size doesn't match with old one.");
+            }
         }
     }
 
