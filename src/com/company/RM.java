@@ -5,7 +5,10 @@ package com.company;
  */
 public class RM extends Machine {
 
-    private void init() {
+    VM vm;
+    Memory external;
+
+    private void init(int vm_blocks, int external_blocks) {
         registers.addRegister(new Register("PTR", 4));
         registers.addRegister(new Register("B", 2));
         registers.addRegister(new Register("IC", 2, "00"));
@@ -18,11 +21,17 @@ public class RM extends Machine {
         registers.addRegister(new Register("CH2", 1, "0"));
         registers.addRegister(new Register("CH3", 1, "0"));
         registers.addRegister(new Register("MODE", 1));
+        vm = new VM(vm_blocks, this);
+        external = new Memory(external_blocks);
     }
 
-    RM(int blocks) {
-        super(blocks);
-        init();
+    RM(int rm_blocks, int vm_blocks, int external_blocks) {
+        super(rm_blocks);
+        init(vm_blocks, external_blocks);
+    }
+
+    public Memory getExternal() {
+        return external;
     }
 
     @Override
