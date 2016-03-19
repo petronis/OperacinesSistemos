@@ -17,10 +17,13 @@ public class Memory {
     Memory(int blocks) {
         this.size = blocks;
         this.block = new char[blocks * block_size];
+        for (int i = 0; i < size * block_size; i++) { // for testing
+            this.block[i] = '0';
+        }
     }
 
     public String getBlock(int n) throws WrongAddress {
-        if (n <= 0 && n < size) {
+        if (n >= 0 && n < size) {
             String temp = new String();
             for (int i = 0; i < block_size; i++) {
                 temp += block[n * block_size + i];
@@ -36,7 +39,7 @@ public class Memory {
     }
 
     public char getCell(int n) throws WrongAddress {
-        if (n <= 0 && n < size * block_size) {
+        if (n >= 0 && n < size * block_size) {
             return block[n];
         } else {
             throw new WrongAddress("wrong cell address");
@@ -55,18 +58,18 @@ public class Memory {
     }
 
     public void put_block(int n, char[] block) {
-        if (n <= 0 && n < size) {
+        if (n >= 0 && n < size) {
             copy_block_to_memory(n, block);
         }
     }
 
 
     public void put_block(int n, String content) throws WrongContentSize {
-        if (n <= 0 && n < size) {
+        if (n >= 0 && n < size) {
             if (block_size == content.length()) {
 
                 for (int i = 0; i < block_size; i++) {
-                    this.block[i + n * block_size] = content.charAt(i);
+                    this.block[n * block_size + i] = content.charAt(i);
                 }
             } else {
                 throw new WrongContentSize("New content size doesn't match with old one.");
@@ -74,5 +77,11 @@ public class Memory {
         }
     }
 
-
+    public String mem() throws Exception{
+        String tmp = new String();
+        for (int i = 0; i < size; i++) {
+            tmp += i + "|" + this.getBlock(i) + "|\n";
+        }
+        return tmp;
+    }
 }

@@ -63,7 +63,7 @@ public class Instructions {
             rm.getExternal().put_block(address, machine.getRegister("R").getContent()); // if throws here interrupt need to set CH3 register to 0
             machine.getRegister("CH3").setContent(0); // chanel 0 released
         } else {
-//            in user mode, so need to save all registers, and then throw interupt and change to Supervision mode
+//            in user mode, so need to save all registers, and then throw interrupt and change to Supervision mode
             throw new WriteToMemory("Can't do save in external memory in user mode");
         }
     }
@@ -74,7 +74,7 @@ public class Instructions {
             machine.getRegister("R").setContent(rm.getExternal().getBlock(address)); // if throws here interrupt need to set CH3 register to 0
             machine.getRegister("CH3").setContent(0); // chanel 0 released
         } else {
-            // in user mode, so need to save all registers, and then throw interupt and change to Supervision mode
+            // in user mode, so need to save all registers, and then throw interrupt and change to Supervision mode
             throw new LoadFromMemory("Can't do load from external memory in user mode");
         }
     }
@@ -87,7 +87,7 @@ public class Instructions {
         if (check_MODE()) {
             machine.getRegister("TI").setContent(time);
         } else {
-            // in user mode, so need to save all registers, and then throw interupt and change to Supervision mode
+            // in user mode, so need to save all registers, and then throw interrupt and change to Supervision mode
             throw new SetTimer("Can't do set timer in user mode");
         }
     }
