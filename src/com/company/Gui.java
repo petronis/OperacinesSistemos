@@ -50,10 +50,11 @@ public class Gui extends JFrame {
                                                     textFieldR,textFieldPI,textFieldSI,textFieldTI,
                                                     textFieldCH1,textFieldCH2,textFieldCH3,textFieldMODE};
 
+    JButton updateButton, closeButton;
+    JTextArea textArea;
+    JButton clearButton, submitButton;
+    JTextField messageField;
 
-    
-
-    JButton updateButton;
 
     public Gui(){
         createView();
@@ -77,10 +78,10 @@ public class Gui extends JFrame {
         gbc.gridy = 0;
         gbc.insets = new Insets(2, 2, 2, 2);
 
-        for(int i = 1; i < 12; i++){
-            createLabels(i, panel, gbc);
+        for(int i = 0; i < 12; i++){
+            createLabels(i, panel,gbc);
             gbc.gridx++;
-            createTextFields(i, panel, gbc);
+            createTextFields(i, panel,gbc);
             gbc.gridx = 0;
             gbc.gridy++;
             gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -98,6 +99,58 @@ public class Gui extends JFrame {
                 }
         );
         panel.add(updateButton,gbc);
+
+        gbc.gridy++;
+        closeButton = new JButton();
+        closeButton.setText("Close");
+        closeButton.addActionListener(
+                e -> {
+                    System.exit(0);
+                }
+        );
+        panel.add(closeButton,gbc);
+
+        JLabel label = new JLabel("Enter some text: ");
+        panel.add(label);
+
+        messageField = new JTextField(12);
+        panel.add(messageField);
+
+        submitButton = new JButton("Submit");
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!messageField.getText().equals("")) {
+                    String message = messageField.getText();
+                    messageField.setText("");
+                    textArea.append(message + "\n");
+                }
+                else{
+                    messageField.setText("Can't add space!");
+                }
+            }
+        });
+        panel.add(submitButton);
+
+        textArea = new JTextArea();
+        textArea.setEditable(false);
+        // instead of horizontal scroll bar your word will go to next line
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+
+
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setPreferredSize(new Dimension(350, 90));
+        panel.add(scrollPane);
+
+        clearButton = new JButton("Clear text area");
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea.setText("");
+            }
+        });
+        panel.add(clearButton);
     }
 
     private void createLabels(int i, JPanel panel, GridBagConstraints gbc) {
@@ -109,23 +162,18 @@ public class Gui extends JFrame {
     }
 
     private void createTextFields(int i, JPanel panel, GridBagConstraints gbc){
-        textFieldArray[i] = new JTextField(4);
+        textFieldArray[i] = new JTextField(10);
         textFieldArray[i].setText("value");
         textFieldArray[i].setEditable(false);
-        panel.add(textFieldArray[i], gbc);//,BorderLayout.EAST);
+        panel.add(textFieldArray[i],gbc);//,BorderLayout.EAST);
     }
-
     private void updateTextFields() {
-        for(int i = 1; i < 12; i++){
-            textFieldArray[i].setText(String.valueOf(rm.getRegister(registersNamesArray[i]).getSize()));
+        for(int i = 0; i < 12; i++){
+            textFieldArray[i].setText(String.valueOf(rm.getRegister(registersNamesArray[i]).getContentStr()));
         }
     }
 
-
     public static void main(String [] args){
-        Register register;
-        register = rm.getRegister("B");
-        //System.out.println(register.getName());
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -133,77 +181,4 @@ public class Gui extends JFrame {
             }
         });
     }
-
 }
-
-
-
-
-
-
-
-    /*JButton buttonCounter, buttonReset;
-    JLabel labelCount;
-
-    private int clicks = 0;
-
-    public Gui(){
-        createView();
-        setTitle("Click me");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        // everything will be compact
-        pack();
-        setResizable(false);
-        setLocationRelativeTo(null);
-    }
-
-    private void createView() {
-        JPanel panel = new JPanel();
-        getContentPane().add(panel);
-
-        labelCount = new JLabel();
-        labelCount.setPreferredSize(new Dimension(200,30));
-        panel.add(labelCount);
-        updateCounter();
-
-        buttonCounter = new JButton("Click me");
-        buttonCounter.addActionListener(
-                new ButtonCounterActionListener()
-        );
-        panel.add(buttonCounter);
-
-        buttonReset = new JButton("Reset");
-        buttonReset.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        clicks = 0;
-                        updateCounter();
-                    }
-                }
-        );
-        panel.add(buttonReset);
-
-    }
-
-    private void updateCounter() {
-        labelCount.setText("Clicked " + clicks + " times");
-    }
-
-    public static void main(String [] args){
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new Gui().setVisible(true);
-            }
-        });
-    }
-
-    private class ButtonCounterActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            clicks++;
-            updateCounter();
-        }
-    }
-}*/
