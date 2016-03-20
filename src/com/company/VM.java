@@ -11,7 +11,7 @@ public class VM extends Machine {
     private void init() {
         registers.addRegister(new Register("IC", 2, "00"));
         registers.addRegister(new Register("C", 1, "0"));
-        registers.addRegister(new Register("R", 4));
+        registers.addRegister(new Register("R", 5));
         registers.addRegister(new Register("B", 2));
     }
 
@@ -25,7 +25,17 @@ public class VM extends Machine {
     }
 
     @Override
-    boolean run() {
-        return false;
+    void run() {
+        instructions.check_machine_mode();
+        Register ic = getRegister("IC");
+        while (!instructions.check_MODE()) {
+            try {
+                String command = new String(getData().getBlock(ic.getContentInt()));
+                instructions.interpreter(command);
+                ic.inc(1);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
     }
 }

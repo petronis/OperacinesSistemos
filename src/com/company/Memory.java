@@ -11,7 +11,7 @@ import Exceptions.WrongContentSize;
 public class Memory {
 
     int size;
-    private static final int block_size = 4;
+    private static final int block_size = 5;
     char block[];
 
     Memory(int blocks) {
