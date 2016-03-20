@@ -244,8 +244,8 @@ public class Instructions {
     }
 
     public void read_from_input(int address) throws Exception {
-        if (check_MODE()) {
-            throw new Error("Input can't work in User MODE");
+        if (!check_MODE()) {
+            throw new Input("Input can't work in User MODE");
         } else {
             machine.getRegister("CH1").setContent(1);
             Memory data = rm.getData();
@@ -254,12 +254,15 @@ public class Instructions {
         }
     }
 
-    public void write_to_output() throws Exception {
+    public void write_to_output(int adress) throws Exception {
         boolean modeCheck = check_MODE();
-        if (modeCheck) {
-            throw new Error("Output can't work in User MODE");
+        if (!modeCheck) {
+            throw new Output("Output can't work in User MODE");
         } else {
-
+            machine.getRegister("CH2").setContent(1);
+            Memory data = rm.getData();
+            rm.output = data.getBlock(adress);
+            machine.getRegister("CH2").setContent(0);
         }
     }
 
