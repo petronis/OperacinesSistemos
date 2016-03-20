@@ -169,7 +169,7 @@ public class Gui extends JFrame {
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setPreferredSize(new Dimension(115,400));
+        scrollPane.setPreferredSize(new Dimension(122,400));
 
         TableRowUtilities.addNumberColumn(table, 0, false);
 
