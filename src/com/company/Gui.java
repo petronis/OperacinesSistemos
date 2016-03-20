@@ -12,7 +12,26 @@ import java.lang.reflect.Array;
  */
 public class Gui extends JFrame {
 
-    public static RM rm = new RM(20,20,20);
+    public static RM rm = new RM(1000,100,20);
+
+    Object rowData[][] = new Object[1000][5];
+    /*int counter = 0;
+    for(int i = 0; i < 1000; i++){
+        for(int j = 0; j < 5;j++){
+//                rowData[i][j]= counter;
+            counter++;
+        }
+    }*/
+    Object columnNames[] = {"1", "2", "3", "4", "5"};
+
+    JTable table = new JTable(rowData,columnNames);
+
+
+
+
+
+
+
 
 /* Real machine UI Items */
 
@@ -123,7 +142,11 @@ public class Gui extends JFrame {
         updateButton.setText("Update");
         updateButton.addActionListener(
                 e -> {
-                    updateTextFields();
+                    try {
+                        updateTextFields();
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
                 }
         );
         //groupLayoutPanel.add(updateButton);
@@ -136,17 +159,7 @@ public class Gui extends JFrame {
                 }
         );
 
-        Object rowData[][] = new Object[1000][5];
-        int counter = 0;
-        for(int i = 0; i < 1000; i++){
-            for(int j = 0; j < 5;j++){
-                rowData[i][j]= counter;
-                counter++;
-            }
-        }
-        Object columnNames[] = {"1", "2", "3", "4", "5"};
 
-        JTable table = new JTable(rowData,columnNames);
         table.setSize(new Dimension(200,100000));
         table.getColumnModel().getColumn(0).setPreferredWidth(33);
         table.getColumnModel().getColumn(1).setPreferredWidth(33);
@@ -460,9 +473,25 @@ public class Gui extends JFrame {
         });
     }
     
-    private void updateTextFields() {
+    private void updateTextFields() throws Exception {
         for(int i = 0; i < 12; i++){
             textFieldArray[i].setText(String.valueOf(rm.getRegister(registersNamesArray[i]).getContentStr()));
+        }
+
+        int tmpInt = 0;
+        Memory data = rm.getData();
+        data.put_block(10, "00034");
+        data.put_block(11, "00025");
+        String tmp = rm.getData().mem();
+        System.out.println(rm.getData().mem());
+        System.out.println(tmp);
+        //rm.run();
+        for(int i = 0; i < 1000; i++){
+            for(int j = 0; j < 5; j++){
+                rowData[i][j] = tmp.charAt(tmpInt);
+                tmpInt++;
+                table.repaint();
+            }
         }
     }
 
