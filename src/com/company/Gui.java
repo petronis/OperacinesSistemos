@@ -361,148 +361,140 @@ public class Gui extends JFrame {
     }
 
     private void VMPanel() {
-        EventQueue.invokeLater(new Runnable()
-        {
-            @Override
-            public void run()
+        EventQueue.invokeLater(() -> {
+            JFrame frame = new JFrame("Virtual Machine");
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            try
             {
-                JFrame frame = new JFrame("Virtual Machine");
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                try
-                {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                JPanel panel = new JPanel();
-                JPanel vmRegisterPanel = new JPanel();
-                JPanel vmTablePanel = new JPanel();
-                JButton updateButton, closeButton;
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            JPanel panel = new JPanel();
+            JPanel vmRegisterPanel = new JPanel();
+            JPanel vmTablePanel = new JPanel();
+            JButton updateButton1, closeButton1;
 
 
 /* TABLE VM */
-                Object rowData[][] = new Object[100][5];
-                int counter = 0;
-                for(int i = 0; i < 100; i++){
-                    for(int j = 0; j < 5;j++){
+            Object rowData1[][] = new Object[100][5];
+            int counter = 0;
+            for(int i = 0; i < 100; i++){
+                for(int j = 0; j < 5;j++){
 //                        rowData[i][j]= counter;
 //                        counter++;
+                }
+            }
+            Object columnNames1[] = {"1", "2", "3", "4", "5"};
+
+            JTable vmTable = new JTable(rowData1, columnNames1);
+            vmTable.setSize(new Dimension(200,100000));
+            vmTable.getColumnModel().getColumn(0).setPreferredWidth(33);
+            vmTable.getColumnModel().getColumn(1).setPreferredWidth(33);
+            vmTable.getColumnModel().getColumn(2).setPreferredWidth(33);
+            vmTable.getColumnModel().getColumn(3).setPreferredWidth(33);
+            vmTable.getColumnModel().getColumn(4).setPreferredWidth(33);
+            vmTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+            JScrollPane scrollPane = new JScrollPane(vmTable);
+            scrollPane.setPreferredSize(new Dimension(212,400));
+
+            TableRowUtilities.addNumberColumn(vmTable, 0, false);
+            vmTablePanel.add(scrollPane);
+
+            updateButton1 = new JButton("Update");
+            closeButton1 = new JButton("Close");
+
+            updateButton1.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        updateVMTable(vmTable, rowData1);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
                     }
                 }
-                Object columnNames[] = {"1", "2", "3", "4", "5"};
-
-                JTable vmTable = new JTable(rowData,columnNames);
-                vmTable.setSize(new Dimension(200,100000));
-                vmTable.getColumnModel().getColumn(0).setPreferredWidth(33);
-                vmTable.getColumnModel().getColumn(1).setPreferredWidth(33);
-                vmTable.getColumnModel().getColumn(2).setPreferredWidth(33);
-                vmTable.getColumnModel().getColumn(3).setPreferredWidth(33);
-                vmTable.getColumnModel().getColumn(4).setPreferredWidth(33);
-                vmTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-                JScrollPane scrollPane = new JScrollPane(vmTable);
-                scrollPane.setPreferredSize(new Dimension(212,400));
-
-                TableRowUtilities.addNumberColumn(vmTable, 0, false);
-                vmTablePanel.add(scrollPane);
-
-                updateButton = new JButton("Update");
-                closeButton = new JButton("Close");
-
-                updateButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        try {
-                            updateVMTabl(vmTable,rowData);
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                });
+            });
 /* END OF TABLE VM */
 
-                vmRegisterPanel.setLayout(new GridBagLayout());
-                getContentPane().add(vmRegisterPanel);
+            vmRegisterPanel.setLayout(new GridBagLayout());
+            getContentPane().add(vmRegisterPanel);
 
-                GroupLayout layout = new GroupLayout(vmRegisterPanel);
-                layout.setAutoCreateGaps(true);
-                layout.setAutoCreateContainerGaps(true);
-                
-                for(int i = 0; i < 4; i++){
-                    vmLabelArray[i] = new JLabel();
-                    vmLabelArray[i].setText("Register " + rm.vm.getRegister(vmRegisterNamesArray[i]).getName());
+            GroupLayout layout = new GroupLayout(vmRegisterPanel);
+            layout.setAutoCreateGaps(true);
+            layout.setAutoCreateContainerGaps(true);
 
-                    vmTextArray[i] = new JTextField(10);
-                    vmTextArray[i].setText(String.valueOf(rm.vm.getRegister(vmRegisterNamesArray[i]).getContentStr()));
-                    vmTextArray[i].setEditable(false);
-                }
-                layout.setHorizontalGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(vmLabelArray[0])
-                                        .addComponent(vmLabelArray[1])
-                                        .addComponent(vmLabelArray[2])
-                                        .addComponent(vmLabelArray[3])
-                                        .addComponent(updateButton)
-                                )
-                        )
-                        .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(vmTextArray[0])
-                                        .addComponent(vmTextArray[1])
-                                        .addComponent(vmTextArray[2])
-                                        .addComponent(vmTextArray[3])
-                                        .addComponent(closeButton)
-                                )
-                        )
-                );
-                layout.setVerticalGroup(
-                        layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(vmLabelArray[0])
-                                        .addComponent(vmTextArray[0])
-                                )
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(vmLabelArray[1])
-                                        .addComponent(vmTextArray[1])
-                                )
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(vmLabelArray[2])
-                                        .addComponent(vmTextArray[2])
-                                )
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(vmLabelArray[3])
-                                        .addComponent(vmTextArray[3])
-                                )
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(updateButton)
-                                        .addComponent(closeButton)
-                                )
-                );
-                vmRegisterPanel.setLayout(layout);
-                panel.add(vmRegisterPanel);
-                panel.add(vmTablePanel);
-                
+            for(int i = 0; i < 4; i++){
+                vmLabelArray[i] = new JLabel();
+                vmLabelArray[i].setText("Register " + rm.vm.getRegister(vmRegisterNamesArray[i]).getName());
 
-                frame.getContentPane().add(BorderLayout.CENTER, panel);
-                frame.pack();
-                frame.setLocationByPlatform(true);
-                frame.setVisible(true);
-                frame.setResizable(false);
-                /*for(int i = 0; i < 4; i++){
-                    panel.add(vmLabelArray[i]);
-                }*/
+                vmTextArray[i] = new JTextField(10);
+                vmTextArray[i].setText(String.valueOf(rm.vm.getRegister(vmRegisterNamesArray[i]).getContentStr()));
+                vmTextArray[i].setEditable(false);
             }
+            layout.setHorizontalGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(vmLabelArray[0])
+                                    .addComponent(vmLabelArray[1])
+                                    .addComponent(vmLabelArray[2])
+                                    .addComponent(vmLabelArray[3])
+                                    .addComponent(updateButton1)
+                            )
+                    )
+                    .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(vmTextArray[0])
+                                    .addComponent(vmTextArray[1])
+                                    .addComponent(vmTextArray[2])
+                                    .addComponent(vmTextArray[3])
+                                    .addComponent(closeButton1)
+                            )
+                    )
+            );
+            layout.setVerticalGroup(
+                    layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(vmLabelArray[0])
+                                    .addComponent(vmTextArray[0])
+                            )
+                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(vmLabelArray[1])
+                                    .addComponent(vmTextArray[1])
+                            )
+                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(vmLabelArray[2])
+                                    .addComponent(vmTextArray[2])
+                            )
+                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(vmLabelArray[3])
+                                    .addComponent(vmTextArray[3])
+                            )
+                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(updateButton1)
+                                    .addComponent(closeButton1)
+                            )
+            );
+            vmRegisterPanel.setLayout(layout);
+            panel.add(vmRegisterPanel);
+            panel.add(vmTablePanel);
+
+
+            frame.getContentPane().add(BorderLayout.CENTER, panel);
+            frame.pack();
+            frame.setLocationByPlatform(true);
+            frame.setVisible(true);
+            frame.setResizable(false);
+
         });
     }
 
-    private void updateVMTabl(JTable vmTable, Object[][] row) throws Exception {
+    private void updateVMTable(JTable vmTable, Object[][] row) throws Exception {
         int tmpInt = 0;
         Memory data = rm.vm.getData();
         data.put_block(10, "00034");
         data.put_block(11, "00025");
         String tmp = rm.vm.getData().mem();
-        System.out.println(tmp);
         //rm.run();
         for(int i = 0; i < 100; i++){
             for(int j = 0; j < 5; j++){
@@ -533,11 +525,6 @@ public class Gui extends JFrame {
     }
 
     public static void main(String [] args){
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new Gui().setVisible(true);
-            }
-        });
+        SwingUtilities.invokeLater(() -> new Gui().setVisible(true));
     }
 }
