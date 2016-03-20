@@ -12,7 +12,7 @@ public class RM extends Machine {
     private void init(int vm_blocks, int external_blocks) {
         registers.addRegister(new Register("PTR", 4));
         registers.addRegister(new Register("B", 2));
-        registers.addRegister(new Register("IC", 2, "00"));
+        registers.addRegister(new Register("IC", 3, "000"));
         registers.addRegister(new Register("C", 1, "0"));
         registers.addRegister(new Register("R", 5));
         registers.addRegister(new Register("PI", 1, "0"));
@@ -43,11 +43,17 @@ public class RM extends Machine {
 
     @Override
     void run() {
+        instructions.check_machine_mode();
+        Register ic = getRegister("IC");
+        String command;
         try {
-            instructions.change_mode();
-            vm.run();
+            while (instructions.check_MODE()) {
+                command = new String(getData().getBlock(ic.getContentInt()));
+                instructions.interpreter(command);
+                ic.inc(1);
+            }
         } catch (Exception exception) {
-            exception.printStackTrace();
+//            exception.printStackTrace();
         }
     }
 }

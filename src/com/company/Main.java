@@ -11,14 +11,14 @@ public class Main {
         RM rm = new RM(100,10,10);
         Memory data = rm.getData();
         try {
-            data.put_block(0, "00034");
+            data.put_block(10, "00034");
+            data.put_block(0, "LR010");
+            data.put_block(1, "HALTP");
             Instructions in = rm.getInstructions();
-            in.check_machine_mode();
-            in.load_R_from_memory(0);
-            rm.getExternal().put_block(6, "12535");
-            in.compare(0);
-            System.out.println(rm.getRegister("R").getContentStr().substring(2,4));
-            System.out.print(rm.getExternal().mem());
+            rm.run();
+            System.out.println("R " + rm.getRegister("R").getContentStr());
+            System.out.println("IC " + rm.getRegister("IC").getContentStr());
+            System.out.print(rm.getData().mem());
         } catch (Exception exception) {
             exception.printStackTrace();
         }

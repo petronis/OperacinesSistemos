@@ -46,6 +46,7 @@ public class Instructions {
             load_IC();
         } else if (command.substring(0,2).contentEquals("LR")) {
             adrress = new Integer(command.substring(2, command.length()));
+            System.out.println(adrress);
             load_R_from_memory(adrress);
         } else if (command.substring(0,2).contentEquals("LB")) {
             adrress = new Integer(command.substring(2, command.length()));
@@ -239,7 +240,7 @@ public class Instructions {
         }
     }
 
-    public void halt() throws Halt {
+    public void halt() throws Exception {
         throw new Halt("Stop process");
     }
 
