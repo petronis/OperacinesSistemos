@@ -16,24 +16,13 @@ public class Gui extends JFrame {
 
     public static RM rm = new RM(1000,100,20);
 
+    public Object input = "";
+    public Object output = "";
+
     Object rowData[][] = new Object[1000][5];
-    /*int counter = 0;
-    for(int i = 0; i < 1000; i++){
-        for(int j = 0; j < 5;j++){
-//                rowData[i][j]= counter;
-            counter++;
-        }
-    }*/
     Object columnNames[] = {"1", "2", "3", "4", "5"};
 
     JTable table = new JTable(rowData,columnNames);
-
-
-
-
-
-
-
 
 /* Real machine UI Items */
 
