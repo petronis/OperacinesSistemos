@@ -16,9 +16,6 @@ public class Gui extends JFrame {
 
     public static RM rm = new RM(1000,100,20);
 
-    public Object input = "";
-    public Object output = "";
-
     Object rowData[][] = new Object[1000][5];
     Object columnNames[] = {"1", "2", "3", "4", "5"};
 
@@ -198,7 +195,9 @@ public class Gui extends JFrame {
         inputTextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                rm.input = inputTextField.getText();
                 System.out.println("Enter");
+                inputTextField.setText("");
             }
         });
         outputTextButton.addActionListener(new ActionListener() {

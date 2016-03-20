@@ -243,12 +243,14 @@ public class Instructions {
         throw new Halt("Stop process");
     }
 
-    public void read_from_input() throws Exception {
-        boolean modeCheck = check_MODE();
-        if (modeCheck) {
+    public void read_from_input(int address) throws Exception {
+        if (check_MODE()) {
             throw new Error("Input can't work in User MODE");
         } else {
-
+            machine.getRegister("CH1").setContent(1);
+            Memory data = rm.getData();
+            data.put_block(address, rm.input.toString());
+            machine.getRegister("CH1").setContent(0);
         }
     }
 

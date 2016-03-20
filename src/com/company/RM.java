@@ -8,6 +8,8 @@ public class RM extends Machine {
     VM vm;
     Memory external;
     Instructions instructions;
+    Object input;
+    Object output;
 
     private void init(int vm_blocks, int external_blocks) {
         registers.addRegister(new Register("PTR", 4));
