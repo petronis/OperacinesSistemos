@@ -1,5 +1,7 @@
 package com.company;
 
+import Exceptions.WrongContentSize;
+
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
@@ -375,6 +377,7 @@ public class Gui extends JFrame {
                 JPanel panel = new JPanel();
                 JPanel vmRegisterPanel = new JPanel();
                 JPanel vmTablePanel = new JPanel();
+                JButton updateButton, closeButton;
 
 
 /* TABLE VM */
@@ -382,8 +385,8 @@ public class Gui extends JFrame {
                 int counter = 0;
                 for(int i = 0; i < 100; i++){
                     for(int j = 0; j < 5;j++){
-                        rowData[i][j]= counter;
-                        counter++;
+//                        rowData[i][j]= counter;
+//                        counter++;
                     }
                 }
                 Object columnNames[] = {"1", "2", "3", "4", "5"};
@@ -402,6 +405,20 @@ public class Gui extends JFrame {
 
                 TableRowUtilities.addNumberColumn(vmTable, 0, false);
                 vmTablePanel.add(scrollPane);
+
+                updateButton = new JButton("Update");
+                closeButton = new JButton("Close");
+
+                updateButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            updateVMTabl(vmTable,rowData);
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                });
 /* END OF TABLE VM */
 
                 vmRegisterPanel.setLayout(new GridBagLayout());
@@ -426,6 +443,7 @@ public class Gui extends JFrame {
                                         .addComponent(vmLabelArray[1])
                                         .addComponent(vmLabelArray[2])
                                         .addComponent(vmLabelArray[3])
+                                        .addComponent(updateButton)
                                 )
                         )
                         .addGroup(layout.createSequentialGroup()
@@ -434,6 +452,7 @@ public class Gui extends JFrame {
                                         .addComponent(vmTextArray[1])
                                         .addComponent(vmTextArray[2])
                                         .addComponent(vmTextArray[3])
+                                        .addComponent(closeButton)
                                 )
                         )
                 );
@@ -455,6 +474,10 @@ public class Gui extends JFrame {
                                         .addComponent(vmLabelArray[3])
                                         .addComponent(vmTextArray[3])
                                 )
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(updateButton)
+                                        .addComponent(closeButton)
+                                )
                 );
                 vmRegisterPanel.setLayout(layout);
                 panel.add(vmRegisterPanel);
@@ -472,12 +495,28 @@ public class Gui extends JFrame {
             }
         });
     }
-    
+
+    private void updateVMTabl(JTable vmTable, Object[][] row) throws Exception {
+        int tmpInt = 0;
+        Memory data = rm.vm.getData();
+        data.put_block(10, "00034");
+        data.put_block(11, "00025");
+        String tmp = rm.vm.getData().mem();
+        System.out.println(tmp);
+        //rm.run();
+        for(int i = 0; i < 100; i++){
+            for(int j = 0; j < 5; j++){
+                row[i][j] = tmp.charAt(tmpInt);
+                tmpInt++;
+                vmTable.repaint();
+            }
+        }
+    }
+
     private void updateTextFields() throws Exception {
         for(int i = 0; i < 12; i++){
             textFieldArray[i].setText(String.valueOf(rm.getRegister(registersNamesArray[i]).getContentStr()));
         }
-
         int tmpInt = 0;
         Memory data = rm.getData();
         data.put_block(10, "00034");
