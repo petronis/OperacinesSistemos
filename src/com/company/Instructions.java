@@ -243,4 +243,22 @@ public class Instructions {
         throw new Halt("Stop process");
     }
 
+    public void read_from_input() throws Exception {
+        boolean modeCheck = check_MODE();
+        if (modeCheck) {
+            // User mode needs a throw
+        } else {
+            // Supervisor everything is okay
+        }
+    }
+
+    public void write_to_output() throws Exception {
+        boolean modeCheck = check_MODE();
+        if (modeCheck) {
+            // User mode needs a throw
+        } else {
+            // Supervisor everything is okay
+        }
+    }
+
 }
