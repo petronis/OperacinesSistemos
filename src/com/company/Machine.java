@@ -29,6 +29,10 @@ public abstract class Machine {
         registers.addRegister(new Register(name, size));
     }
 
+    public int getRegistersSize() {
+        return registers.get_size();
+    }
+
     public Register getRegister(int n) {
         return registers.get_register(n);
     }

@@ -3,8 +3,6 @@ package com.company;
 import Exceptions.Error;
 import Interrupts.*;
 
-import java.util.Date;
-
 /**
  * Created by Vik on 3/12/2016.
  */
@@ -18,24 +16,24 @@ public class Instructions {
     }
 
     public void interpreter(String command) throws Exception {
-        int adrress;
+        int address;
         if (command.substring(0,2).contentEquals("AD")) {
-            adrress = new Integer(command.substring(2, command.length()));
-            addition(adrress);
+            address = new Integer(command.substring(2, command.length()));
+            addition(address);
         } else if (command.substring(0,2).contentEquals("SB")) {
-            adrress = new Integer(command.substring(2, command.length()));
-            substitution(adrress);
+            address = new Integer(command.substring(2, command.length()));
+            substitution(address);
         } else if (command.substring(0,2).contentEquals("SV")) {
-            adrress = new Integer(command.substring(2, command.length()));
-            save_in_external_memory(adrress);
+            address = new Integer(command.substring(2, command.length()));
+            save_in_external_memory(address);
         } else if (command.substring(0,2).contentEquals("LD")) {
-            adrress = new Integer(command.substring(2, command.length()));
-            load_from_external_memory(adrress);
+            address = new Integer(command.substring(2, command.length()));
+            load_from_external_memory(address);
         } else if (command.substring(0,5).contentEquals("RESTR")) {
             reset_R_register();
         } else if (command.substring(0,3).contentEquals("STI")) {
-            adrress = new Integer(command.substring(3, command.length()));
-            set_timer(adrress);
+            address = new Integer(command.substring(3, command.length()));
+            set_timer(address);
         } else if (command.substring(0,5).contentEquals("LRCH1")) {
             load_chanel1();
         } else if (command.substring(0,5).contentEquals("LRCH2")) {
@@ -45,21 +43,21 @@ public class Instructions {
         } else if (command.substring(0,5).contentEquals("LTRIC")) {
             load_IC();
         } else if (command.substring(0,2).contentEquals("LR")) {
-            adrress = new Integer(command.substring(2, command.length()));
-            System.out.println(adrress);
-            load_R_from_memory(adrress);
+            address = new Integer(command.substring(2, command.length()));
+            System.out.println(address);
+            load_R_from_memory(address);
         } else if (command.substring(0,2).contentEquals("LB")) {
-            adrress = new Integer(command.substring(2, command.length()));
-            load_B_from_memory(adrress);
+            address = new Integer(command.substring(2, command.length()));
+            load_B_from_memory(address);
         } else if (command.substring(0,2).contentEquals("SR")) {
-            adrress = new Integer(command.substring(2, command.length()));
-            save_in_memory_from_R(adrress);
+            address = new Integer(command.substring(2, command.length()));
+            save_in_memory_from_R(address);
         } else if (command.substring(0,2).contentEquals("CR")) {
-            adrress = new Integer(command.substring(2, command.length()));
-            compare(adrress);
+            address = new Integer(command.substring(2, command.length()));
+            compare(address);
         } else if (command.substring(0,2).contentEquals("RT")) {
-            adrress = new Integer(command.substring(2, command.length()));
-            function_call(adrress);
+            address = new Integer(command.substring(2, command.length()));
+            function_call(address);
         } else if (command.substring(0,5).contentEquals("RETRN")) {
             function_return();
         } else if (command.substring(0,5).contentEquals("SETC0")) {
@@ -124,7 +122,7 @@ public class Instructions {
         if (check_MODE()) {
             machine.getRegister("CH3").setContent(1); // chanel 1 occupied (External memory)
             // wtf?
-            rm.getExternal().put_block(address, machine.getRegister("R").getContent()); // if throws here interrupt need to set CH3 register to 0
+            rm.getExternal().put_block(address, machine.getRegister("R").getContentStr()); // if throws here interrupt need to set CH3 register to 0
             machine.getRegister("CH3").setContent(0); // chanel 0 released
         } else {
 //            in user mode, so need to save all registers, and then throw interrupt and change to Supervision mode
@@ -144,7 +142,7 @@ public class Instructions {
     }
 
     public void reset_R_register() throws  Exception {
-        machine.getRegister("R").setContent("0000");
+        machine.getRegister("R").setContent("00000");
     }
 
     public void set_timer(int time) throws Exception {
@@ -177,11 +175,11 @@ public class Instructions {
     }
 
     public void load_B_from_memory(int address) throws Exception {
-        machine.getRegister("B").setContent(machine.getData().getBlock(address));
+        machine.getRegister("B").setContent(machine.getData().getBlockInt(address));
     }
 
     public void save_in_memory_from_R(int address) throws Exception {
-        machine.getData().put_block(address, machine.getRegister("R").getContent());
+        machine.getData().put_block(address, machine.getRegister("R").getContentStr());
     }
 
     public void compare(int address) throws Exception {
@@ -196,17 +194,19 @@ public class Instructions {
         if (machine.getRegister("C").getContentStr().contentEquals("1")) {
             Register b = machine.getRegister("B"), ic = machine.getRegister("IC");
             Memory data = machine.getData();
-            b.inc(1);
             ic.inc(1);
-            data.put_block(b.getContentInt(), ic.getContent());
+            b.inc(1);
+            data.put_block(b.getContentInt(), "00" + ic.getContentStr());
             ic.setContent(address);
+            ic.inc(-1);
         }
     }
 
     public void function_return() throws Exception {
         Register b = machine.getRegister("B"), ic = machine.getRegister("IC");
-        ic.setContent(b.getContentInt());
+        ic.setContent(machine.getData().getBlockInt(b.getContentInt()));
         b.inc(-1);
+        ic.inc(-1);
     }
 
     public void set_C_0() throws Exception {
@@ -216,9 +216,9 @@ public class Instructions {
     public void invert_C() throws Exception {
         Register c = machine.getRegister("C");
         if (c.getContentInt() == 1) {
-            c.setContent(0);
-        } else {
             set_C_0();
+        } else {
+            c.setContent(1);
         }
     }
 
