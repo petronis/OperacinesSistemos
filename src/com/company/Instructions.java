@@ -67,6 +67,12 @@ public class Instructions {
             halt();
         }  else if (command.substring(0,5).contentEquals("CMODE")) {
             change_mode();
+        }  else if (command.substring(0,2).contentEquals("GD")) {
+            address = new Integer(command.substring(2, command.length()));
+            read_from_input(address);
+        }  else if (command.substring(0,2).contentEquals("PD")) {
+            address = new Integer(command.substring(2, command.length()));
+            write_to_output(address);
         } else {
             throw new BadOperationPlan("no such operation");
         }
