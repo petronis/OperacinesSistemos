@@ -19,6 +19,7 @@ public class VM extends Machine {
         super(blocks);
         init();
         this.rm = rm;
+        init();
     }
 
     public void setInstructions(Instructions instructions) {

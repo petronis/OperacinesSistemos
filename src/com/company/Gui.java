@@ -1,6 +1,7 @@
 package com.company;
 
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +13,8 @@ import java.lang.reflect.Array;
 public class Gui extends JFrame {
 
     public static RM rm = new RM(20,20,20);
+
+/* Real machine UI Items */
 
     JLabel labelRegisterPTR;
     JLabel labelRegisterB;
@@ -27,7 +30,6 @@ public class Gui extends JFrame {
     JLabel labelRegisterMODE;
 
     String[] registersNamesArray = {"PTR","B","IC","C","R","PI","SI","TI","CH1","CH2","CH3","MODE"};
-    
 
     JLabel[] labelArray = new JLabel[]{ labelRegisterPTR,labelRegisterB,labelRegisterIC,labelRegisterC,
                                         labelRegisterR,labelRegisterPI,labelRegisterSI,labelRegisterTI,
@@ -50,7 +52,27 @@ public class Gui extends JFrame {
                                                     textFieldR,textFieldPI,textFieldSI,textFieldTI,
                                                     textFieldCH1,textFieldCH2,textFieldCH3,textFieldMODE};
 
-    JButton updateButton, closeButton, inputTextButton, outputTextButton;
+    JButton updateButton, closeButton, inputTextButton, outputTextButton, modeButton;
+
+/* End of Real machine UI Items */
+/* Virtual machine UI Items */
+
+    JLabel vmRegisterIC;
+    JLabel vmRegisterR;
+    JLabel vmRegisterC;
+    JLabel vmRegisterB;
+
+    String[] vmRegisterNamesArray = {"R","IC","C","B"};
+    JLabel[] vmLabelArray = new JLabel[]{vmRegisterR,vmRegisterIC,vmRegisterC,vmRegisterB};
+
+    JTextField vmTextR;
+    JTextField vmTextIC;
+    JTextField vmTextC;
+    JTextField vmTextB;
+
+    JTextField[] vmTextArray = new JTextField[]{vmTextR,vmTextIC,vmTextC,vmTextB};
+
+/* End of Virtual machine UI Items */
 
 
     public Gui(){
@@ -90,7 +112,7 @@ public class Gui extends JFrame {
         layout2.setAutoCreateContainerGaps(true);
 
         for(int i = 0; i < 12; i++) {
-            textFieldArray[i] = new JTextField(10);
+            textFieldArray[i] = new JTextField();
             textFieldArray[i].setText("value");
             textFieldArray[i].setEditable(false);
 
@@ -114,33 +136,58 @@ public class Gui extends JFrame {
                 }
         );
 
-        Object rowData[][] = new Object[1024][4];
+        Object rowData[][] = new Object[1000][5];
         int counter = 0;
-        for(int i = 0; i < 1024; i++){
-            for(int j = 0; j < 4;j++){
+        for(int i = 0; i < 1000; i++){
+            for(int j = 0; j < 5;j++){
                 rowData[i][j]= counter;
                 counter++;
             }
         }
-        Object columnNames[] = {"1", "2", "3","4"};
+        Object columnNames[] = {"1", "2", "3", "4", "5"};
 
         JTable table = new JTable(rowData,columnNames);
+        table.setSize(new Dimension(200,100000));
+        table.getColumnModel().getColumn(0).setPreferredWidth(33);
+        table.getColumnModel().getColumn(1).setPreferredWidth(33);
+        table.getColumnModel().getColumn(2).setPreferredWidth(33);
+        table.getColumnModel().getColumn(3).setPreferredWidth(33);
+        table.getColumnModel().getColumn(4).setPreferredWidth(33);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
         JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setPreferredSize(new Dimension(212,400));
+
+        TableRowUtilities.addNumberColumn(table, 0, false);
 
         JTextField inputTextField = new JTextField("");
         JTextArea outputTextArea = new JTextArea("");
 
-        inputTextField.setPreferredSize(new Dimension(20,30));
         outputTextArea.setEditable(false);
         outputTextArea.setLineWrap(true);
         outputTextArea.setWrapStyleWord(true);
 
         JScrollPane scrollTextArea = new JScrollPane(outputTextArea);
-        scrollTextArea.setPreferredSize(new Dimension(200, 90));
+        scrollTextArea.setPreferredSize(new Dimension(250, 200));
+
+        inputTextField.setPreferredSize(new Dimension(250, 27));
+
 
         inputTextButton = new JButton();
         outputTextButton = new JButton();
 
+        modeButton = new JButton();
+        modeButton.setText("Mode");
+        modeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(rm.getRegister(registersNamesArray[11]).getContentStr().equals("S")){
+                    VMPanel();
+                }
+
+            }
+        });
+        panel.add(modeButton);
         inputTextButton.setText("Input");
         outputTextButton.setText("Output");
 
@@ -170,27 +217,29 @@ public class Gui extends JFrame {
                         .addGroup(layout2.createParallelGroup(
                                 GroupLayout.Alignment.LEADING)
                                 .addComponent(inputTextField)
-                                .addComponent(inputTextButton)
+                                .addComponent(scrollTextArea)
                         )
                 )
                 .addGroup(layout2.createSequentialGroup()
                         .addGroup(layout2.createParallelGroup(
                                 GroupLayout.Alignment.LEADING)
-                                .addComponent(scrollTextArea)
+                                .addComponent(inputTextButton)
                                 .addComponent(outputTextButton)
                         )
+
                 )
         );
         layout2.setVerticalGroup(
                 layout2.createSequentialGroup()
-                        .addGroup(layout2.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout2.createParallelGroup(GroupLayout.Alignment.CENTER)
                                 .addComponent(inputTextField)
-                                .addComponent(scrollTextArea)
-                        )
-                        .addGroup(layout2.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(inputTextButton)
+                        )
+                        .addGroup(layout2.createParallelGroup(GroupLayout.Alignment.CENTER)
+                                .addComponent(scrollTextArea)
                                 .addComponent(outputTextButton)
                         )
+
         );
         
 
@@ -296,20 +345,121 @@ public class Gui extends JFrame {
         this.getContentPane().add(panel);
     }
 
-    private void createLabels(int i, JPanel groupLayoutPanel, GridBagConstraints gbc) {
-        labelArray[i] = new JLabel();
-        labelArray[i].setText("Register " + rm.getRegister(registersNamesArray[i]).getName());
-//        labelArray[i].setHorizontalAlignment();
-        groupLayoutPanel.add(labelArray[i],gbc);//,BorderLayout.EAST);
-        //labelArray[i].setAlignmentX(Component.LEFT_ALIGNMENT);
-    }
+    private void VMPanel() {
+        EventQueue.invokeLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                JFrame frame = new JFrame("Virtual Machine");
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                try
+                {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                JPanel panel = new JPanel();
+                JPanel vmRegisterPanel = new JPanel();
+                JPanel vmTablePanel = new JPanel();
 
-    private void createTextFields(int i, JPanel groupLayoutPanel, GridBagConstraints gbc){
-        textFieldArray[i] = new JTextField(10);
-        textFieldArray[i].setText("value");
-        textFieldArray[i].setEditable(false);
-        groupLayoutPanel.add(textFieldArray[i],gbc);//,BorderLayout.EAST);
+
+/* TABLE VM */
+                Object rowData[][] = new Object[100][5];
+                int counter = 0;
+                for(int i = 0; i < 100; i++){
+                    for(int j = 0; j < 5;j++){
+                        rowData[i][j]= counter;
+                        counter++;
+                    }
+                }
+                Object columnNames[] = {"1", "2", "3", "4", "5"};
+
+                JTable vmTable = new JTable(rowData,columnNames);
+                vmTable.setSize(new Dimension(200,100000));
+                vmTable.getColumnModel().getColumn(0).setPreferredWidth(33);
+                vmTable.getColumnModel().getColumn(1).setPreferredWidth(33);
+                vmTable.getColumnModel().getColumn(2).setPreferredWidth(33);
+                vmTable.getColumnModel().getColumn(3).setPreferredWidth(33);
+                vmTable.getColumnModel().getColumn(4).setPreferredWidth(33);
+                vmTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+                JScrollPane scrollPane = new JScrollPane(vmTable);
+                scrollPane.setPreferredSize(new Dimension(212,400));
+
+                TableRowUtilities.addNumberColumn(vmTable, 0, false);
+                vmTablePanel.add(scrollPane);
+/* END OF TABLE VM */
+
+                vmRegisterPanel.setLayout(new GridBagLayout());
+                getContentPane().add(vmRegisterPanel);
+
+                GroupLayout layout = new GroupLayout(vmRegisterPanel);
+                layout.setAutoCreateGaps(true);
+                layout.setAutoCreateContainerGaps(true);
+                
+                for(int i = 0; i < 4; i++){
+                    vmLabelArray[i] = new JLabel();
+                    vmLabelArray[i].setText("Register " + rm.vm.getRegister(vmRegisterNamesArray[i]).getName());
+
+                    vmTextArray[i] = new JTextField(10);
+                    vmTextArray[i].setText(String.valueOf(rm.vm.getRegister(vmRegisterNamesArray[i]).getContentStr()));
+                    vmTextArray[i].setEditable(false);
+                }
+                layout.setHorizontalGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(vmLabelArray[0])
+                                        .addComponent(vmLabelArray[1])
+                                        .addComponent(vmLabelArray[2])
+                                        .addComponent(vmLabelArray[3])
+                                )
+                        )
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(vmTextArray[0])
+                                        .addComponent(vmTextArray[1])
+                                        .addComponent(vmTextArray[2])
+                                        .addComponent(vmTextArray[3])
+                                )
+                        )
+                );
+                layout.setVerticalGroup(
+                        layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(vmLabelArray[0])
+                                        .addComponent(vmTextArray[0])
+                                )
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(vmLabelArray[1])
+                                        .addComponent(vmTextArray[1])
+                                )
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(vmLabelArray[2])
+                                        .addComponent(vmTextArray[2])
+                                )
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(vmLabelArray[3])
+                                        .addComponent(vmTextArray[3])
+                                )
+                );
+                vmRegisterPanel.setLayout(layout);
+                panel.add(vmRegisterPanel);
+                panel.add(vmTablePanel);
+                
+
+                frame.getContentPane().add(BorderLayout.CENTER, panel);
+                frame.pack();
+                frame.setLocationByPlatform(true);
+                frame.setVisible(true);
+                frame.setResizable(false);
+                /*for(int i = 0; i < 4; i++){
+                    panel.add(vmLabelArray[i]);
+                }*/
+            }
+        });
     }
+    
     private void updateTextFields() {
         for(int i = 0; i < 12; i++){
             textFieldArray[i].setText(String.valueOf(rm.getRegister(registersNamesArray[i]).getContentStr()));
