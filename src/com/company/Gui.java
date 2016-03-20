@@ -196,14 +196,25 @@ public class Gui extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rm.input = inputTextField.getText();
-                System.out.println("Enter");
+                try {
+                    rm.getInstructions().read_from_input(12);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+                System.out.println(rm.input);
                 inputTextField.setText("");
             }
         });
         outputTextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Output");
+
+                    try {
+                        rm.getInstructions().write_to_output(12);
+                        outputTextArea.setText(rm.output.toString());
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
             }
         });
 

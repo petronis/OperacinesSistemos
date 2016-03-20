@@ -247,8 +247,10 @@ public class Instructions {
         if (!check_MODE()) {
             throw new Input("Input can't work in User MODE");
         } else {
+            check_machine_mode();
             machine.getRegister("CH1").setContent(1);
             Memory data = rm.getData();
+            System.out.println(rm.input);
             data.put_block(address, rm.input.toString());
             machine.getRegister("CH1").setContent(0);
         }
@@ -259,6 +261,7 @@ public class Instructions {
         if (!modeCheck) {
             throw new Output("Output can't work in User MODE");
         } else {
+            check_machine_mode();
             machine.getRegister("CH2").setContent(1);
             Memory data = rm.getData();
             rm.output = data.getBlock(adress);
