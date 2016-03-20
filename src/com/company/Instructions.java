@@ -44,7 +44,6 @@ public class Instructions {
             load_IC();
         } else if (command.substring(0,2).contentEquals("LR")) {
             address = new Integer(command.substring(2, command.length()));
-            System.out.println(address);
             load_R_from_memory(address);
         } else if (command.substring(0,2).contentEquals("LB")) {
             address = new Integer(command.substring(2, command.length()));

@@ -55,7 +55,7 @@ public class RM extends Machine {
                 ti.inc(-1);
             }
         } catch (Exception exception) {
-            exception.printStackTrace();
+//            exception.printStackTrace();
         }
     }
 }
