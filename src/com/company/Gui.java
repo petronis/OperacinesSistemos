@@ -160,16 +160,16 @@ public class Gui extends JFrame {
         );
 
 
-        table.setSize(new Dimension(200,100000));
-        table.getColumnModel().getColumn(0).setPreferredWidth(33);
-        table.getColumnModel().getColumn(1).setPreferredWidth(33);
-        table.getColumnModel().getColumn(2).setPreferredWidth(33);
-        table.getColumnModel().getColumn(3).setPreferredWidth(33);
-        table.getColumnModel().getColumn(4).setPreferredWidth(33);
+        table.setSize(new Dimension(130,100000));
+        table.getColumnModel().getColumn(0).setPreferredWidth(10);
+        table.getColumnModel().getColumn(1).setPreferredWidth(10);
+        table.getColumnModel().getColumn(2).setPreferredWidth(10);
+        table.getColumnModel().getColumn(3).setPreferredWidth(10);
+        table.getColumnModel().getColumn(4).setPreferredWidth(10);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setPreferredSize(new Dimension(212,400));
+        scrollPane.setPreferredSize(new Dimension(115,400));
 
         TableRowUtilities.addNumberColumn(table, 0, false);
 
@@ -483,8 +483,6 @@ public class Gui extends JFrame {
         data.put_block(10, "00034");
         data.put_block(11, "00025");
         String tmp = rm.getData().mem();
-        System.out.println(rm.getData().mem());
-        System.out.println(tmp);
         //rm.run();
         for(int i = 0; i < 1000; i++){
             for(int j = 0; j < 5; j++){
