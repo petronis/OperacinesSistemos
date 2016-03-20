@@ -84,7 +84,16 @@ public class Register {
             for (int i = 0; i < size; i++) {
                 this.content[i] = content.charAt(i);
             }
-        } else {
+        } else if (size > content.length()) {
+            for (int i = 0; i < size; i++) {
+                if (i < size - content.length()) {
+                    this.content[i] = '0';
+                } else {
+                    this.content[i] = content.charAt(i - (size - content.length() - 1) - 1);
+                }
+//                System.out.println(getContentStr() + " cont " + i);
+            }
+        }else {
             throw new WrongContentSize("New content size doesn't match with old one.");
         }
     }

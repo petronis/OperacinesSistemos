@@ -1,10 +1,7 @@
 package com.company;
 
 import Exceptions.Error;
-import Interrupts.Halt;
-import Interrupts.LoadFromMemory;
-import Interrupts.SetTimer;
-import Interrupts.WriteToMemory;
+import Interrupts.*;
 
 import java.util.Date;
 
@@ -20,6 +17,64 @@ public class Instructions {
         this.vm = vm;
     }
 
+    public void interpreter(String command) throws Exception {
+        int adrress;
+        if (command.substring(0,2).contentEquals("AD")) {
+            adrress = new Integer(command.substring(2, command.length()));
+            addition(adrress);
+        } else if (command.substring(0,2).contentEquals("SB")) {
+            adrress = new Integer(command.substring(2, command.length()));
+            substitution(adrress);
+        } else if (command.substring(0,2).contentEquals("SV")) {
+            adrress = new Integer(command.substring(2, command.length()));
+            save_in_external_memory(adrress);
+        } else if (command.substring(0,2).contentEquals("LD")) {
+            adrress = new Integer(command.substring(2, command.length()));
+            load_from_external_memory(adrress);
+        } else if (command.substring(0,5).contentEquals("RESTR")) {
+            reset_R_register();
+        } else if (command.substring(0,3).contentEquals("STI")) {
+            adrress = new Integer(command.substring(3, command.length()));
+            set_timer(adrress);
+        } else if (command.substring(0,5).contentEquals("LRCH1")) {
+            load_chanel1();
+        } else if (command.substring(0,5).contentEquals("LRCH2")) {
+            load_chanel2();
+        } else if (command.substring(0,5).contentEquals("LRCH3")) {
+            load_chanel3();
+        } else if (command.substring(0,5).contentEquals("LTRIC")) {
+            load_IC();
+        } else if (command.substring(0,2).contentEquals("LR")) {
+            adrress = new Integer(command.substring(2, command.length()));
+            System.out.println(adrress);
+            load_R_from_memory(adrress);
+        } else if (command.substring(0,2).contentEquals("LB")) {
+            adrress = new Integer(command.substring(2, command.length()));
+            load_B_from_memory(adrress);
+        } else if (command.substring(0,2).contentEquals("SR")) {
+            adrress = new Integer(command.substring(2, command.length()));
+            save_in_memory_from_R(adrress);
+        } else if (command.substring(0,2).contentEquals("CR")) {
+            adrress = new Integer(command.substring(2, command.length()));
+            compare(adrress);
+        } else if (command.substring(0,2).contentEquals("RT")) {
+            adrress = new Integer(command.substring(2, command.length()));
+            function_call(adrress);
+        } else if (command.substring(0,5).contentEquals("RETRN")) {
+            function_return();
+        } else if (command.substring(0,5).contentEquals("SETC0")) {
+            set_C_0();
+        } else if (command.substring(0,5).contentEquals("INVRC")) {
+            invert_C();
+        } else if (command.substring(0,5).contentEquals("HALTP")) {
+            halt();
+        }  else if (command.substring(0,5).contentEquals("CMODE")) {
+            change_mode();
+        } else {
+            throw new BadOperationPlan("no such operation");
+        }
+    }
+
 
     // instructions list
     private String IntToHex(int n, int size) throws Error {
@@ -31,8 +86,8 @@ public class Instructions {
         }
     }
 
-    private boolean check_MODE() {
-        if (rm.getRegister("MODE").getContentStr() == "U") {
+    public boolean check_MODE() {
+        if (rm.getRegister("MODE").getContentStr().contentEquals("U")) {
             return false;
         } else {
             return true;
@@ -49,21 +104,30 @@ public class Instructions {
 
     public void addition(int address) throws Exception {
         Register r =  machine.getRegister("R");
-        r.setContent(IntToHex(machine.getData().getBlockInt(address) + r.getContentInt(), r.getSize()));
+        String tmp = new Integer(machine.getData().getBlockInt(address) + r.getContentInt()).toString();
+        for (int i = tmp.length(); i < r.size; i++) {
+            tmp = "0" + tmp;
+        }
+        r.setContent(tmp);
     }
 
     public void substitution(int address) throws Exception {
         Register r =  machine.getRegister("R");
-        r.setContent(IntToHex(r.getContentInt() - machine.getData().getBlockInt(address), r.getSize()));
+        String tmp = new Integer(r.getContentInt() - machine.getData().getBlockInt(address)).toString();
+        for (int i = tmp.length(); i < r.size; i++) {
+            tmp = "0" + tmp;
+        }
+        r.setContent(tmp);
     }
 
     public void save_in_external_memory(int address) throws Exception{
         if (check_MODE()) {
             machine.getRegister("CH3").setContent(1); // chanel 1 occupied (External memory)
+            // wtf?
             rm.getExternal().put_block(address, machine.getRegister("R").getContent()); // if throws here interrupt need to set CH3 register to 0
             machine.getRegister("CH3").setContent(0); // chanel 0 released
         } else {
-//            in user mode, so need to save all registers, and then throw interupt and change to Supervision mode
+//            in user mode, so need to save all registers, and then throw interrupt and change to Supervision mode
             throw new WriteToMemory("Can't do save in external memory in user mode");
         }
     }
@@ -74,7 +138,7 @@ public class Instructions {
             machine.getRegister("R").setContent(rm.getExternal().getBlock(address)); // if throws here interrupt need to set CH3 register to 0
             machine.getRegister("CH3").setContent(0); // chanel 0 released
         } else {
-            // in user mode, so need to save all registers, and then throw interupt and change to Supervision mode
+            // in user mode, so need to save all registers, and then throw interrupt and change to Supervision mode
             throw new LoadFromMemory("Can't do load from external memory in user mode");
         }
     }
@@ -87,7 +151,7 @@ public class Instructions {
         if (check_MODE()) {
             machine.getRegister("TI").setContent(time);
         } else {
-            // in user mode, so need to save all registers, and then throw interupt and change to Supervision mode
+            // in user mode, so need to save all registers, and then throw interrupt and change to Supervision mode
             throw new SetTimer("Can't do set timer in user mode");
         }
     }
@@ -121,7 +185,7 @@ public class Instructions {
     }
 
     public void compare(int address) throws Exception {
-        if (machine.getData().getBlock(address) == machine.getRegister("R").getContentStr()) {
+        if (machine.getData().getBlock(address).contentEquals(machine.getRegister("R").getContentStr())) {
             machine.getRegister("C").setContent("1");
         } else {
             machine.getRegister("C").setContent("0");
@@ -129,7 +193,7 @@ public class Instructions {
     }
 
     public void function_call(int address) throws Exception { // function call
-        if (machine.getRegister("C").getContentStr() == "1") {
+        if (machine.getRegister("C").getContentStr().contentEquals("1")) {
             Register b = machine.getRegister("B"), ic = machine.getRegister("IC");
             Memory data = machine.getData();
             b.inc(1);
@@ -167,7 +231,16 @@ public class Instructions {
         }
     }
 
-    public void halt() throws Halt {
+    public void change_mode() throws Exception {
+        Register mode = rm.getRegister("MODE");
+        if (check_MODE()) {
+            mode.setContent("U");
+        } else {
+            mode.setContent("S");
+        }
+    }
+
+    public void halt() throws Exception {
         throw new Halt("Stop process");
     }
 

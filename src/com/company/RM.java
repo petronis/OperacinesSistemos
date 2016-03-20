@@ -12,9 +12,9 @@ public class RM extends Machine {
     private void init(int vm_blocks, int external_blocks) {
         registers.addRegister(new Register("PTR", 4));
         registers.addRegister(new Register("B", 2));
-        registers.addRegister(new Register("IC", 2, "00"));
+        registers.addRegister(new Register("IC", 3, "000"));
         registers.addRegister(new Register("C", 1, "0"));
-        registers.addRegister(new Register("R", 5,"00000"));
+        registers.addRegister(new Register("R", 5));
         registers.addRegister(new Register("PI", 1, "0"));
         registers.addRegister(new Register("SI", 1, "0"));
         registers.addRegister(new Register("TI", 2, "30"));
@@ -42,7 +42,18 @@ public class RM extends Machine {
     }
 
     @Override
-    boolean run() {
-        return false;
+    void run() {
+        instructions.check_machine_mode();
+        Register ic = getRegister("IC");
+        String command;
+        try {
+            while (instructions.check_MODE()) {
+                command = new String(getData().getBlock(ic.getContentInt()));
+                instructions.interpreter(command);
+                ic.inc(1);
+            }
+        } catch (Exception exception) {
+//            exception.printStackTrace();
+        }
     }
 }
