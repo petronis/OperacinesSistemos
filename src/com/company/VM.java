@@ -1,5 +1,8 @@
 package com.company;
 
+import Interrupts.Interrupt;
+import Interrupts.SupervisorInterrupt;
+
 /**
  * Created by Vik on 3/12/2016.
  */
@@ -27,14 +30,25 @@ public class VM extends Machine {
     }
 
     @Override
-    void run() {
+    void run()  {
         instructions.check_machine_mode();
-        Register ic = getRegister("IC");
+        Register ic = getRegister("IC"), ti = rm.getRegister("TI");
         try {
-            while (!instructions.check_MODE()) {
+            while (!instructions.check_MODE() && ti.getContentInt() > 0) {
                 String command = new String(getData().getBlock(ic.getContentInt()));
                 instructions.interpreter(command);
                 ic.inc(1);
+                ti.inc(-1);
+            }
+        } catch (SupervisorInterrupt s) {
+            try {
+                instructions.change_mode(); // change to S mode
+                // save registers in RM do instruction, and come back to vm mode
+                // takes PTR + IC
+                instructions.change_mode(); // change back to U mode
+                this.run();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         } catch (Exception exception) {
             exception.printStackTrace();
