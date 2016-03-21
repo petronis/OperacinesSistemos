@@ -7,6 +7,7 @@ import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.lang.reflect.Array;
 
 /**
@@ -59,7 +60,7 @@ public class Gui extends JFrame {
                                                     textFieldR,textFieldPI,textFieldSI,textFieldTI,
                                                     textFieldCH1,textFieldCH2,textFieldCH3,textFieldMODE};
 
-    JButton updateButton, closeButton, inputTextButton, outputTextButton, modeButton;
+    JButton updateButton, closeButton, inputTextButton, outputTextButton, modeButton, exteriorMemoryButton;
 
 /* End of Real machine UI Items */
 /* Virtual machine UI Items */
@@ -218,6 +219,16 @@ public class Gui extends JFrame {
             }
         });
 
+        exteriorMemoryButton = new JButton("Exterior memory");
+        exteriorMemoryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exteriorMemory();
+            }
+        });
+        panel.add(exteriorMemoryButton);
+
+
         layout1.setHorizontalGroup(layout1.createSequentialGroup()
                         .addComponent(scrollPane)
         );
@@ -359,6 +370,50 @@ public class Gui extends JFrame {
         this.getContentPane().add(panel);
     }
 
+    private void exteriorMemory() {
+        EventQueue.invokeLater(() -> {
+            JFrame frame = new JFrame("Exterior memory");
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            try
+            {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            JPanel panel = new JPanel();
+            JButton updateButton1, closeButton1;
+
+            Object rowData1[][] = new Object[100][5];
+            Object columnNames1 [] = {"1","2","3","4","5"};
+
+            JTable exMemoryTable = new JTable(rowData1, columnNames1);
+            exMemoryTable.setSize(new Dimension(200,100000));
+            exMemoryTable.getColumnModel().getColumn(0).setPreferredWidth(33);
+            exMemoryTable.getColumnModel().getColumn(1).setPreferredWidth(33);
+            exMemoryTable.getColumnModel().getColumn(2).setPreferredWidth(33);
+            exMemoryTable.getColumnModel().getColumn(3).setPreferredWidth(33);
+            exMemoryTable.getColumnModel().getColumn(4).setPreferredWidth(33);
+            exMemoryTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+            JScrollPane scrollPane = new JScrollPane(exMemoryTable);
+            scrollPane.setPreferredSize(new Dimension(212,400));
+
+            TableRowUtilities.addNumberColumn(exMemoryTable, 0, false);
+            panel.add(scrollPane);
+            try {
+                updateVMTable(table, rowData1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            frame.getContentPane().add(BorderLayout.CENTER, panel);
+            frame.pack();
+            frame.setLocationByPlatform(true);
+            frame.setVisible(true);
+            frame.setResizable(false);
+        });
+    }
+
     private void VMPanel() {
         EventQueue.invokeLater(() -> {
             JFrame frame = new JFrame("Virtual Machine");
@@ -412,6 +467,12 @@ public class Gui extends JFrame {
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
+                }
+            });
+            closeButton1.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
                 }
             });
 /* END OF TABLE VM */

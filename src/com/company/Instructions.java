@@ -262,7 +262,7 @@ public class Instructions {
         }
     }
 
-    public void write_to_output(int adress) throws Exception {
+    public void write_to_output(int address) throws Exception {
         boolean modeCheck = check_MODE();
         if (!modeCheck) {
             throw new Output("Output can't work in User MODE");
@@ -270,7 +270,7 @@ public class Instructions {
             check_machine_mode();
             machine.getRegister("CH2").setContent(1);
             Memory data = rm.getData();
-            rm.output = data.getBlock(adress);
+            rm.output = data.getBlock(address);
             machine.getRegister("CH2").setContent(0);
         }
     }
