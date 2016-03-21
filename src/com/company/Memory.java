@@ -22,6 +22,15 @@ public class Memory {
         }
     }
 
+    protected Memory(char block[], int size) {
+        this.block = block;
+        this.size = size;
+    }
+
+    protected int getBlockSize(){
+        return block_size;
+    }
+
     public String getBlock(int n) throws WrongAddress {
         if (n >= 0 && n < size) {
             String temp = new String();
@@ -57,13 +66,6 @@ public class Memory {
         return false;
     }
 
-    public void put_block(int n, char[] block) {
-        if (n >= 0 && n < size) {
-            copy_block_to_memory(n, block);
-        }
-    }
-
-
     public void put_block(int n, String content) throws WrongContentSize {
         if (n >= 0 && n < size) {
             if (block_size == content.length()) {
@@ -75,6 +77,10 @@ public class Memory {
                 throw new WrongContentSize("New content size doesn't match with old one.");
             }
         }
+    }
+
+    public char[] getBlock() {
+        return block;
     }
 
     public String mem() throws Exception{
