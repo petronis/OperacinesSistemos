@@ -2,6 +2,7 @@ package com.company;
 
 import Exceptions.Error;
 import Interrupts.*;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 /**
  * Created by Vik on 3/12/2016.
@@ -65,7 +66,11 @@ public class Instructions {
             invert_C();
         } else if (command.substring(0,5).contentEquals("HALTP")) {
             halt();
-        }  else if (command.substring(0,5).contentEquals("CMODE")) {
+        } else if (command.substring(0,5).contentEquals("BEGPR")) {
+            start_process();
+        } else if (command.substring(0,5).contentEquals("STOPP")) {
+            stopP();
+        } else if (command.substring(0,5).contentEquals("CMODE")) {
             change_mode();
         }  else if (command.substring(0,2).contentEquals("GD")) {
             address = new Integer(command.substring(2, command.length()));
@@ -73,6 +78,13 @@ public class Instructions {
         }  else if (command.substring(0,2).contentEquals("PD")) {
             address = new Integer(command.substring(2, command.length()));
             write_to_output(address);
+        }  else if (command.substring(0,2).contentEquals("SP")) {
+            address = new Integer(command.substring(2, command.length()));
+            setPtr(address);
+        } else if (command.substring(0,5).contentEquals("INCBL")) {
+            incBL();
+        } else if (command.substring(0,5).contentEquals("DECBL")) {
+            decBL();
         } else {
             throw new BadOperationPlan("no such operation");
         }
@@ -246,7 +258,20 @@ public class Instructions {
     }
 
     public void halt() throws Exception {
-        throw new Halt("Stop process");
+        throw new Halt("Halt process");
+    }
+
+    public void stopP() throws Exception {
+        if (!check_MODE()) {
+            Register ptr = rm.getRegister("PTR");
+            ptr.inc(1);
+            String dataSize = new Integer(vm.getData().getSize()).toString();
+            for (int i = 0; i < 6 - dataSize.length(); i++) {
+                dataSize = "0" + dataSize;
+            }
+            rm.data.put_block(ptr.getContentInt(), dataSize);
+        }
+        throw new StopProcess("stop process");
     }
 
     public void read_from_input(int address) throws Exception {
@@ -272,6 +297,37 @@ public class Instructions {
             Memory data = rm.getData();
             rm.output = data.getBlock(address);
             machine.getRegister("CH2").setContent(0);
+        }
+    }
+
+    public  void setPtr(int address) throws Exception {
+        if (!check_MODE()){
+            throw new SetPTR("want to change PTR value");
+        } else {
+            rm.getRegister("PTR").setContent(rm.data.getBlockInt(address));
+        }
+    }
+
+    public  void incBL() throws Exception {
+        if (!check_MODE()) {
+            Memory data = vm.getData();
+            data.setSize(data.getSize() + 10);
+        }
+    }
+
+
+    public  void decBL() throws Exception {
+        if (!check_MODE()) {
+            Memory data = vm.getData();
+            data.setSize(data.getSize() - 10);
+        }
+    }
+
+    public void start_process() throws Exception {
+        if (check_MODE()) {
+            change_mode();
+        } else  {
+            stopP();
         }
     }
 

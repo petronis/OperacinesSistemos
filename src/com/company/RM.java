@@ -12,7 +12,7 @@ public class RM extends Machine {
     Object output;
 
     private void init(int vm_blocks, int external_blocks) {
-        registers.addRegister(new Register("PTR", 4));
+        registers.addRegister(new Register("PTR", 3, "090"));
         registers.addRegister(new Register("B", 3));
         registers.addRegister(new Register("IC", 3, "000"));
         registers.addRegister(new Register("C", 1, "0"));
@@ -24,7 +24,7 @@ public class RM extends Machine {
         registers.addRegister(new Register("CH2", 1, "0"));
         registers.addRegister(new Register("CH3", 1, "0"));
         registers.addRegister(new Register("MODE", 1, "S"));
-        vm = new VM(vm_blocks, this, 0);
+        vm = new VM(vm_blocks, this, getRegister("PTR"));
         external = new Memory(external_blocks);
         instructions = new Instructions(this, vm);
         vm.setInstructions(instructions);
