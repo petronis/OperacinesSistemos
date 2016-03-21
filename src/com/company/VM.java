@@ -18,9 +18,9 @@ public class VM extends Machine {
         registers.addRegister(new Register("B", 2));
     }
 
-    VM(int blocks, RM rm) {
+    VM(int blocks, RM rm, int ptr) {
         super(blocks);
-        init();
+        setData(new VirtualMemory(rm.getData().getBlock(), blocks, ptr));
         this.rm = rm;
         init();
     }

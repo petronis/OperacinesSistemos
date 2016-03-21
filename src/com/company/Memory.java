@@ -27,6 +27,10 @@ public class Memory {
         this.size = size;
     }
 
+    protected void setPtr(int ptr) {
+
+    }
+
     protected int getBlockSize(){
         return block_size;
     }
