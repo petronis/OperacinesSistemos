@@ -200,8 +200,9 @@ public class Gui extends JFrame {
 
                 //rm.input = inputTextField.getText();
                 try {
-                    String tmp1 = tmp.substring(0,7);
-                    rm.input = tmp.substring(7);
+                    int tmpInteger = tmp.indexOf(" ");
+                    String tmp1 = tmp.substring(0,tmpInteger);
+                    rm.input = tmp.substring(tmpInteger+1);
                     rm.getInstructions().interpreter(tmp1);
                 } catch (Exception e1) {
                     e1.printStackTrace();
