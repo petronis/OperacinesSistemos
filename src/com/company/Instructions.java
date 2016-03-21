@@ -256,7 +256,7 @@ public class Instructions {
             check_machine_mode();
             machine.getRegister("CH1").setContent(1);
             Memory data = rm.getData();
-            System.out.println(rm.input);
+            System.out.println(rm.input + " instructions");
             data.put_block(address, rm.input.toString());
             machine.getRegister("CH1").setContent(0);
         }

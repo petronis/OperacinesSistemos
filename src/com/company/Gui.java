@@ -196,13 +196,17 @@ public class Gui extends JFrame {
         inputTextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                rm.input = inputTextField.getText();
+                String tmp = inputTextField.getText();
+
+                //rm.input = inputTextField.getText();
                 try {
-                    rm.getInstructions().read_from_input(12);
+                    String tmp1 = tmp.substring(0,7);
+                    rm.input = tmp.substring(7);
+                    rm.getInstructions().interpreter(tmp1);
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
-                System.out.println(rm.input);
+//                System.out.println(rm.input+"after try");
                 inputTextField.setText("");
             }
         });
