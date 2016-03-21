@@ -264,7 +264,7 @@ public class Instructions {
     public void stopP() throws Exception {
         if (!check_MODE()) {
             Register ptr = rm.getRegister("PTR");
-            ptr.inc(1);
+            ptr.inc(1, 10);
             String dataSize = new Integer(vm.getData().getSize()).toString();
             for (int i = 0; i < 6 - dataSize.length(); i++) {
                 dataSize = "0" + dataSize;
