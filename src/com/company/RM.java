@@ -59,5 +59,8 @@ public class RM extends Machine {
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+        if(!instructions.check_MODE()) {
+            vm.run();
+        }
     }
 }

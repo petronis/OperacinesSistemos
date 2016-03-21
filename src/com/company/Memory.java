@@ -90,8 +90,8 @@ public class Memory {
     public String mem() throws Exception{
         String tmp = new String();
         for (int i = 0; i < size; i++) {
-            tmp += this.getBlock(i);
-            //tmp += i + "|" + this.getBlock(i) + "|\n";
+//            tmp += this.getBlock(i);
+            tmp += i + "|" + this.getBlock(i) + "|\n";
         }
         return tmp;
     }

@@ -35,6 +35,7 @@ public class VM extends Machine {
         Register ic = getRegister("IC"), ti = rm.getRegister("TI");
         try {
             while (!instructions.check_MODE() && ti.getContentInt() > 0) {
+                System.out.println(ic.getName() + " " + ic.getContentInt());
                 String command = new String(getData().getBlock(ic.getContentInt()));
                 instructions.interpreter(command);
                 ic.inc(1);
@@ -42,6 +43,7 @@ public class VM extends Machine {
             }
         } catch (SupervisorInterrupt s) {
             try {
+                // TODO: 2016-03-21 interrupt system
                 instructions.change_mode(); // change to S mode
                 // save registers in RM do instruction, and come back to vm mode
                 // takes PTR + IC
