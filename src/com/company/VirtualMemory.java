@@ -1,26 +1,25 @@
 package com.company;
 
 import Exceptions.WrongAddress;
+import Exceptions.WrongContentSize;
 
 /**
  * Created by Viktor-PC on 2016-03-21.
  */
 public class VirtualMemory extends Memory {
 
-    int ptr;
+    Register ptr;
+    Memory old;
 
-    VirtualMemory(char block[], int size, int ptr) {
+    VirtualMemory(char block[], int size, Register ptr, Memory old) {
         super(block, size);
         this.ptr = ptr;
-    }
-
-    public void setPtr(int ptr) {
-        this.ptr = ptr;
+        this.old = old;
     }
 
     public String getBlock(int n) throws WrongAddress {
         if (n >= 0 && n < size) {
-            n = n + ptr;
+            n = n + old.getBlockInt(ptr.getContentInt());
             String temp = new String();
             for (int i = 0; i < getBlockSize(); i++) {
                 temp += block[n * getBlockSize() + i];
@@ -37,7 +36,7 @@ public class VirtualMemory extends Memory {
 
     public char getCell(int n) throws WrongAddress {
         if (n >= 0 && n < size * getBlockSize()) {
-            return block[ptr + n];
+            return block[old.getBlockInt(ptr.getContentInt()) + n];
         } else {
             throw new WrongAddress("wrong cell address");
         }

@@ -27,8 +27,12 @@ public class Memory {
         this.size = size;
     }
 
-    protected void setPtr(int ptr) {
+    public void setSize(int size) {
+        this.size = size;
+    }
 
+    public int getSize() {
+        return size;
     }
 
     protected int getBlockSize(){
@@ -48,7 +52,7 @@ public class Memory {
     }
 
     public int getBlockInt(int n) throws WrongAddress {
-        return Integer.parseInt(getBlock(n));
+        return Integer.parseInt(this.getBlock(n));
     }
 
     public char getCell(int n) throws WrongAddress {

@@ -1,8 +1,5 @@
 package com.company;
 
-import Exceptions.WrongAddress;
-import Exceptions.WrongContentSize;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -20,6 +17,7 @@ public class Main {
             data.put_block(1, "LB009");
             data.put_block(2, "INVRC");
             data.put_block(3, "RT015");
+            data.put_block(4, "STOPP");
             Instructions in = rm.getInstructions();
             in.change_mode();
             rm.run();

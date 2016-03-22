@@ -55,6 +55,11 @@ public class Register {
         this.setContent(this.getContentInt() + number);
     }
 
+    public void inc(int number, int cycle) throws WrongContentSize{
+        if ((this.getContentInt() + number) % cycle == cycle-1)
+            this.setContent(this.getContentInt() - cycle - 1);
+    }
+
     public void setContent(char[] content) throws WrongContentSize {
         if (size == content.toString().length()) {
 
