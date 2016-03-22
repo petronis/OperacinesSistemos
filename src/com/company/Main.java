@@ -1,16 +1,12 @@
 package com.company;
 
-import javax.swing.*;
-
 public class Main {
 
     public static void main(String[] args) {
 	// write your code here
         System.out.println("Program start point");
-        RM rm = new RM(1000,100,10);
+        RM rm = new RM(1000,100,100);
         Memory data = rm.getData();
-
-//        SwingUtilities.invokeLater(() -> new Gui(rm).setVisible(true));
         try {
             data.put_block(10, "00034");
             data.put_block(11, "00025");
@@ -21,7 +17,8 @@ public class Main {
             data.put_block(1, "LB009");
             data.put_block(2, "INVRC");
             data.put_block(3, "RT015");
-            data.put_block(4, "GD012");
+            data.put_block(4, "DECBL");
+            data.put_block(5, "PD011");
             Instructions in = rm.getInstructions();
             in.change_mode();
             rm.run();
@@ -34,4 +31,3 @@ public class Main {
         }
     }
 }
-
