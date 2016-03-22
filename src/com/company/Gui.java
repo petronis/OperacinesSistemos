@@ -393,7 +393,8 @@ public class Gui extends JFrame {
             JPanel panel = new JPanel();
             JButton updateButton1, closeButton1;
 
-            Object rowData1[][] = new Object[100][5];
+            int size = rm.getExternal().getSize();
+            Object rowData1[][] = new Object[size][5];
             Object columnNames1[] = {"1", "2", "3", "4", "5"};
 
             JTable exMemoryTable = new JTable(rowData1, columnNames1);
@@ -411,7 +412,7 @@ public class Gui extends JFrame {
             TableRowUtilities.addNumberColumn(exMemoryTable, 0, false);
             panel.add(scrollPane);
             try {
-                updateVMTable(table, rowData1);
+                updateEXTable(table, rowData1);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -440,9 +441,10 @@ public class Gui extends JFrame {
 
 
 /* TABLE VM */
-            Object rowData1[][] = new Object[100][5];
+            int size = rm.vm.data.getSize();
+            Object rowData1[][] = new Object[size][5];
             int counter = 0;
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < size; i++) {
                 for (int j = 0; j < 5; j++) {
 //                        rowData[i][j]= counter;
 //                        counter++;
@@ -564,8 +566,26 @@ public class Gui extends JFrame {
         data.put_block(10, "00034");
         data.put_block(11, "00025");
         String tmp = rm.vm.getData().mem2();
+        int size = data.getSize();
         //rm.run();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < 5; j++) {
+                row[i][j] = tmp.charAt(tmpInt);
+                tmpInt++;
+                vmTable.repaint();
+            }
+        }
+    }
+
+    private void updateEXTable(JTable vmTable, Object[][] row) throws Exception {
+        int tmpInt = 0;
+        Memory data = rm.getExternal();
+        int size = data.getSize();
+        data.put_block(10, "00034");
+        data.put_block(11, "00025");
+        String tmp = data.mem2();
+        //rm.run();
+        for (int i = 0; i < size; i++) {
             for (int j = 0; j < 5; j++) {
                 row[i][j] = tmp.charAt(tmpInt);
                 tmpInt++;
