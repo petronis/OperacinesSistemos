@@ -374,10 +374,10 @@ public class Gui extends JFrame {
         );
         groupLayoutPanel.setLayout(layout);
         tablePanel.setLayout(layout1);
-        inputOutputPanel.setLayout(layout2);
+        //inputOutputPanel.setLayout(layout2);
         panel.add(groupLayoutPanel);
         panel.add(tablePanel);
-        panel.add(inputOutputPanel);
+        //panel.add(inputOutputPanel);
         this.getContentPane().add(panel);
     }
 

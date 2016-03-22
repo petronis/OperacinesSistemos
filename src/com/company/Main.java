@@ -1,11 +1,12 @@
 package com.company;
-
+import javax.swing.*;
 public class Main {
 
     public static void main(String[] args) {
 	// write your code here
         System.out.println("Program start point");
         RM rm = new RM(1000,100,100);
+        SwingUtilities.invokeLater(() -> new Gui(rm).setVisible(true));
         Memory data = rm.getData();
         try {
             data.put_block(10, "00034");
@@ -19,6 +20,7 @@ public class Main {
             data.put_block(3, "RT015");
             data.put_block(4, "DECBL");
             data.put_block(5, "PD011");
+            data.put_block(6, "GD012");
             Instructions in = rm.getInstructions();
             in.change_mode();
             rm.run();
