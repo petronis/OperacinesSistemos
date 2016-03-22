@@ -51,6 +51,7 @@ public class VM extends Machine {
                 // save registers in RM do instruction, and come back to vm mode
                 // takes [PTR] + IC
                 instructions.change_mode(); // change back to U mode
+                getRegister("IC").inc(1);
                 this.run();
             } catch (Exception e) {
                 e.printStackTrace();

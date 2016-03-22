@@ -4,6 +4,8 @@ import Exceptions.Error;
 import Interrupts.*;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
+import java.util.Scanner;
+
 /**
  * Created by Vik on 3/12/2016.
  */
@@ -264,9 +266,10 @@ public class Instructions {
     public void stopP() throws Exception {
         if (!check_MODE()) {
             Register ptr = rm.getRegister("PTR");
-            ptr.inc(1, 10);
+            ptr.inc(1);
             String dataSize = new Integer(vm.getData().getSize()).toString();
-            for (int i = 0; i < 6 - dataSize.length(); i++) {
+            int size = dataSize.length();
+            for (int i = 0; i < 5 - size; i++) {
                 dataSize = "0" + dataSize;
             }
             rm.data.put_block(ptr.getContentInt(), dataSize);
@@ -282,7 +285,9 @@ public class Instructions {
             machine.getRegister("CH1").setContent(1);
             Memory data = rm.getData();
 //            System.out.println(rm.input + " instructions");
-            data.put_block(address, rm.input.toString());
+            Scanner sc = new Scanner(System.in);
+            String str = sc.nextLine().substring(0,5);
+            data.put_block(address, str);
             machine.getRegister("CH1").setContent(0);
         }
     }
@@ -295,7 +300,7 @@ public class Instructions {
             check_machine_mode();
             machine.getRegister("CH2").setContent(1);
             Memory data = rm.getData();
-            rm.output = data.getBlock(address);
+            System.out.println("OUT: " + data.getBlock(address));
             machine.getRegister("CH2").setContent(0);
         }
     }
