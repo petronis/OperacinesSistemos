@@ -200,10 +200,12 @@ public class Gui extends JFrame {
 
                 //rm.input = inputTextField.getText();
                 try {
+                    rm.input = tmp;
+                    /*
                     int tmpInteger = tmp.indexOf(" ");
                     String tmp1 = tmp.substring(0,tmpInteger);
                     rm.input = tmp.substring(tmpInteger+1);
-                    rm.getInstructions().interpreter(tmp1);
+                    rm.getInstructions().interpreter(tmp1);*/
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
@@ -559,7 +561,7 @@ public class Gui extends JFrame {
         Memory data = rm.vm.getData();
         data.put_block(10, "00034");
         data.put_block(11, "00025");
-        String tmp = rm.vm.getData().mem();
+        String tmp = rm.vm.getData().mem2();
         //rm.run();
         for(int i = 0; i < 100; i++){
             for(int j = 0; j < 5; j++){
@@ -578,7 +580,7 @@ public class Gui extends JFrame {
         Memory data = rm.getData();
         data.put_block(10, "00034");
         data.put_block(11, "00025");
-        String tmp = rm.getData().mem();
+        String tmp = rm.getData().mem2();
         //rm.run();
         for(int i = 0; i < 1000; i++){
             for(int j = 0; j < 5; j++){

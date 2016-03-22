@@ -95,4 +95,13 @@ public class Memory {
         }
         return tmp;
     }
+
+    public String mem2() throws Exception{
+        String tmp = new String();
+        for (int i = 0; i < size; i++) {
+            tmp += this.getBlock(i);
+            //tmp += i + "|" + this.getBlock(i) + "|\n";
+        }
+        return tmp;
+    }
 }
