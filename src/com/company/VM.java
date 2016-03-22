@@ -58,20 +58,21 @@ public class VM extends Machine {
                 instructions.change_mode(); // change back to U mode
                 getRegister("IC").inc(1);
                 this.run();
-            }catch (TimerEnd e) {
-                try {
-                    instructions.change_mode();
-                    instructions.stopP();
-                    rm.getRegister("TI").setContent(30);
-                    instructions.change_mode();
-                    this.run();
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } catch (Exception exception) {
+        }  catch (TimerEnd e) {
+        try {
+//            instructions.change_mode();
+            instructions.stopP();
+            rm.getRegister("TI").setContent(30);
+            getRegister("IC").setContent(0);
+//            instructions.change_mode();
+            this.run();
+        }  catch (Exception e2) {
+            e2.printStackTrace();
+        }
+    }catch (Exception exception) {
             exception.printStackTrace();
         }
     }

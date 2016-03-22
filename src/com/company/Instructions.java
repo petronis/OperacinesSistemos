@@ -273,8 +273,9 @@ public class Instructions {
                 dataSize = "0" + dataSize;
             }
             rm.data.put_block(ptr.getContentInt(), dataSize);
+        } else {
+            throw new StopProcess("stop process");
         }
-        throw new StopProcess("stop process");
     }
 
     public void read_from_input(int address) throws Exception {

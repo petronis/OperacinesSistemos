@@ -52,6 +52,7 @@ public class RM extends Machine {
             vm.run();
         }
         try {
+            instructions.check_machine_mode();
             System.out.println("Supervisor");
             while (instructions.check_MODE() && ti.getContentInt() > 0) {
                 System.out.println(ic.getName() + " " + ic.getContentInt());
