@@ -563,8 +563,6 @@ public class Gui extends JFrame {
     private void updateVMTable(JTable vmTable, Object[][] row) throws Exception {
         int tmpInt = 0;
         Memory data = rm.vm.getData();
-        data.put_block(10, "00034");
-        data.put_block(11, "00025");
         String tmp = rm.vm.getData().mem2();
         int size = data.getSize();
         //rm.run();
@@ -581,8 +579,6 @@ public class Gui extends JFrame {
         int tmpInt = 0;
         Memory data = rm.getExternal();
         int size = data.getSize();
-        data.put_block(10, "00034");
-        data.put_block(11, "00025");
         String tmp = data.mem2();
         //rm.run();
         for (int i = 0; i < size; i++) {
