@@ -1,7 +1,7 @@
 package com.company;
 
-import Interrupts.Interrupt;
 import Interrupts.SupervisorInterrupt;
+import Interrupts.TimerEnd;
 
 /**
  * Created by Vik on 3/12/2016.
@@ -35,12 +35,17 @@ public class VM extends Machine {
         Register ic = getRegister("IC"), ti = rm.getRegister("TI");
         String command;
         try {
+            System.out.println("User");
             while (!instructions.check_MODE() && ti.getContentInt() > 0) {
                 System.out.println(ic.getName() + " " + ic.getContentInt());
+                System.out.println(ti.getName() + " " + ti.getContentInt());
                 command = getData().getBlock(ic.getContentInt());
                 instructions.interpreter(command);
                 ic.inc(1);
                 ti.inc(-1);
+                if (ti.getContentInt() == 0) {
+                    throw new TimerEnd("TI is 0");
+                }
             }
         } catch (SupervisorInterrupt s) {
             try {
@@ -53,6 +58,16 @@ public class VM extends Machine {
                 instructions.change_mode(); // change back to U mode
                 getRegister("IC").inc(1);
                 this.run();
+            }catch (TimerEnd e) {
+                try {
+                    instructions.change_mode();
+                    instructions.stopP();
+                    rm.getRegister("TI").setContent(30);
+                    instructions.change_mode();
+                    this.run();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

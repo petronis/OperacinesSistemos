@@ -48,7 +48,11 @@ public class RM extends Machine {
         instructions.check_machine_mode();
         Register ic = getRegister("IC"), ti = getRegister("TI");
         String command;
+        if(!instructions.check_MODE()) {
+            vm.run();
+        }
         try {
+            System.out.println("Supervisor");
             while (instructions.check_MODE() && ti.getContentInt() > 0) {
                 System.out.println(ic.getName() + " " + ic.getContentInt());
                 command = new String(getData().getBlock(ic.getContentInt()));
@@ -59,8 +63,6 @@ public class RM extends Machine {
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-        if(!instructions.check_MODE()) {
-            vm.run();
-        }
+
     }
 }
