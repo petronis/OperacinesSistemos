@@ -15,12 +15,16 @@ import java.lang.reflect.Array;
  */
 public class Gui extends JFrame {
 
-    public static RM rm = new RM(1000,100,20);
+    //public static RM rm = new RM(1000, 100, 100);
+
+    Memory data;
+    RM rm;
+
 
     Object rowData[][] = new Object[1000][5];
     Object columnNames[] = {"1", "2", "3", "4", "5"};
 
-    JTable table = new JTable(rowData,columnNames);
+    JTable table = new JTable(rowData, columnNames);
 
 /* Real machine UI Items */
 
@@ -37,11 +41,11 @@ public class Gui extends JFrame {
     JLabel labelRegisterCH3;
     JLabel labelRegisterMODE;
 
-    String[] registersNamesArray = {"PTR","B","IC","C","R","PI","SI","TI","CH1","CH2","CH3","MODE"};
+    String[] registersNamesArray = {"PTR", "B", "IC", "C", "R", "PI", "SI", "TI", "CH1", "CH2", "CH3", "MODE"};
 
-    JLabel[] labelArray = new JLabel[]{ labelRegisterPTR,labelRegisterB,labelRegisterIC,labelRegisterC,
-                                        labelRegisterR,labelRegisterPI,labelRegisterSI,labelRegisterTI,
-                                        labelRegisterCH1,labelRegisterCH2,labelRegisterCH3,labelRegisterMODE};
+    JLabel[] labelArray = new JLabel[]{labelRegisterPTR, labelRegisterB, labelRegisterIC, labelRegisterC,
+            labelRegisterR, labelRegisterPI, labelRegisterSI, labelRegisterTI,
+            labelRegisterCH1, labelRegisterCH2, labelRegisterCH3, labelRegisterMODE};
 
     JTextField textFieldPTR;
     JTextField textFieldB;
@@ -55,12 +59,12 @@ public class Gui extends JFrame {
     JTextField textFieldCH2;
     JTextField textFieldCH3;
     JTextField textFieldMODE;
-    
-    JTextField[] textFieldArray = new JTextField[]{ textFieldPTR,textFieldB,textFieldIC,textFieldC,
-                                                    textFieldR,textFieldPI,textFieldSI,textFieldTI,
-                                                    textFieldCH1,textFieldCH2,textFieldCH3,textFieldMODE};
 
-    JButton updateButton, closeButton, inputTextButton, outputTextButton, modeButton, exteriorMemoryButton;
+    JTextField[] textFieldArray = new JTextField[]{textFieldPTR, textFieldB, textFieldIC, textFieldC,
+            textFieldR, textFieldPI, textFieldSI, textFieldTI,
+            textFieldCH1, textFieldCH2, textFieldCH3, textFieldMODE};
+
+    JButton updateButton, closeButton, modeButton, exteriorMemoryButton;
 
 /* End of Real machine UI Items */
 /* Virtual machine UI Items */
@@ -70,26 +74,29 @@ public class Gui extends JFrame {
     JLabel vmRegisterC;
     JLabel vmRegisterB;
 
-    String[] vmRegisterNamesArray = {"R","IC","C","B"};
-    JLabel[] vmLabelArray = new JLabel[]{vmRegisterR,vmRegisterIC,vmRegisterC,vmRegisterB};
+    String[] vmRegisterNamesArray = {"R", "IC", "C", "B"};
+    JLabel[] vmLabelArray = new JLabel[]{vmRegisterR, vmRegisterIC, vmRegisterC, vmRegisterB};
 
     JTextField vmTextR;
     JTextField vmTextIC;
     JTextField vmTextC;
     JTextField vmTextB;
 
-    JTextField[] vmTextArray = new JTextField[]{vmTextR,vmTextIC,vmTextC,vmTextB};
+    JTextField[] vmTextArray = new JTextField[]{vmTextR, vmTextIC, vmTextC, vmTextB};
 
 /* End of Virtual machine UI Items */
 
 
-    public Gui(){
+    public Gui(RM rm) {
+        data = rm.getData();
+        this.rm = rm;
         createView();
         setTitle("Real Machine");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
         setResizable(false);
         setLocationRelativeTo(null);
+
 
     }
 
@@ -119,7 +126,7 @@ public class Gui extends JFrame {
         layout2.setAutoCreateGaps(true);
         layout2.setAutoCreateContainerGaps(true);
 
-        for(int i = 0; i < 12; i++) {
+        for (int i = 0; i < 12; i++) {
             textFieldArray[i] = new JTextField();
             textFieldArray[i].setText("value");
             textFieldArray[i].setEditable(false);
@@ -149,7 +156,7 @@ public class Gui extends JFrame {
         );
 
 
-        table.setSize(new Dimension(130,100000));
+        table.setSize(new Dimension(130, 100000));
         table.getColumnModel().getColumn(0).setPreferredWidth(10);
         table.getColumnModel().getColumn(1).setPreferredWidth(10);
         table.getColumnModel().getColumn(2).setPreferredWidth(10);
@@ -158,7 +165,7 @@ public class Gui extends JFrame {
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setPreferredSize(new Dimension(122,400));
+        scrollPane.setPreferredSize(new Dimension(122, 400));
 
         TableRowUtilities.addNumberColumn(table, 0, false);
 
@@ -175,22 +182,19 @@ public class Gui extends JFrame {
         inputTextField.setPreferredSize(new Dimension(250, 27));
 
 
-        inputTextButton = new JButton();
-        outputTextButton = new JButton();
-
         modeButton = new JButton();
         modeButton.setText("Mode");
         modeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(rm.getRegister(registersNamesArray[11]).getContentStr().equals("S")){
+                if (rm.getRegister(registersNamesArray[11]).getContentStr().equals("U")) {
                     VMPanel();
                 }
 
             }
         });
         panel.add(modeButton);
-        inputTextButton.setText("Input");
+ /*       inputTextButton.setText("Input");
         outputTextButton.setText("Output");
 
         inputTextButton.addActionListener(new ActionListener() {
@@ -206,7 +210,7 @@ public class Gui extends JFrame {
                     String tmp1 = tmp.substring(0,tmpInteger);
                     rm.input = tmp.substring(tmpInteger+1);
                     rm.getInstructions().interpreter(tmp1);*/
-                } catch (Exception e1) {
+ /*               } catch (Exception e1) {
                     e1.printStackTrace();
                 }
 //                System.out.println(rm.input+"after try");
@@ -217,14 +221,14 @@ public class Gui extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                    try {
-                        rm.getInstructions().write_to_output(12);
-                        outputTextArea.setText(rm.output.toString());
-                    } catch (Exception e1) {
-                        e1.printStackTrace();
-                    }
+                try {
+                    rm.getInstructions().write_to_output(12);
+                    outputTextArea.setText(rm.output.toString());
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
             }
-        });
+        });*/
 
         exteriorMemoryButton = new JButton("Exterior memory");
         exteriorMemoryButton.addActionListener(new ActionListener() {
@@ -237,11 +241,11 @@ public class Gui extends JFrame {
 
 
         layout1.setHorizontalGroup(layout1.createSequentialGroup()
-                        .addComponent(scrollPane)
+                .addComponent(scrollPane)
         );
         layout1.setVerticalGroup(
                 layout1.createSequentialGroup()
-                .addComponent(scrollPane)
+                        .addComponent(scrollPane)
         );
 
         layout2.setHorizontalGroup(layout2.createSequentialGroup()
@@ -252,16 +256,16 @@ public class Gui extends JFrame {
                                 .addComponent(scrollTextArea)
                         )
                 )
-                .addGroup(layout2.createSequentialGroup()
+                /*.addGroup(layout2.createSequentialGroup()
                         .addGroup(layout2.createParallelGroup(
                                 GroupLayout.Alignment.LEADING)
                                 .addComponent(inputTextButton)
                                 .addComponent(outputTextButton)
                         )
 
-                )
+                )*/
         );
-        layout2.setVerticalGroup(
+        /*layout2.setVerticalGroup(
                 layout2.createSequentialGroup()
                         .addGroup(layout2.createParallelGroup(GroupLayout.Alignment.CENTER)
                                 .addComponent(inputTextField)
@@ -272,8 +276,8 @@ public class Gui extends JFrame {
                                 .addComponent(outputTextButton)
                         )
 
-        );
-        
+        );*/
+
 
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createSequentialGroup()
@@ -381,8 +385,7 @@ public class Gui extends JFrame {
         EventQueue.invokeLater(() -> {
             JFrame frame = new JFrame("Exterior memory");
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            try
-            {
+            try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -391,10 +394,10 @@ public class Gui extends JFrame {
             JButton updateButton1, closeButton1;
 
             Object rowData1[][] = new Object[100][5];
-            Object columnNames1 [] = {"1","2","3","4","5"};
+            Object columnNames1[] = {"1", "2", "3", "4", "5"};
 
             JTable exMemoryTable = new JTable(rowData1, columnNames1);
-            exMemoryTable.setSize(new Dimension(200,100000));
+            exMemoryTable.setSize(new Dimension(200, 100000));
             exMemoryTable.getColumnModel().getColumn(0).setPreferredWidth(33);
             exMemoryTable.getColumnModel().getColumn(1).setPreferredWidth(33);
             exMemoryTable.getColumnModel().getColumn(2).setPreferredWidth(33);
@@ -403,7 +406,7 @@ public class Gui extends JFrame {
             exMemoryTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
             JScrollPane scrollPane = new JScrollPane(exMemoryTable);
-            scrollPane.setPreferredSize(new Dimension(212,400));
+            scrollPane.setPreferredSize(new Dimension(212, 400));
 
             TableRowUtilities.addNumberColumn(exMemoryTable, 0, false);
             panel.add(scrollPane);
@@ -425,8 +428,7 @@ public class Gui extends JFrame {
         EventQueue.invokeLater(() -> {
             JFrame frame = new JFrame("Virtual Machine");
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            try
-            {
+            try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -440,8 +442,8 @@ public class Gui extends JFrame {
 /* TABLE VM */
             Object rowData1[][] = new Object[100][5];
             int counter = 0;
-            for(int i = 0; i < 100; i++){
-                for(int j = 0; j < 5;j++){
+            for (int i = 0; i < 100; i++) {
+                for (int j = 0; j < 5; j++) {
 //                        rowData[i][j]= counter;
 //                        counter++;
                 }
@@ -449,7 +451,7 @@ public class Gui extends JFrame {
             Object columnNames1[] = {"1", "2", "3", "4", "5"};
 
             JTable vmTable = new JTable(rowData1, columnNames1);
-            vmTable.setSize(new Dimension(200,100000));
+            vmTable.setSize(new Dimension(200, 100000));
             vmTable.getColumnModel().getColumn(0).setPreferredWidth(33);
             vmTable.getColumnModel().getColumn(1).setPreferredWidth(33);
             vmTable.getColumnModel().getColumn(2).setPreferredWidth(33);
@@ -458,7 +460,7 @@ public class Gui extends JFrame {
             vmTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
             JScrollPane scrollPane = new JScrollPane(vmTable);
-            scrollPane.setPreferredSize(new Dimension(212,400));
+            scrollPane.setPreferredSize(new Dimension(212, 400));
 
             TableRowUtilities.addNumberColumn(vmTable, 0, false);
             vmTablePanel.add(scrollPane);
@@ -491,7 +493,7 @@ public class Gui extends JFrame {
             layout.setAutoCreateGaps(true);
             layout.setAutoCreateContainerGaps(true);
 
-            for(int i = 0; i < 4; i++){
+            for (int i = 0; i < 4; i++) {
                 vmLabelArray[i] = new JLabel();
                 vmLabelArray[i].setText("Register " + rm.vm.getRegister(vmRegisterNamesArray[i]).getName());
 
@@ -563,8 +565,8 @@ public class Gui extends JFrame {
         data.put_block(11, "00025");
         String tmp = rm.vm.getData().mem2();
         //rm.run();
-        for(int i = 0; i < 100; i++){
-            for(int j = 0; j < 5; j++){
+        for (int i = 0; i < 100; i++) {
+            for (int j = 0; j < 5; j++) {
                 row[i][j] = tmp.charAt(tmpInt);
                 tmpInt++;
                 vmTable.repaint();
@@ -573,8 +575,9 @@ public class Gui extends JFrame {
     }
 
     private void updateTextFields() throws Exception {
-        for(int i = 0; i < 12; i++){
+        for (int i = 0; i < 12; i++) {
             textFieldArray[i].setText(String.valueOf(rm.getRegister(registersNamesArray[i]).getContentStr()));
+            table.repaint();
         }
         int tmpInt = 0;
         Memory data = rm.getData();
@@ -582,16 +585,16 @@ public class Gui extends JFrame {
         data.put_block(11, "00025");
         String tmp = rm.getData().mem2();
         //rm.run();
-        for(int i = 0; i < 1000; i++){
-            for(int j = 0; j < 5; j++){
+        for (int i = 0; i < 1000; i++) {
+            for (int j = 0; j < 5; j++) {
                 rowData[i][j] = tmp.charAt(tmpInt);
                 tmpInt++;
                 table.repaint();
             }
         }
     }
-
-    public static void main(String [] args){
+}
+/*    public static void main(String [] args){
         SwingUtilities.invokeLater(() -> new Gui().setVisible(true));
     }
-}
+}*/

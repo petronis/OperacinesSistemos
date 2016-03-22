@@ -18,72 +18,72 @@ public class Instructions {
 
     public void interpreter(String command) throws Exception {
         int address;
-        if (command.substring(0,2).contentEquals("AD")) {
+        if (command.substring(0, 2).contentEquals("AD")) {
             address = new Integer(command.substring(2, command.length()));
             addition(address);
-        } else if (command.substring(0,2).contentEquals("SB")) {
+        } else if (command.substring(0, 2).contentEquals("SB")) {
             address = new Integer(command.substring(2, command.length()));
             substitution(address);
-        } else if (command.substring(0,2).contentEquals("SV")) {
+        } else if (command.substring(0, 2).contentEquals("SV")) {
             address = new Integer(command.substring(2, command.length()));
             save_in_external_memory(address);
-        } else if (command.substring(0,2).contentEquals("LD")) {
+        } else if (command.substring(0, 2).contentEquals("LD")) {
             address = new Integer(command.substring(2, command.length()));
             load_from_external_memory(address);
-        } else if (command.substring(0,5).contentEquals("RESTR")) {
+        } else if (command.substring(0, 5).contentEquals("RESTR")) {
             reset_R_register();
-        } else if (command.substring(0,3).contentEquals("STI")) {
+        } else if (command.substring(0, 3).contentEquals("STI")) {
             address = new Integer(command.substring(3, command.length()));
             set_timer(address);
-        } else if (command.substring(0,5).contentEquals("LRCH1")) {
+        } else if (command.substring(0, 5).contentEquals("LRCH1")) {
             load_chanel1();
-        } else if (command.substring(0,5).contentEquals("LRCH2")) {
+        } else if (command.substring(0, 5).contentEquals("LRCH2")) {
             load_chanel2();
-        } else if (command.substring(0,5).contentEquals("LRCH3")) {
+        } else if (command.substring(0, 5).contentEquals("LRCH3")) {
             load_chanel3();
-        } else if (command.substring(0,5).contentEquals("LTRIC")) {
+        } else if (command.substring(0, 5).contentEquals("LTRIC")) {
             load_IC();
-        } else if (command.substring(0,2).contentEquals("LR")) {
+        } else if (command.substring(0, 2).contentEquals("LR")) {
             address = new Integer(command.substring(2, command.length()));
             load_R_from_memory(address);
-        } else if (command.substring(0,2).contentEquals("LB")) {
+        } else if (command.substring(0, 2).contentEquals("LB")) {
             address = new Integer(command.substring(2, command.length()));
             load_B_from_memory(address);
-        } else if (command.substring(0,2).contentEquals("SR")) {
+        } else if (command.substring(0, 2).contentEquals("SR")) {
             address = new Integer(command.substring(2, command.length()));
             save_in_memory_from_R(address);
-        } else if (command.substring(0,2).contentEquals("CR")) {
+        } else if (command.substring(0, 2).contentEquals("CR")) {
             address = new Integer(command.substring(2, command.length()));
             compare(address);
-        } else if (command.substring(0,2).contentEquals("RT")) {
+        } else if (command.substring(0, 2).contentEquals("RT")) {
             address = new Integer(command.substring(2, command.length()));
             function_call(address);
-        } else if (command.substring(0,5).contentEquals("RETRN")) {
+        } else if (command.substring(0, 5).contentEquals("RETRN")) {
             function_return();
-        } else if (command.substring(0,5).contentEquals("SETC0")) {
+        } else if (command.substring(0, 5).contentEquals("SETC0")) {
             set_C_0();
-        } else if (command.substring(0,5).contentEquals("INVRC")) {
+        } else if (command.substring(0, 5).contentEquals("INVRC")) {
             invert_C();
-        } else if (command.substring(0,5).contentEquals("HALTP")) {
+        } else if (command.substring(0, 5).contentEquals("HALTP")) {
             halt();
-        } else if (command.substring(0,5).contentEquals("BEGPR")) {
+        } else if (command.substring(0, 5).contentEquals("BEGPR")) {
             start_process();
-        } else if (command.substring(0,5).contentEquals("STOPP")) {
+        } else if (command.substring(0, 5).contentEquals("STOPP")) {
             stopP();
-        } else if (command.substring(0,5).contentEquals("CMODE")) {
+        } else if (command.substring(0, 5).contentEquals("CMODE")) {
             change_mode();
-        }  else if (command.substring(0,2).contentEquals("GD")) {
+        } else if (command.substring(0, 2).contentEquals("GD")) {
             address = new Integer(command.substring(2, command.length()));
             read_from_input(address);
-        }  else if (command.substring(0,2).contentEquals("PD")) {
+        } else if (command.substring(0, 2).contentEquals("PD")) {
             address = new Integer(command.substring(2, command.length()));
             write_to_output(address);
-        }  else if (command.substring(0,2).contentEquals("SP")) {
+        } else if (command.substring(0, 2).contentEquals("SP")) {
             address = new Integer(command.substring(2, command.length()));
             setPtr(address);
-        } else if (command.substring(0,5).contentEquals("INCBL")) {
+        } else if (command.substring(0, 5).contentEquals("INCBL")) {
             incBL();
-        } else if (command.substring(0,5).contentEquals("DECBL")) {
+        } else if (command.substring(0, 5).contentEquals("DECBL")) {
             decBL();
         } else {
             throw new BadOperationPlan("no such operation");
@@ -282,6 +282,7 @@ public class Instructions {
             machine.getRegister("CH1").setContent(1);
             Memory data = rm.getData();
 //            System.out.println(rm.input + " instructions");
+
             data.put_block(address, rm.input.toString());
             machine.getRegister("CH1").setContent(0);
         }
