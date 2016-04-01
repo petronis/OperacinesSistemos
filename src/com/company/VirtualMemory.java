@@ -19,7 +19,6 @@ public class VirtualMemory extends Memory {
 
     public String getBlock(int n) throws WrongAddress {
         if (n >= 0 && n < size) {
-            System.out.println("dafuq " + ptr.getContentInt());
             n = n + old.getBlockInt(ptr.getContentInt());
             String temp = new String();
             for (int i = 0; i < getBlockSize(); i++) {

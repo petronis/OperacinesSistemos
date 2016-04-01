@@ -21,6 +21,7 @@ public class Main {
             data.put_block(4, "DECBL");
             data.put_block(5, "PD011");
             data.put_block(6, "GD012");
+            data.put_block(101, "TESTS");
             Instructions in = rm.getInstructions();
             in.change_mode();
             rm.run();
