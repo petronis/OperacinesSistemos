@@ -20,7 +20,6 @@ public class Gui extends JFrame {
     Memory data;
     RM rm;
 
-
     Object rowData[][] = new Object[1000][5];
     Object columnNames[] = {"1", "2", "3", "4", "5"};
 
@@ -88,8 +87,8 @@ public class Gui extends JFrame {
 
 
     public Gui(RM rm) {
-        data = rm.getData();
         this.rm = rm;
+        data = rm.getData();
         createView();
         setTitle("Real Machine");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -593,7 +592,6 @@ public class Gui extends JFrame {
     private void updateTextFields() throws Exception {
         for (int i = 0; i < 12; i++) {
             textFieldArray[i].setText(String.valueOf(rm.getRegister(registersNamesArray[i]).getContentStr()));
-            table.repaint();
         }
         int tmpInt = 0;
         Memory data = rm.getData();

@@ -10,18 +10,18 @@ public class Main {
         Memory data = rm.getData();
         try {
             data.put_block(10, "00034");
-            data.put_block(11, "00025");
+            data.put_block(5, "00025");
             data.put_block(9, "00020");
             data.put_block(15, "AD011");
             data.put_block(16, "RETRN");
             data.put_block(0, "LR010");
             data.put_block(1, "LB009");
             data.put_block(2, "INVRC");
-            data.put_block(3, "RT003");
+            data.put_block(3, "RT015");
             data.put_block(4, "DECBL");
-            data.put_block(5, "PD011");
-            data.put_block(6, "GD012");
-            data.put_block(101, "TESTS");
+            //data.put_block(5, "GD012");
+            data.put_block(6, "PD005");
+            //data.put_block(101, "TESTS");
             Instructions in = rm.getInstructions();
             in.change_mode();
             rm.run();

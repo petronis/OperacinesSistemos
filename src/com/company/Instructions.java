@@ -75,6 +75,7 @@ public class Instructions {
         } else if (command.substring(0,5).contentEquals("CMODE")) {
             change_mode();
         }  else if (command.substring(0,2).contentEquals("GD")) {
+            System.out.println("WE ARE IN GD");
             address = new Integer(command.substring(2, command.length()));
             read_from_input(address);
         }  else if (command.substring(0,2).contentEquals("PD")) {
