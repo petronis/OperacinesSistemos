@@ -6,9 +6,16 @@ public class Main {
 	// write your code here
         System.out.println("Program start point");
         RM rm = new RM(1000,100,64);
-        SwingUtilities.invokeLater(() -> new Gui(rm).setVisible(true));
+        //SwingUtilities.invokeLater(() -> new Gui(rm).setVisible(true));
         Memory data = rm.getData();
         try {
+            ProcessPlaner processPlaner = new ProcessPlaner();
+            processPlaner.AddingProcessesToList();
+            processPlaner.PrintList();
+            processPlaner.PrintReadyList();
+            processPlaner.PrintWaitingList();
+
+            /*
             data.put_block(10, "00034");
             data.put_block(5, "00025");
             data.put_block(9, "00020");
@@ -28,7 +35,7 @@ public class Main {
             for (int i = 0; i < rm.getRegistersSize(); i++) {
                 System.out.println(rm.getRegister(i).getName() + " " + rm.getRegister(i).getContentStr());
             }
-//            System.out.print(rm.getData().mem());
+//            System.out.print(rm.getData().mem());*/
         } catch (Exception exception) {
             exception.printStackTrace();
         }
