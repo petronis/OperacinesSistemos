@@ -22,6 +22,8 @@ public class ProcessWantResources {
         wants.add(r);
     }
 
+    public void gotAllResources(){wants.clear();}
+
     public boolean isAvailable(){
         int size = wants.size(), check = 0;
         for (int i = 0; i < size ; i++) {

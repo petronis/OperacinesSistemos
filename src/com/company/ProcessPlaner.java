@@ -66,6 +66,8 @@ public class ProcessPlaner {
         if  (process.state == 0) { // Process is blocked need to be changed to ready
             waitingProcessesList.remove(waitingProcessesList.indexOf(process));
             readyProcessesList.add(process);
+            process.changeState(2);
+            process.processWantResources.gotAllResources();
         }
     }
 
