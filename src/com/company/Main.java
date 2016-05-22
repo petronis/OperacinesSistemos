@@ -11,7 +11,7 @@ public class Main {
         try {
             ProcessPlaner processPlaner = new ProcessPlaner();
             //processPlaner.AddingProcessesToList();
-            processPlaner.StartStopProcess();
+//            processPlaner.StartStopProcess();
             processPlaner.PrintList();
             //processPlaner.PrintReadyList();
             //processPlaner.PrintWaitingList();

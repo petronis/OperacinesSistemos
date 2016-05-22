@@ -19,9 +19,9 @@ public class ResourcePlaner {
         resources.add(new Resource(name, multiuse, creator));
     }
 
-    private Resource findResource(String key){
+    public Resource findResource(String key){
         for (int i = 0; i < resources.size(); i++) {
-            if (resources.get(i).getName() == key) {
+            if (resources.get(i).getName().equals(key)) {
                 return resources.get(i);
             }
         }

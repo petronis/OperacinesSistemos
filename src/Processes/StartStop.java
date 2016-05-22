@@ -10,9 +10,9 @@ import java.util.ArrayList;
  */
 public class StartStop extends Process {
     ResourcePlaner resourcePlaner;
-    public StartStop(String name, int state, Process father) {
+    public StartStop(String name, int state, Process father, ResourcePlaner resourcePlaner) {
         super(name, state, father);
-        this.resourcePlaner = new ResourcePlaner();
+        this.resourcePlaner = resourcePlaner;
     }
 
     public void createStaticResources(){
@@ -31,12 +31,12 @@ public class StartStop extends Process {
 
     public ArrayList<Process> createProcesses(){
         ArrayList<Process> processArrayList = new ArrayList<>();
-        processArrayList.add(new ReadFromInterface("ReadFromInterface", 3,this));
-        processArrayList.add(new ReadFromInterface("JobToDisk", 3,this));
-        processArrayList.add(new ReadFromInterface("Loader", 3,this));
-        processArrayList.add(new ReadFromInterface("Cheker", 3,this));
-        processArrayList.add(new ReadFromInterface("PrintLine", 3,this));
-        processArrayList.add(new ReadFromInterface("MainProc", 3,this));
+        processArrayList.add(new ReadFromInterface("ReadFromInterface", 3,this,resourcePlaner));
+        processArrayList.add(new JobToDisk("JobToDisk", 3,this,resourcePlaner));
+        processArrayList.add(new Loader("Loader", 3,this,resourcePlaner));
+        processArrayList.add(new Cheker("Cheker", 3,this,resourcePlaner));
+        processArrayList.add(new PrintLine("PrintLine", 3,this,resourcePlaner));
+        processArrayList.add(new MainProc("MainProc", 3,this,resourcePlaner));
         return processArrayList;
     }
 }

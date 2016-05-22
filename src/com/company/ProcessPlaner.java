@@ -16,11 +16,12 @@ public class ProcessPlaner {
         this.processesList = new ArrayList<>();
         this.readyProcessesList = new ArrayList<>();
         this.waitingProcessesList = new ArrayList<>();
-        this.startStop = new StartStop("StartStop",1,null);
+        this.resourcePlaner = new ResourcePlaner();
+        this.startStop = new StartStop("StartStop",1,null,resourcePlaner);
         //this.startStop.createStaticResources();
+        StartStopProcess();
         ArrayList<Process> tmp = startStop.createProcesses();
         this.processesList.add(startStop);
-        this.resourcePlaner = new ResourcePlaner();
         for (int i = 0; i < tmp.size(); i++){
             this.processesList.add(tmp.get(i));
         }
@@ -29,20 +30,6 @@ public class ProcessPlaner {
     public void StartStopProcess(){
         startStop.createStaticResources();
     }
-    /*public ArrayList<Process> StartStopProcessesCreate(Process father){
-        Process JobToDisk = new Process("JobToDisk", 0, process);
-        Process ReadFromInterface = new Process("ReadFromInterface",0,process);
-        Process Loader = new Process("Loader", 0, process);
-        Process PrintLn = new Process("PrintLine", 0, process);
-        Process MainProc = new Process("MainProcess", 0, process);
-        processesList.add(father);
-        processesList.add(JobToDisk);
-        processesList.add(ReadFromInterface);
-        processesList.add(Loader);
-        processesList.add(PrintLn);
-        processesList.add(MainProc);
-        return processesList;
-    }*/
 
     public int getProcessFromListByName(String processName){
         for (int i = 0; i < processesList.size(); i++){
@@ -55,7 +42,7 @@ public class ProcessPlaner {
 
     public void PrintList(){
         for(int i = 0; i < processesList.size(); i++){
-            System.out.println("Process at " + i + " is " + processesList.get(i).getName());
+            System.out.println("Process at " + i + " is " + processesList.get(i).getName() + " state " + processesList.get(i).getState());
         }
     }
 

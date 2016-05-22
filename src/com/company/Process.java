@@ -10,6 +10,7 @@ public class Process {
     Process father;
     int state;// 1 - vykdomas procesas; 0 - blokuotas; 2 - pasiruoses;
               // 3 - blokuotas sustabdytas; 4 - pasiruoses sustabdytas.
+
     ProcessWantResources processWantResources;
     ArrayList<Process> childProcess;
 
