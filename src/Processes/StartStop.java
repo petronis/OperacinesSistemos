@@ -12,20 +12,21 @@ public class StartStop extends Process {
     ResourcePlaner resourcePlaner;
     public StartStop(String name, int state, Process father) {
         super(name, state, father);
+        this.resourcePlaner = new ResourcePlaner();
     }
 
     public void createStaticResources(){
-        resourcePlaner.createResource("Supervizorinės atminties", false, this);
-        resourcePlaner.createResource("Užduotis supervizorinėje atminyje", false, this);
-        resourcePlaner.createResource("Užduoties duomenys supervizorinėje atmintyje", false, this);
-        resourcePlaner.createResource("Užduoties programa supervizorinėje atmintyje", false, this);
-        resourcePlaner.createResource("Kanalų įrenginys", false, this);
-        resourcePlaner.createResource("Vartotojo atmintis", false, this);
-        resourcePlaner.createResource("Pakrovimo paketas", true, this);
-        resourcePlaner.createResource("Išorinė atmintis", false, this);
-        resourcePlaner.createResource("InputOutput", false, this);
-        resourcePlaner.createResource("Pertraukimas", false, this);
-        resourcePlaner.createResource("Programa parengta", false, this);
+        this.createResourcesFromProcess(resourcePlaner,"Supervizorinės atminties", false);
+        this.createResourcesFromProcess(resourcePlaner,"Užduotis supervizorinėje atminyje", false);
+        this.createResourcesFromProcess(resourcePlaner,"Užduoties duomenys supervizorinėje atmintyje", false);
+        this.createResourcesFromProcess(resourcePlaner,"Užduoties programa supervizorinėje atmintyje", false);
+        this.createResourcesFromProcess(resourcePlaner,"Kanalų įrenginys", false);
+        this.createResourcesFromProcess(resourcePlaner,"Vartotojo atmintis", false);
+        this.createResourcesFromProcess(resourcePlaner,"Pakrovimo paketas", true);
+        this.createResourcesFromProcess(resourcePlaner,"Išorinė atmintis", false);
+        this.createResourcesFromProcess(resourcePlaner,"InputOutput", false);
+        this.createResourcesFromProcess(resourcePlaner,"Pertraukimas", false);
+        this.createResourcesFromProcess(resourcePlaner,"Programa parengta", false);
     }
 
     public ArrayList<Process> createProcesses(){

@@ -1,5 +1,7 @@
 package com.company;
 
+import Processes.StartStop;
+
 import java.util.ArrayList;
 
 /**
@@ -7,20 +9,27 @@ import java.util.ArrayList;
  */
 public class ProcessPlaner {
     ArrayList<Process> processesList, readyProcessesList, waitingProcessesList;
-    Process process;
+    StartStop startStop;
     ResourcePlaner resourcePlaner;
 
     public ProcessPlaner(){
         this.processesList = new ArrayList<>();
         this.readyProcessesList = new ArrayList<>();
         this.waitingProcessesList = new ArrayList<>();
-        this.process = new Process("StartStopProcess", 1, null);
-        this.processesList = StartStopProcessesCreate(process);
+        this.startStop = new StartStop("StartStop",1,null);
+        //this.startStop.createStaticResources();
+        ArrayList<Process> tmp = startStop.createProcesses();
+        this.processesList.add(startStop);
         this.resourcePlaner = new ResourcePlaner();
+        for (int i = 0; i < tmp.size(); i++){
+            this.processesList.add(tmp.get(i));
+        }
 
     }
-
-    public ArrayList<Process> StartStopProcessesCreate(Process father){
+    public void StartStopProcess(){
+        startStop.createStaticResources();
+    }
+    /*public ArrayList<Process> StartStopProcessesCreate(Process father){
         Process JobToDisk = new Process("JobToDisk", 0, process);
         Process ReadFromInterface = new Process("ReadFromInterface",0,process);
         Process Loader = new Process("Loader", 0, process);
@@ -33,7 +42,7 @@ public class ProcessPlaner {
         processesList.add(PrintLn);
         processesList.add(MainProc);
         return processesList;
-    }
+    }*/
 
     public int getProcessFromListByName(String processName){
         for (int i = 0; i < processesList.size(); i++){
@@ -106,7 +115,7 @@ public class ProcessPlaner {
         if (position == -1){
             System.out.println("There is no process with this name");
         } else {
-            processesList.get(position).createResources(resourcePlaner, resourceName,multiuse);
+            processesList.get(position).createResourcesFromProcess(resourcePlaner, resourceName,multiuse);
         }
     }
 
