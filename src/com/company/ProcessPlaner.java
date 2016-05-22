@@ -88,10 +88,11 @@ public class ProcessPlaner {
     public void IsThereAnyReadyProcess(){
         if  (!readyProcessesList.isEmpty()){
             //TODO Vykdyti procesa
-//            for (int i = 0; i < readyProcessesList.size(); i++) {
-//                Process workingProcess = readyProcessesList.get(i);
-//                workingProcess.work(this);
-//            }
+            for (int i = 0; i < readyProcessesList.size(); i++) {
+                Process workingProcess = readyProcessesList.get(i);
+                workingProcess.changeState(1);
+                workingProcess.work(this);
+            }
         }else{
             for (int i = 0; i < waitingProcessesList.size(); i++){
                 if  (waitingProcessesList.get(i).processWantResources.isAvailable()){

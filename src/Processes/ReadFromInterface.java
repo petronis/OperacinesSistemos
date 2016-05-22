@@ -16,7 +16,7 @@ public class ReadFromInterface extends StartStop {
 
     public void work(ProcessPlaner processPlaner){
         if (this.ProcessHasAllResource()){
-            this.changeState(2);
+
         }
     }
 }

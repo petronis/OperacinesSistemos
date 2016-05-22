@@ -50,9 +50,14 @@ public class StartStop extends Process {
         createProcesses(processPlaner);
         Resource startStopEnd = new Resource("OS darbo pabaiga", false, false, this);
         this.ProcessNeedsResource(startStopEnd);
+        processPlaner.AddingProcessesToList();
+//        processPlaner.PrintWaitingList();
         while(true) {
             if(this.ProcessHasAllResource()){
                 break;
+            }
+            else{
+                processPlaner.IsThereAnyReadyProcess();
             }
         }
     }
