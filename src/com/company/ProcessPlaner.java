@@ -67,7 +67,6 @@ public class ProcessPlaner {
             waitingProcessesList.remove(waitingProcessesList.indexOf(process));
             readyProcessesList.add(process);
             process.changeState(2);
-            process.processWantResources.gotAllResources();
         }
     }
 
