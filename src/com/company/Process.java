@@ -36,4 +36,8 @@ public class Process {
     public void createChildProcess(String childName, int childState){
         childProcess.add(new Process(childName,childState, this));
     }
+
+    public void createResources(ResourcePlaner resourcePlaner, String resourcesName, boolean multiuse){
+        resourcePlaner.createResource(resourcesName,multiuse,this);
+    }
 }

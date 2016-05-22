@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class ProcessPlaner {
     ArrayList<Process> processesList, readyProcessesList, waitingProcessesList;
     Process process;
+    ResourcePlaner resourcePlaner;
 
     public ProcessPlaner(){
         this.processesList = new ArrayList<>();
@@ -15,14 +16,32 @@ public class ProcessPlaner {
         this.waitingProcessesList = new ArrayList<>();
         this.process = new Process("StartStopProcess", 1, null);
         this.processesList = StartStopProcessesCreate(process);
+        this.resourcePlaner = new ResourcePlaner();
 
     }
 
     public ArrayList<Process> StartStopProcessesCreate(Process father){
         Process JobToDisk = new Process("JobToDisk", 0, process);
+        Process ReadFromInterface = new Process("ReadFromInterface",0,process);
+        Process Loader = new Process("Loader", 0, process);
+        Process PrintLn = new Process("PrintLine", 0, process);
+        Process MainProc = new Process("MainProcess", 0, process);
         processesList.add(father);
         processesList.add(JobToDisk);
+        processesList.add(ReadFromInterface);
+        processesList.add(Loader);
+        processesList.add(PrintLn);
+        processesList.add(MainProc);
         return processesList;
+    }
+
+    public int getProcessFromListByName(String processName){
+        for (int i = 0; i < processesList.size(); i++){
+            if(processesList.get(i).getName().equals(processName)){
+                return i; // returns index of process by its name
+            }
+        }
+        return -1;  // returns -1 if there is no process with name processName
     }
 
     public void PrintList(){
@@ -79,6 +98,15 @@ public class ProcessPlaner {
                     ChangeListByState(waitingProcessesList.get(i));
                 }
             }
+        }
+    }
+
+    public void createResource(String processName, String resourceName, boolean multiuse){
+        int position = getProcessFromListByName(processName);
+        if (position == -1){
+            System.out.println("There is no process with this name");
+        } else {
+            processesList.get(position).createResources(resourcePlaner, resourceName,multiuse);
         }
     }
 
