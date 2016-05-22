@@ -61,4 +61,24 @@ public class ProcessPlaner {
             }
         }
     }
+
+    public void ChangeListByState(Process process){
+        if  (process.state == 0) { // Process is blocked need to be changed to ready
+            waitingProcessesList.remove(waitingProcessesList.indexOf(process));
+            readyProcessesList.add(process);
+        }
+    }
+
+    public void IsThereAnyReadyProcess(){
+        if  (!readyProcessesList.isEmpty()){
+            //TODO Vykdyti procesa
+        }else{
+            for (int i = 0; i < waitingProcessesList.size(); i++){
+                if  (waitingProcessesList.get(i).processWantResources.isAvailable()){
+                    ChangeListByState(waitingProcessesList.get(i));
+                }
+            }
+        }
+    }
+
 }

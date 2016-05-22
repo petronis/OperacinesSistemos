@@ -10,14 +10,19 @@ public class Process {
     Process father;
     int state;// 1 - vykdomas procesas; 0 - blokuotas; 2 - pasiruoses;
               // 3 - blokuotas sustabdytas; 4 - pasiruoses sustabdytas.
-    Resource neededResource;
-    ArrayList<Process> chilledProcess;
+    ProcessWantResources processWantResources;
+    ArrayList<Process> childProcess;
 
     public Process(String name, int state, Process father) {
         this.name = name;
         this.state = state;
-        this.neededResource = null;
+        this.processWantResources = new ProcessWantResources(this);
         this.father = father;
+    }
+
+    public void ProcessNeedsResource(Resource resource){
+        processWantResources.addToWantingList(resource);
+        changeState(0);
     }
 
     public void changeState(int stateToWhichToChange){
@@ -29,8 +34,6 @@ public class Process {
     public int getState(){return this.state;}
 
     public void createChildProcess(String childName, int childState){
-        chilledProcess.add(new Process(childName,childState, this));
+        childProcess.add(new Process(childName,childState, this));
     }
-
-
 }
