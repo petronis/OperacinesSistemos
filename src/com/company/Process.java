@@ -26,6 +26,10 @@ public class Process {
         changeState(0);
     }
 
+    public boolean ProcessHasAllResource(){
+        return processWantResources.isAvailable();
+    }
+
     public void changeState(int stateToWhichToChange){
         this.state = stateToWhichToChange;
     }
@@ -40,5 +44,8 @@ public class Process {
 
     public void createResourcesFromProcess(ResourcePlaner resourcePlaner, String resourcesName, boolean multiuse){
         resourcePlaner.createResource(resourcesName,multiuse,this);
+    }
+
+    public void work(ProcessPlaner processPlaner) {
     }
 }

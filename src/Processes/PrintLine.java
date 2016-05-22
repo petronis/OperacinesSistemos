@@ -1,6 +1,7 @@
 package Processes;
 
 import com.company.Process;
+import com.company.ProcessPlaner;
 import com.company.ResourcePlaner;
 
 /**
@@ -10,5 +11,11 @@ public class PrintLine extends Process {
     public PrintLine(String name, int state, Process father, ResourcePlaner resourcePlaner) {
         super(name, state, father);
 //        this.ProcessNeedsResource(resourcePlaner.findResource("Užduotis supervizorinėje atminyje"));
+    }
+
+    public void work(ProcessPlaner processPlaner){
+        if (this.ProcessHasAllResource()){
+            this.changeState(2);
+        }
     }
 }

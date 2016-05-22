@@ -31,7 +31,7 @@ public class ProcessWantResources {
                 check++;
             }
         }
-        if (check == size - 1) {
+        if (check == size ) {
             return true;
         }
         return false;

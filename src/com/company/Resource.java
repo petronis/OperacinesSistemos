@@ -15,6 +15,13 @@ public class Resource {
         this.creator = creator;
     }
 
+    public Resource(String name, boolean multiuse, boolean free, Process creator) {
+        this.name = name;
+        this.multiuse = multiuse;
+        this.free = free;
+        this.creator = creator;
+    }
+
 
     public String getName() {
         return name;

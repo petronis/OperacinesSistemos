@@ -1,6 +1,7 @@
 package Processes;
 
 import com.company.Process;
+import com.company.ProcessPlaner;
 import com.company.ResourcePlaner;
 
 /**
@@ -11,5 +12,11 @@ public class Loader extends Process {
         super(name, state, father);
         this.ProcessNeedsResource(resourcePlaner.findResource("Pakrovimo paketas"));
         this.ProcessNeedsResource(resourcePlaner.findResource("Kanalų įrenginys"));
+    }
+
+    public void work(ProcessPlaner processPlaner){
+        if (this.ProcessHasAllResource()){
+            this.changeState(2);
+        }
     }
 }

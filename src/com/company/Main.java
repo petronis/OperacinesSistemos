@@ -10,11 +10,7 @@ public class Main {
         Memory data = rm.getData();
         try {
             ProcessPlaner processPlaner = new ProcessPlaner();
-            //processPlaner.AddingProcessesToList();
-//            processPlaner.StartStopProcess();
-            processPlaner.PrintList();
-            //processPlaner.PrintReadyList();
-            //processPlaner.PrintWaitingList();
+
 
             /*
             data.put_block(10, "00034");

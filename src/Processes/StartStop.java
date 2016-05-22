@@ -1,7 +1,7 @@
 package Processes;
 
+import com.company.*;
 import com.company.Process;
-import com.company.ResourcePlaner;
 
 import java.util.ArrayList;
 
@@ -29,14 +29,31 @@ public class StartStop extends Process {
         this.createResourcesFromProcess(resourcePlaner,"Programa parengta", false);
     }
 
-    public ArrayList<Process> createProcesses(){
-        ArrayList<Process> processArrayList = new ArrayList<>();
-        processArrayList.add(new ReadFromInterface("ReadFromInterface", 3,this,resourcePlaner));
-        processArrayList.add(new JobToDisk("JobToDisk", 3,this,resourcePlaner));
-        processArrayList.add(new Loader("Loader", 3,this,resourcePlaner));
-        processArrayList.add(new Cheker("Cheker", 3,this,resourcePlaner));
-        processArrayList.add(new PrintLine("PrintLine", 3,this,resourcePlaner));
-        processArrayList.add(new MainProc("MainProc", 3,this,resourcePlaner));
-        return processArrayList;
+    public void createProcesses(ProcessPlaner processPlaner){
+        System.out.println("Create Processes");
+        ReadFromInterface processToAdd = new ReadFromInterface("ReadFromInterface", 3,this,resourcePlaner);
+        processPlaner.addProcessToList(processToAdd);
+        JobToDisk processToAdd1 = new JobToDisk("JobToDisk", 3,this,resourcePlaner);
+        processPlaner.addProcessToList(processToAdd1);
+        Loader processToAdd2 = new Loader("Loader", 3,this,resourcePlaner);
+        processPlaner.addProcessToList(processToAdd2);
+        Cheker processToAdd3 = new Cheker("Cheker", 3,this,resourcePlaner);
+        processPlaner.addProcessToList(processToAdd3);
+        PrintLine processToAdd4 = new PrintLine("PrintLine", 3,this,resourcePlaner);
+        processPlaner.addProcessToList(processToAdd4);
+        MainProc processToAdd5 = new MainProc("MainProc", 3,this,resourcePlaner);
+        processPlaner.addProcessToList(processToAdd5);
+    }
+
+    public void work(ProcessPlaner processPlaner){
+        while(true) {
+            createStaticResources();
+            createProcesses(processPlaner);
+            Resource startStopEnd = new Resource("OS darbo pabaiga", false, false, this);
+            this.ProcessNeedsResource(startStopEnd);
+            if(this.ProcessHasAllResource()){
+                break;
+            }
+        }
     }
 }
