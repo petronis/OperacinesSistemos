@@ -30,6 +30,14 @@ public class Process {
         return processWantResources.isAvailable();
     }
 
+    public boolean hasItTaken(Resource resource){
+        return processWantResources.hasIt(resource);
+    }
+
+    public boolean removeResourcesAfterUsingIt(Resource resource){
+        return processWantResources.releaseResources(resource);
+    }
+
     public void changeState(int stateToWhichToChange){
         this.state = stateToWhichToChange;
     }

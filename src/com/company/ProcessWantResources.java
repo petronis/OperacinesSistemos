@@ -23,6 +23,15 @@ public class ProcessWantResources {
     }
 
     public void gotAllResources(){wants.clear();}
+    public boolean releaseResources(Resource resource){
+        if (wants.contains(resource)){
+            wants.remove(resource);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
     public boolean isAvailable(){
         int size = wants.size(), check = 0;
@@ -35,5 +44,9 @@ public class ProcessWantResources {
             return true;
         }
         return false;
+    }
+
+    public boolean hasIt(Resource resource){
+        return wants.contains(resource);
     }
 }

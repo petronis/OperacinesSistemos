@@ -97,6 +97,7 @@ public class ProcessPlaner {
             for (int i = 0; i < waitingProcessesList.size(); i++){
                 if  (waitingProcessesList.get(i).processWantResources.isAvailable()){
                     ChangeListByState(waitingProcessesList.get(i));
+                    break;
                 }
             }
         }
