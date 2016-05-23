@@ -15,8 +15,10 @@ public class Loader extends Process {
     }
 
     public void work(ProcessPlaner processPlaner){
-        if (this.ProcessHasAllResource()){
-            this.changeState(2);
+        while(true) {
+            if (this.ProcessHasAllResource()) {
+                // TODO: 2016-05-23 Programa uzloadina i vartotojo atminti 
+            }
         }
     }
 }

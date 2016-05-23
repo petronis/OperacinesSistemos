@@ -14,8 +14,12 @@ public class Cheker extends Process {
     }
 
     public void work(ProcessPlaner processPlaner){
-        if (this.ProcessHasAllResource()){
-            this.changeState(2);
+        while(true) {
+            if (this.ProcessHasAllResource()) {
+                // Todo programos saraso iniciavimas
+                // todo Skaitomas zodis
+                // todo Ar tai data? -> ar tai code? -> atlaisviname resursa -> skaitome zodi iki eof -> baigiame darba su cheker
+            }
         }
     }
 }
