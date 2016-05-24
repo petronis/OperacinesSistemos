@@ -6,12 +6,12 @@ package com.company;
 public class RM extends Machine {
 
     VM vm;
-    Memory external;
+    Memory external, supervision;
     Instructions instructions;
     Object input;
     Object output;
 
-    private void init(int vm_blocks, int external_blocks) {
+    private void init(int vm_blocks, int external_blocks, int supervision_blocks) {
         registers.addRegister(new Register("PTR", 3, "090"));
         registers.addRegister(new Register("B", 3));
         registers.addRegister(new Register("IC", 3, "000"));
@@ -26,13 +26,14 @@ public class RM extends Machine {
         registers.addRegister(new Register("MODE", 1, "S"));
         vm = new VM(vm_blocks, this, getRegister("PTR"));
         external = new Memory(external_blocks);
+        supervision = new Memory(supervision_blocks);
         instructions = new Instructions(this, vm);
         vm.setInstructions(instructions);
     }
 
-    RM(int rm_blocks, int vm_blocks, int external_blocks) {
+    RM(int rm_blocks, int vm_blocks, int external_blocks, int supervision_blocks) {
         super(rm_blocks);
-        init(vm_blocks, external_blocks);
+        init(vm_blocks, external_blocks, supervision_blocks);
     }
 
     public Instructions getInstructions() {
@@ -41,6 +42,10 @@ public class RM extends Machine {
 
     public Memory getExternal() {
         return external;
+    }
+
+    public Memory getSupervision() {
+        return supervision;
     }
 
     @Override
