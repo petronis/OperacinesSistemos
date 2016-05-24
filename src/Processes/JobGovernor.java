@@ -7,7 +7,7 @@ import com.company.ResourcePlaner;
 /**
  * Created by lukas on 2016-05-23.
  */
-public class JobGovernor extends Process{
+public class JobGovernor extends Process {
 
     ResourcePlaner resourcePlaner;
     public JobGovernor(String name, int state, Process father,ResourcePlaner resourcePlaner) {
@@ -20,14 +20,19 @@ public class JobGovernor extends Process{
     }
 
     @Override
-    public void work(ProcessPlaner processPlaner) {
+    public void run() {
         while(true){
             if(this.ProcessHasAllResource()){
                 // TODO: 2016-05-23 Create VM
                 this.ProcessNeedsResource(resourcePlaner.findResource("Interrupt"));
-                // TODO: 2016-05-23 Stop VM 
-                // TODO: 2016-05-23 What Interrupt is it if GD good, if not terminante JobGovernor with VM 
+                // TODO: 2016-05-23 Stop VM
+                // TODO: 2016-05-23 What Interrupt is it if GD good, if not terminante JobGovernor with VM
             }
         }
+    }
+
+    @Override
+    public void work(ProcessPlaner processPlaner) {
+
     }
 }

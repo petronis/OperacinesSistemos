@@ -10,10 +10,12 @@ import java.util.ArrayList;
  */
 public class StartStop extends Process {
     ResourcePlaner resourcePlaner;
+    ProcessPlaner processPlaner;
     public StartStop(String name, int state, Process father, ResourcePlaner resourcePlaner) {
         super(name, state, father);
         this.resourcePlaner = resourcePlaner;
     }
+
 
     public void createStaticResources(){
         this.createResourcesFromProcess(resourcePlaner,"Supervizorinės atminties", false);
@@ -45,7 +47,8 @@ public class StartStop extends Process {
         processPlaner.addProcessToList(processToAdd5);
     }
 
-    public void work(ProcessPlaner processPlaner){
+    @Override
+    public void run() {
         createStaticResources();
         createProcesses(processPlaner);
         Resource startStopEnd = new Resource("OS darbo pabaiga", false, false, this);
@@ -60,5 +63,9 @@ public class StartStop extends Process {
                 processPlaner.IsThereAnyReadyProcess();
             }
         }
+    }
+
+    public void work(ProcessPlaner processPlaner){
+        this.processPlaner = processPlaner;
     }
 }

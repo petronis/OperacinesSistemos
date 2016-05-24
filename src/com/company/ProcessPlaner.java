@@ -11,13 +11,17 @@ public class ProcessPlaner {
     ArrayList<Process> processesList, readyProcessesList, waitingProcessesList;
     StartStop startStop;
     ResourcePlaner resourcePlaner;
+    RM rm;
 
-    public ProcessPlaner(){
+
+    public ProcessPlaner(RM rm){
+        this.rm = rm;
         this.processesList = new ArrayList<>();
         this.readyProcessesList = new ArrayList<>();
         this.waitingProcessesList = new ArrayList<>();
         this.resourcePlaner = new ResourcePlaner();
         this.startStop = new StartStop("StartStop",1,null,resourcePlaner);
+        this.startStop.setRm(rm);
         this.processesList.add(startStop);
         StartStopProcess();
     }
@@ -33,7 +37,7 @@ public class ProcessPlaner {
 
     public int getProcessFromListByName(String processName){
         for (int i = 0; i < processesList.size(); i++){
-            if(processesList.get(i).getName().equals(processName)){
+            if(processesList.get(i).getProcessName().equals(processName)){
                 return i; // returns index of process by its name
             }
         }
@@ -42,19 +46,19 @@ public class ProcessPlaner {
 
     public void PrintList(){
         for(int i = 0; i < processesList.size(); i++){
-            System.out.println("Process at " + i + " is " + processesList.get(i).getName() + " state " + processesList.get(i).getState());
+            System.out.println("Process at " + i + " is " + processesList.get(i).getProcessName() + " state " + processesList.get(i).getProcessState());
         }
     }
 
     public void PrintReadyList(){
         for (int i = 0; i < this.readyProcessesList.size(); i++){
-            System.out.println("Process in ready list at " + i + " is " + readyProcessesList.get(i).getName());
+            System.out.println("Process in ready list at " + i + " is " + readyProcessesList.get(i).getProcessName());
         }
     }
 
     public void PrintWaitingList(){
         for (int i = 0; i < waitingProcessesList.size(); i++){
-            System.out.println("Process in waiting list at " + i + " is " + waitingProcessesList.get(i).getName());
+            System.out.println("Process in waiting list at " + i + " is " + waitingProcessesList.get(i).getProcessName());
         }
     }
 
@@ -69,9 +73,9 @@ public class ProcessPlaner {
     }
     public void AddingProcessesToList(){
         for(int i = 0; i < processesList.size(); i++) {
-            if (processesList.get(i).getState() == 0 || processesList.get(i).getState() == 3) {
+            if (processesList.get(i).getProcessState() == 0 || processesList.get(i).getProcessState() == 3) {
                 waitingProcessesList.add(processesList.get(i));
-            } else if (processesList.get(i).getState() == 2) {
+            } else if (processesList.get(i).getProcessState() == 2) {
                 readyProcessesList.add(processesList.get(i));
             }
         }
@@ -92,6 +96,7 @@ public class ProcessPlaner {
                 Process workingProcess = readyProcessesList.get(i);
                 workingProcess.changeState(1);
                 workingProcess.work(this);
+                workingProcess.start();
             }
         }else{
             for (int i = 0; i < waitingProcessesList.size(); i++){
@@ -102,8 +107,9 @@ public class ProcessPlaner {
             }
         }
         for (int i = 0; i < processesList.size(); i++){
-            if (processesList.get(i).getState() == 1){
+            if (processesList.get(i).getProcessState() == 1){
                 processesList.get(i).work(this);
+                processesList.get(i).start();
             }
         }
     }

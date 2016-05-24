@@ -13,7 +13,8 @@ public class Cheker extends Process {
         this.ProcessNeedsResource(resourcePlaner.findResource("Užduotis supervizorinėje atminyje"));
     }
 
-    public void work(ProcessPlaner processPlaner){
+    @Override
+    public void run() {
         while(true) {
             if (this.ProcessHasAllResource()) {
                 // Todo programos saraso iniciavimas
@@ -21,5 +22,9 @@ public class Cheker extends Process {
                 // todo Ar tai data? -> ar tai code? -> atlaisviname resursa -> skaitome zodi iki eof -> baigiame darba su cheker
             }
         }
+    }
+
+    public void work(ProcessPlaner processPlaner){
+
     }
 }

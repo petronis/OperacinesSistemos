@@ -13,11 +13,16 @@ public class MainProc extends Process {
         this.ProcessNeedsResource(resourcePlaner.findResource("Programa parengta"));
     }
 
-    public void work(ProcessPlaner processPlaner){
+    @Override
+    public void run() {
         while(true) {
             if (this.ProcessHasAllResource()) {
-                // TODO: 2016-05-23 Sukurti arba sunaikinti JobGovernor 
+                // TODO: 2016-05-23 Sukurti arba sunaikinti JobGovernor
             }
         }
+    }
+
+    public void work(ProcessPlaner processPlaner){
+
     }
 }

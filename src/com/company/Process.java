@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by lukas on 2016-05-11.
  */
-public class Process {
+public class Process extends Thread {
     String name;
     Process father;
     static ResourcePlaner resourcePlaner;
@@ -60,9 +60,9 @@ public class Process {
         this.state = stateToWhichToChange;
     }
 
-    public String getName(){return this.name;}
+    public String getProcessName(){return this.name;}
 
-    public int getState(){return this.state;}
+    public int getProcessState(){return this.state;}
 
     public void createChildProcess(String childName, int childState){
         childProcess.add(new Process(childName,childState, this));
@@ -73,5 +73,10 @@ public class Process {
     }
 
     public void work(ProcessPlaner processPlaner) {
+    }
+
+    @Override
+    public void run() {
+
     }
 }

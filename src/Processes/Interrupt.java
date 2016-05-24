@@ -16,11 +16,16 @@ public class Interrupt extends Process {
     }
 
     @Override
-    public void work(ProcessPlaner processPlaner) {
+    public void run() {
         while(true){
             if (this.ProcessHasAllResource()){
-                // TODO: 2016-05-23 Nustatyti pertraukima  
+                // TODO: 2016-05-23 Nustatyti pertraukima
             }
         }
+    }
+
+    @Override
+    public void work(ProcessPlaner processPlaner) {
+
     }
 }

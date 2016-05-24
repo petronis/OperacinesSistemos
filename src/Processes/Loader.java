@@ -14,11 +14,16 @@ public class Loader extends Process {
         this.ProcessNeedsResource(resourcePlaner.findResource("Kanalų įrenginys"));
     }
 
-    public void work(ProcessPlaner processPlaner){
+    @Override
+    public void run() {
         while(true) {
             if (this.ProcessHasAllResource()) {
-                // TODO: 2016-05-23 Programa uzloadina i vartotojo atminti 
+                // TODO: 2016-05-23 Programa uzloadina i vartotojo atminti
             }
         }
+    }
+
+    public void work(ProcessPlaner processPlaner){
+
     }
 }

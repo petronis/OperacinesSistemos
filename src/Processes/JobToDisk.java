@@ -14,11 +14,16 @@ public class JobToDisk extends Process {
         this.ProcessNeedsResource(resourcePlaner.findResource("Užduoties programa supervizorinėje atmintyje"));
     }
 
-    public void work(ProcessPlaner processPlaner){
+    @Override
+    public void run() {
         while(true) {
             if (this.ProcessHasAllResource()) {
-                // TODO: 2016-05-23 kopijuojame informacija i isorine atminti -> atlaisviname resursus 
+                // TODO: 2016-05-23 kopijuojame informacija i isorine atminti -> atlaisviname resursus
             }
         }
+    }
+
+    public void work(ProcessPlaner processPlaner){
+
     }
 }

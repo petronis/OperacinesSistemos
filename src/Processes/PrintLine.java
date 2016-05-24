@@ -13,11 +13,17 @@ public class PrintLine extends Process {
 //        this.ProcessNeedsResource(resourcePlaner.findResource("Užduotis supervizorinėje atminyje"));
     }
 
-    public void work(ProcessPlaner processPlaner){
+
+    @Override
+    public void run() {
         while(true) {
             if (this.ProcessHasAllResource()) {
-                // TODO: 2016-05-23 I pranesimo lauka pasiunciame Supervizorineje atmintyje esanti pranesima 
+                // TODO: 2016-05-23 I pranesimo lauka pasiunciame Supervizorineje atmintyje esanti pranesima
             }
         }
+    }
+
+    public void work(ProcessPlaner processPlaner){
+
     }
 }
