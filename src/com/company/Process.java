@@ -8,6 +8,8 @@ import java.util.ArrayList;
 public class Process {
     String name;
     Process father;
+    static ResourcePlaner resourcePlaner;
+    static RM rm;
     int state;// 1 - vykdomas procesas; 0 - blokuotas; 2 - pasiruoses;
               // 3 - blokuotas sustabdytas; 4 - pasiruoses sustabdytas.
 
@@ -19,6 +21,22 @@ public class Process {
         this.state = state;
         this.processWantResources = new ProcessWantResources(this);
         this.father = father;
+    }
+
+    public static void setResourcePlaner(ResourcePlaner resourcePlaner) {
+        Process.resourcePlaner = resourcePlaner;
+    }
+
+    public static ResourcePlaner getResourcePlaner() {
+        return resourcePlaner;
+    }
+
+    public static RM getRm() {
+        return rm;
+    }
+
+    public static void setRm(RM rm) {
+        Process.rm = rm;
     }
 
     public void ProcessNeedsResource(Resource resource){
