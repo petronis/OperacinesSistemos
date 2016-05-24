@@ -23,6 +23,7 @@ public class ProcessWantResources {
     }
 
     public void gotAllResources(){wants.clear();}
+
     public boolean releaseResources(Resource resource){
         if (wants.contains(resource)){
             wants.remove(resource);

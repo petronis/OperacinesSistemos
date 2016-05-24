@@ -90,26 +90,28 @@ public class ProcessPlaner {
     }
 
     public void IsThereAnyReadyProcess(){
-        if  (!readyProcessesList.isEmpty()){
-            //TODO Vykdyti procesa
-            for (int i = 0; i < readyProcessesList.size(); i++) {
-                Process workingProcess = readyProcessesList.get(i);
-                workingProcess.changeState(1);
-                workingProcess.work(this);
-                workingProcess.start();
-            }
-        }else{
-            for (int i = 0; i < waitingProcessesList.size(); i++){
-                if  (waitingProcessesList.get(i).processWantResources.isAvailable()){
-                    ChangeListByState(waitingProcessesList.get(i));
-                    break;
+        while(true) {
+            if (!readyProcessesList.isEmpty()) {
+                //TODO Vykdyti procesa
+                for (int i = 0; i < readyProcessesList.size(); i++) {
+                    Process workingProcess = readyProcessesList.get(i);
+                    workingProcess.changeState(1);
+                    workingProcess.work(this);
+                    workingProcess.start();
+                }
+            } else {
+                for (int i = 0; i < waitingProcessesList.size(); i++) {
+                    if (waitingProcessesList.get(i).processWantResources.isAvailable()) {
+                        ChangeListByState(waitingProcessesList.get(i));
+                        break;
+                    }
                 }
             }
-        }
-        for (int i = 0; i < processesList.size(); i++){
-            if (processesList.get(i).getProcessState() == 1){
-                processesList.get(i).work(this);
-                processesList.get(i).start();
+            for (int i = 0; i < processesList.size(); i++) {
+                if (processesList.get(i).getProcessState() == 1) {
+                    processesList.get(i).work(this);
+                    processesList.get(i).start();
+                }
             }
         }
     }

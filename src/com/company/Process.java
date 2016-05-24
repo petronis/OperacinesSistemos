@@ -48,6 +48,10 @@ public class Process extends Thread {
         return processWantResources.isAvailable();
     }
 
+    public void releaseAllResource(){
+        processWantResources.gotAllResources();
+    }
+
     public boolean hasItTaken(Resource resource){
         return processWantResources.hasIt(resource);
     }

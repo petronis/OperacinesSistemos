@@ -35,16 +35,17 @@ public class StartStop extends Process {
         System.out.println("Create Processes");
         ReadFromInterface processToAdd = new ReadFromInterface("ReadFromInterface", 3,this,resourcePlaner);
         processPlaner.addProcessToList(processToAdd);
-        JobToDisk processToAdd1 = new JobToDisk("JobToDisk", 3,this,resourcePlaner);
-        processPlaner.addProcessToList(processToAdd1);
-        Loader processToAdd2 = new Loader("Loader", 3,this,resourcePlaner);
-        processPlaner.addProcessToList(processToAdd2);
         Cheker processToAdd3 = new Cheker("Cheker", 3,this,resourcePlaner);
         processPlaner.addProcessToList(processToAdd3);
-        PrintLine processToAdd4 = new PrintLine("PrintLine", 3,this,resourcePlaner);
-        processPlaner.addProcessToList(processToAdd4);
+        JobToDisk processToAdd1 = new JobToDisk("JobToDisk", 3,this,resourcePlaner);
+        processPlaner.addProcessToList(processToAdd1);
         MainProc processToAdd5 = new MainProc("MainProc", 3,this,resourcePlaner);
         processPlaner.addProcessToList(processToAdd5);
+        Loader processToAdd2 = new Loader("Loader", 3,this,resourcePlaner);
+        processPlaner.addProcessToList(processToAdd2);
+        PrintLine processToAdd4 = new PrintLine("PrintLine", 3,this,resourcePlaner);
+        processPlaner.addProcessToList(processToAdd4);
+
     }
 
     @Override
