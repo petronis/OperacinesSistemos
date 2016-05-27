@@ -13,6 +13,7 @@ public class ResourcePlaner {
 
     public ResourcePlaner() {
         this.resources = new ArrayList<>();
+        this.waiting = new ArrayList<>();
     }
 
     public void createResource(String name, boolean multiuse, Process creator) {

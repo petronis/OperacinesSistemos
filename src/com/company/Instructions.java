@@ -92,6 +92,63 @@ public class Instructions {
         }
     }
 
+    public boolean check_comm(String command) {
+        try {
+            int address;
+            if (command.substring(0, 2).contentEquals("AD")) {
+                address = new Integer(command.substring(2, command.length()));
+            } else if (command.substring(0, 2).contentEquals("SB")) {
+                address = new Integer(command.substring(2, command.length()));
+            } else if (command.substring(0, 2).contentEquals("SV")) {
+                address = new Integer(command.substring(2, command.length()));
+            } else if (command.substring(0, 2).contentEquals("LD")) {
+                address = new Integer(command.substring(2, command.length()));
+            } else if (command.substring(0, 5).contentEquals("RESTR")) {
+
+            } else if (command.substring(0, 3).contentEquals("STI")) {
+                address = new Integer(command.substring(3, command.length()));
+            } else if (command.substring(0, 5).contentEquals("LRCH1")) {
+
+            } else if (command.substring(0, 5).contentEquals("LRCH2")) {
+
+            } else if (command.substring(0, 5).contentEquals("LRCH3")) {
+
+            } else if (command.substring(0, 5).contentEquals("LTRIC")) {
+
+            } else if (command.substring(0, 2).contentEquals("LR")) {
+                address = new Integer(command.substring(2, command.length()));
+            } else if (command.substring(0, 2).contentEquals("LB")) {
+                address = new Integer(command.substring(2, command.length()));
+            } else if (command.substring(0, 2).contentEquals("SR")) {
+                address = new Integer(command.substring(2, command.length()));
+            } else if (command.substring(0, 2).contentEquals("CR")) {
+                address = new Integer(command.substring(2, command.length()));
+            } else if (command.substring(0, 2).contentEquals("RT")) {
+                address = new Integer(command.substring(2, command.length()));
+            } else if (command.substring(0, 5).contentEquals("RETRN")) {
+            } else if (command.substring(0, 5).contentEquals("SETC0")) {
+            } else if (command.substring(0, 5).contentEquals("INVRC")) {
+            } else if (command.substring(0, 5).contentEquals("HALTP")) {
+            } else if (command.substring(0, 5).contentEquals("BEGPR")) {
+            } else if (command.substring(0, 5).contentEquals("STOPP")) {
+            } else if (command.substring(0, 5).contentEquals("CMODE")) {
+            } else if (command.substring(0, 2).contentEquals("GD")) {
+                address = new Integer(command.substring(2, command.length()));
+            } else if (command.substring(0, 2).contentEquals("PD")) {
+                address = new Integer(command.substring(2, command.length()));
+            } else if (command.substring(0, 2).contentEquals("SP")) {
+                address = new Integer(command.substring(2, command.length()));
+            } else if (command.substring(0, 5).contentEquals("INCBL")) {
+            } else if (command.substring(0, 5).contentEquals("DECBL")) {
+            } else {
+                throw new BadOperationPlan("no such operation");
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
 
     // instructions list
     private String IntToHex(int n, int size) throws Error {
