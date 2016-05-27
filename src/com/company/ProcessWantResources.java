@@ -34,6 +34,18 @@ public class ProcessWantResources {
         }
     }
 
+    public boolean occupy(){
+        if (isAvailable()) {
+            int size = wants.size();
+            for (int i = 0; i < size ; i++) {
+                wants.get(i).setFree(false);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public boolean isAvailable(){
         int size = wants.size(), check = 0;
         for (int i = 0; i < size ; i++) {
