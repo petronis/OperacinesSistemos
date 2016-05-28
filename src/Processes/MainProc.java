@@ -8,6 +8,9 @@ import com.company.ResourcePlaner;
  * Created by lukas on 2016-05-22.
  */
 public class MainProc extends Process {
+
+    JobGovernor jobGovernor;
+
     public MainProc(String name, int state, Process father, ResourcePlaner resourcePlaner) {
         super(name, state, father);
         this.ProcessNeedsResource(resourcePlaner.findResource("Programa parengta"));
@@ -15,9 +18,18 @@ public class MainProc extends Process {
 
     @Override
     public void run() {
+        int timer = 0;
         while(true) {
             if (this.ProcessHasAllResource()) {
-                // TODO: 2016-05-23 Sukurti arba sunaikinti JobGovernor
+                if (timer == 0) {
+                    timer++;
+//                    create jobGovernor
+//                    jobGovernor = new JobGovernor();
+                } else {
+//                    something went wrong in JobGovernor, so need to destroy JobGovernor and try again
+
+                    timer = 0;
+                }
             }
         }
     }
