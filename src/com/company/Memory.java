@@ -8,7 +8,7 @@ import Exceptions.WrongContentSize;
  */
 
 // block = 4 chars, cell = 1 char
-public class Memory {
+public class    Memory {
 
     int size;
     private static final int block_size = 5;

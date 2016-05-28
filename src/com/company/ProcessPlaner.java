@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by lukas on 2016-05-22.
  */
-public class ProcessPlaner {
+public class ProcessPlaner extends Thread {
     ArrayList<Process> processesList, readyProcessesList, waitingProcessesList;
     StartStop startStop;
     ResourcePlaner resourcePlaner;
@@ -23,13 +23,13 @@ public class ProcessPlaner {
         this.startStop = new StartStop("StartStop",1,null,resourcePlaner);
         this.startStop.setRm(rm);
         this.processesList.add(startStop);
-        StartStopProcess();
+//            StartStopProcess();
     }
 
-    public void StartStopProcess(){
+    /*public void StartStopProcess(){
         IsThereAnyReadyProcess();
         //startStop.createStaticResources();
-    }
+    }*/
 
     public void addProcessToList(Process processToAdd){
         processesList.add(processToAdd);
@@ -90,6 +90,11 @@ public class ProcessPlaner {
     }
 
     public void IsThereAnyReadyProcess(){
+        for (int i = 0; i < processesList.size(); i++) {
+            if (processesList.get(i).getProcessState() == 1) {
+                processesList.get(i).work(this);
+            }
+        }
         while(true) {
             if (!readyProcessesList.isEmpty()) {
                 //TODO Vykdyti procesa
@@ -97,7 +102,6 @@ public class ProcessPlaner {
                     Process workingProcess = readyProcessesList.get(i);
                     workingProcess.changeState(1);
                     workingProcess.work(this);
-                    workingProcess.start();
                 }
             } else {
                 for (int i = 0; i < waitingProcessesList.size(); i++) {
@@ -107,10 +111,29 @@ public class ProcessPlaner {
                     }
                 }
             }
-            for (int i = 0; i < processesList.size(); i++) {
-                if (processesList.get(i).getProcessState() == 1) {
-                    processesList.get(i).work(this);
-                    processesList.get(i).start();
+        }
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < processesList.size(); i++){
+            if(processesList.get(i).getProcessState() == 1){
+                processesList.get(i).work(this);
+            }
+        }
+        while(true){
+            if (!readyProcessesList.isEmpty()){
+                for (int i = 0; i < readyProcessesList.size();i++){
+                    readyProcessesList.get(i).changeState(1);
+                    Process newProcess = readyProcessesList.get(i);
+                    readyProcessesList.remove(i);
+                    newProcess.work(this);
+                }
+            } else {
+                for (int i = 0; i < waitingProcessesList.size(); i++){
+                    if (waitingProcessesList.get(i).processWantResources.isAvailable()){
+                        ChangeListByState(waitingProcessesList.get(i));
+                    }
                 }
             }
         }

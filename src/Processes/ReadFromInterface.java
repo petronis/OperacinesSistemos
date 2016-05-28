@@ -18,17 +18,17 @@ public class ReadFromInterface extends Process {
     ResourcePlaner resourcePlaner;
     ProcessPlaner processPlaner;
     public ReadFromInterface(String name, int state, Process father, ResourcePlaner resourcePlaner) {
-        super(name, state, father);
+        super(name, state, father,resourcePlaner);
         this.ProcessNeedsResource(resourcePlaner.findResource("InputOutput"));
         this.resourcePlaner = resourcePlaner;
     }
 
-    @Override
-    public void run() {
+    public void work(ProcessPlaner processPlaner){
+        this.processPlaner = processPlaner;
         while(true) {
-            if (this.ProcessHasAllResource()) {
+            //if (this.ProcessHasAllResource(this)) {
                 this.ProcessNeedsResource(resourcePlaner.findResource("Supervizorinės atminties"));
-                if (this.ProcessHasAllResource()) {
+                if (this.ProcessHasAllResource(this)) {
                     // if we get supervision memory we put everything from file to it.
                     try (BufferedReader br = new BufferedReader(new FileReader("code.txt"))) {
                         String line = br.readLine();
@@ -51,24 +51,20 @@ public class ReadFromInterface extends Process {
                         this.removeResourcesAfterUsingIt(resourcePlaner.findResource("Užduotis supervizorinėje atminyje"));
                         // returns true if remove was successful and false if not
                     }
-                    if (this.ProcessHasAllResource()) {
+                    //if (this.ProcessHasAllResource(this)) {
                         this.releaseAllResource();
                         this.ProcessNeedsResource(resourcePlaner.findResource("InputOutput"));
                         this.changeState(3); // blocked stopped
                         processPlaner.RemovingProcessesFromList(this);
                         processPlaner.addProcessToList(this);
                         processPlaner.IsThereAnyReadyProcess();
-                    }
+                    //}
                 }
 
-            }
+            //}
             else{
                 System.out.println("Something is wrong ReadFromInterface should not have gotten processor");
             }
         }
-    }
-
-    public void work(ProcessPlaner processPlaner){
-        this.processPlaner = processPlaner;
     }
 }
