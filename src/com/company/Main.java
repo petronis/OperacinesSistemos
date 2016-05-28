@@ -10,8 +10,7 @@ public class Main {
         Memory data = rm.getData();
         try {
             ProcessPlaner processPlaner = new ProcessPlaner(rm);
-
-
+            processPlaner.start();
             /*
             data.put_block(10, "00034");
             data.put_block(5, "00025");

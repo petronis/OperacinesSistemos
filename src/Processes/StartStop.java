@@ -12,7 +12,7 @@ public class StartStop extends Process {
     ResourcePlaner resourcePlaner;
     ProcessPlaner processPlaner;
     public StartStop(String name, int state, Process father, ResourcePlaner resourcePlaner) {
-        super(name, state, father);
+        super(name, state, father,resourcePlaner);
         this.resourcePlaner = resourcePlaner;
     }
 
@@ -35,8 +35,8 @@ public class StartStop extends Process {
         System.out.println("Create Processes");
         ReadFromInterface processToAdd = new ReadFromInterface("ReadFromInterface", 3,this,resourcePlaner);
         processPlaner.addProcessToList(processToAdd);
-        Cheker processToAdd3 = new Cheker("Cheker", 3,this,resourcePlaner);
-        processPlaner.addProcessToList(processToAdd3);
+        /*Cheker processToAdd3 = new Cheker("Cheker", 3,this,resourcePlaner);
+        processPlaner.addProcessToList(processToAdd3);*/
         JobToDisk processToAdd1 = new JobToDisk("JobToDisk", 3,this,resourcePlaner);
         processPlaner.addProcessToList(processToAdd1);
         MainProc processToAdd5 = new MainProc("MainProc", 3,this,resourcePlaner);
@@ -48,8 +48,8 @@ public class StartStop extends Process {
 
     }
 
-    @Override
-    public void run() {
+    public void work(ProcessPlaner processPlaner){
+        this.processPlaner = processPlaner;
         createStaticResources();
         createProcesses(processPlaner);
         Resource startStopEnd = new Resource("OS darbo pabaiga", false, false, this);
@@ -57,8 +57,9 @@ public class StartStop extends Process {
         processPlaner.AddingProcessesToList();
 //        processPlaner.PrintWaitingList();
         while(true) {
-            if(this.ProcessHasAllResource()){
-                break;
+            if(this.ProcessHasAllResource(this)){
+                System.exit(0);
+//                break;
             }
             else{
                 processPlaner.IsThereAnyReadyProcess();
@@ -66,7 +67,4 @@ public class StartStop extends Process {
         }
     }
 
-    public void work(ProcessPlaner processPlaner){
-        this.processPlaner = processPlaner;
-    }
 }

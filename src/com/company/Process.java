@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by lukas on 2016-05-11.
  */
-public class Process extends Thread {
+public class Process {
     String name;
     Process father;
     static ResourcePlaner resourcePlaner;
@@ -16,11 +16,12 @@ public class Process extends Thread {
     ProcessWantResources processWantResources;
     ArrayList<Process> childProcess;
 
-    public Process(String name, int state, Process father) {
+    public Process(String name, int state, Process father,ResourcePlaner resourcePlaner) {
         this.name = name;
         this.state = state;
         this.processWantResources = new ProcessWantResources(this);
         this.father = father;
+        this.resourcePlaner = resourcePlaner;
     }
 
     public static void setResourcePlaner(ResourcePlaner resourcePlaner) {
@@ -44,8 +45,18 @@ public class Process extends Thread {
         changeState(0);
     }
 
-    public boolean ProcessHasAllResource(){
-        return processWantResources.isAvailable();
+    public boolean ProcessHasAllResource(Process process){
+        boolean tmp;
+//        System.out.println("CheckWaitingList " + process.resourcePlaner.checkWaitingList());
+//        if (resourcePlaner.checkWaitingList() == process){
+        if (process.processWantResources.isAvailable()){
+            tmp = process.processWantResources.occupy();
+            System.out.println("TMP in PHAR " + tmp);
+        }else {
+            tmp = false;
+        }
+
+        return tmp;
     }
 
     public void releaseAllResource(){
@@ -69,7 +80,7 @@ public class Process extends Thread {
     public int getProcessState(){return this.state;}
 
     public void createChildProcess(String childName, int childState){
-        childProcess.add(new Process(childName,childState, this));
+        childProcess.add(new Process(childName,childState, this,resourcePlaner));
     }
 
     public void createResourcesFromProcess(ResourcePlaner resourcePlaner, String resourcesName, boolean multiuse){
@@ -77,10 +88,5 @@ public class Process extends Thread {
     }
 
     public void work(ProcessPlaner processPlaner) {
-    }
-
-    @Override
-    public void run() {
-
     }
 }
