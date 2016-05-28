@@ -12,7 +12,7 @@ public class MainProc extends Process {
     JobGovernor jobGovernor;
 
     public MainProc(String name, int state, Process father, ResourcePlaner resourcePlaner) {
-        super(name, state, father);
+        super(name, state, father, resourcePlaner);
         this.ProcessNeedsResource(resourcePlaner.findResource("Programa parengta"));
     }
 
