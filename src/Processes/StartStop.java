@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class StartStop extends Process {
     ResourcePlaner resourcePlaner;
     ProcessPlaner processPlaner;
+    boolean firstTime = true;
     public StartStop(String name, int state, Process father, ResourcePlaner resourcePlaner) {
         super(name, state, father,resourcePlaner);
         this.resourcePlaner = resourcePlaner;
@@ -52,11 +53,14 @@ public class StartStop extends Process {
 
     public void work(ProcessPlaner processPlaner){
         this.processPlaner = processPlaner;
-        createStaticResources();
-        createProcesses(processPlaner);
-        this.createResourcesFromProcess(resourcePlaner,"OS darbo pabaiga", true,false);
-        this.ProcessNeedsResource(resourcePlaner.findResource("OS darbo pabaiga"));
-        processPlaner.AddingProcessesToList();
+        if(firstTime) {
+            firstTime = false;
+            createStaticResources();
+            createProcesses(processPlaner);
+            this.createResourcesFromProcess(resourcePlaner, "OS darbo pabaiga", true, false);
+            this.ProcessNeedsResource(resourcePlaner.findResource("OS darbo pabaiga"));
+            processPlaner.AddingProcessesToList();
+        }
 //        processPlaner.PrintWaitingList();
         while(true) {
             if(this.ProcessHasAllResource(this)){
