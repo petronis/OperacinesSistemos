@@ -22,7 +22,12 @@ public class ProcessWantResources {
         wants.add(r);
     }
 
-    public void gotAllResources(){wants.clear();}
+    public void gotAllResources(){
+        for (int i = 0; i < wants.size(); i++) {
+            wants.get(i).setFree(true);
+        }
+        wants.clear();
+    }
 
     public boolean releaseResources(Resource resource){
         if (wants.contains(resource)){

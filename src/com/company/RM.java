@@ -54,7 +54,11 @@ public class RM extends Machine {
         Register ic = getRegister("IC"), ti = getRegister("TI");
         String command;
         if(!instructions.check_MODE()) {
-            vm.run();
+            try {
+                vm.run();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         try {
             instructions.check_machine_mode();
