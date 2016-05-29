@@ -25,6 +25,7 @@ public class ReadFromInterface extends Process {
 
     public void work(ProcessPlaner processPlaner){
         this.processPlaner = processPlaner;
+        System.out.println("Read From Interface is working now");
         while(true) {
             //if (this.ProcessHasAllResource(this)) {
                 this.ProcessNeedsResource(resourcePlaner.findResource("Supervizorinės atminties"));

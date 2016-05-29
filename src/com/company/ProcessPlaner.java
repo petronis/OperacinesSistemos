@@ -65,16 +65,14 @@ public class ProcessPlaner extends Thread {
     public void RemovingProcessesFromList(Process process){
         if (waitingProcessesList.contains(process)){
             waitingProcessesList.remove(process);
-            System.out.println("Process "+process+" was removed from waiting list");
         } else if (readyProcessesList.contains(process)){
             readyProcessesList.remove(process);
-            System.out.println("Process "+process+" was removed form ready list");
         }
     }
 
-    public void AddingProcessesToReadyList(Process process){
-        processesList.add(process);
-        readyProcessesList.add(0,process);
+    public void AddingProcessesToReadyList(Process process, int position){
+        System.out.println("Size " + readyProcessesList.size());
+        this.readyProcessesList.add(position, process);
     }
 
     public void AddingProcessesToList(){

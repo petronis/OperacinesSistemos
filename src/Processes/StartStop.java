@@ -32,7 +32,7 @@ public class StartStop extends Process {
     }
 
     public void createProcesses(ProcessPlaner processPlaner){
-        System.out.println("Create Processes");
+        System.out.println("Create Processes in StartStop");
         ReadFromInterface processToAdd = new ReadFromInterface("ReadFromInterface", 3,this,resourcePlaner);
         processPlaner.addProcessToList(processToAdd);
         /*Cheker processToAdd3 = new Cheker("Cheker", 3,this,resourcePlaner);

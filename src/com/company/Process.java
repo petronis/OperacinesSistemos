@@ -51,7 +51,6 @@ public class Process {
 //        if (resourcePlaner.checkWaitingList() == process){
         if (process.processWantResources.isAvailable()){
             tmp = process.processWantResources.occupy();
-            System.out.println("TMP in PHAR " + tmp);
         }else {
             tmp = false;
         }

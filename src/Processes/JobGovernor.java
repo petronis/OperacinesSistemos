@@ -3,6 +3,7 @@ package Processes;
 import com.company.Process;
 import com.company.ProcessPlaner;
 import com.company.ResourcePlaner;
+import com.sun.corba.se.impl.orbutil.concurrent.Sync;
 
 /**
  * Created by lukas on 2016-05-23.
@@ -22,6 +23,7 @@ public class JobGovernor extends Process {
 
     @Override
     public void work(ProcessPlaner processPlaner) {
+        System.out.println("Job Governor is working now");
         while(true){
             if(this.ProcessHasAllResource(this)){
                 // TODO: 2016-05-23 Create VM
