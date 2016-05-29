@@ -24,6 +24,8 @@ public class VirtualMachine extends Process {
             System.out.println("Fathers name " + getFather().getProcessName());
             String msg = getFather().getProcessName();
             resourcePlaner.findResource("Pertraukimas").setMessage(msg);
+            processPlaner.RemovingProcessesFromList(this);
+            processPlaner.IsThereAnyReadyProcess();
         } catch (Exception e) {
             e.printStackTrace();
         }

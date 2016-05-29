@@ -5,6 +5,8 @@ import com.company.Process;
 import com.company.ProcessPlaner;
 import com.company.ResourcePlaner;
 
+import java.util.Scanner;
+
 /**
  * Created by lukas on 2016-05-23.
  */
@@ -18,8 +20,10 @@ public class Interrupt extends Process {
 
     @Override
     public void work(ProcessPlaner processPlaner) {
+        System.out.println("Interrupt");
         int SI, PI, TI;
         if (this.ProcessHasAllResource(this)){
+            System.out.println("WE HAVE ALL RESOURCES");
             SI = getRm().getRegister("SI").getContentInt();
             PI = getRm().getRegister("PI").getContentInt();
             TI = getRm().getRegister("TI").getContentInt();
@@ -44,5 +48,13 @@ public class Interrupt extends Process {
             resourcePlaner.findResource("Iš Interrupt").setMessage(resourcePlaner.findResource("Pertraukimas").getMessage());
             resourcePlaner.findResource("Iš Interrupt").setFree(true);
         }
+        processPlaner.RemovingProcessesFromList(this);
+        this.changeState(3);
+        processPlaner.AddingProcessesToWaitingList(this);
+        int place = processPlaner.getProcessFromListByName(resourcePlaner.findResource("Pertraukimas").getMessage());
+        if (place > -1){
+            processPlaner.AddingProcessesToWaitingList(processPlaner.processesList.get(place),1);
+        }
+        processPlaner.IsThereAnyReadyProcess();
     }
 }

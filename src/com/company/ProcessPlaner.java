@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by lukas on 2016-05-22.
  */
 public class ProcessPlaner extends Thread {
-    ArrayList<Process> processesList, readyProcessesList, waitingProcessesList;
+    public ArrayList<Process> processesList, readyProcessesList, waitingProcessesList;
     StartStop startStop;
     ResourcePlaner resourcePlaner;
     RM rm;

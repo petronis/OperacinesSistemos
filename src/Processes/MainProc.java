@@ -28,7 +28,7 @@ public class MainProc extends Process {
                     jobGovernorNumbering++;
                     processPlaner.RemovingProcessesFromList(this);
                     processPlaner.addProcessToList(jobGovernor);
-                    processPlaner.AddingProcessesToWaitingList(jobGovernor, 2);
+                    processPlaner.AddingProcessesToWaitingList(jobGovernor, 1);
                     processPlaner.addProcessToList(this);
                     this.changeState(2);
                     processPlaner.IsThereAnyReadyProcess();

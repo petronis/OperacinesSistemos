@@ -24,7 +24,7 @@ public class StartStop extends Process {
         this.createResourcesFromProcess(resourcePlaner,"Užduoties programa supervizorinėje atmintyje", true);
         this.createResourcesFromProcess(resourcePlaner,"Kanalų įrenginys", true);
         this.createResourcesFromProcess(resourcePlaner,"Vartotojo atmintis", true);
-        this.createResourcesFromProcess(resourcePlaner,"Pakrovimo paketas", true);
+        this.createResourcesFromProcess(resourcePlaner,"Pakrovimo paketas", true, false);
         this.createResourcesFromProcess(resourcePlaner,"Išorinė atmintis", true);
         this.createResourcesFromProcess(resourcePlaner,"InputOutput", true);
         this.createResourcesFromProcess(resourcePlaner,"Pertraukimas", true, false);
