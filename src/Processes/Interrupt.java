@@ -19,22 +19,30 @@ public class Interrupt extends Process {
     @Override
     public void work(ProcessPlaner processPlaner) {
         int SI, PI, TI;
-        while(true){
-            if (this.ProcessHasAllResource(this)){
-                SI = getRm().getRegister("SI").getContentInt();
-                PI = getRm().getRegister("PI").getContentInt();
-                TI = getRm().getRegister("TI").getContentInt();
-                if (TI == 0){
-                    // timer interrupt
-                } else if (PI > 0) {
+        if (this.ProcessHasAllResource(this)){
+            SI = getRm().getRegister("SI").getContentInt();
+            PI = getRm().getRegister("PI").getContentInt();
+            TI = getRm().getRegister("TI").getContentInt();
+            if (TI == 0){
+//                     timer interrupt
+                resourcePlaner.findResource("Interrupt").setMessage("TI");
+                resourcePlaner.findResource("Interrupt").setFree(true);
+            } else if (PI > 0) {
 //                    Program interrupt
-                } else if (SI > 0) {
+                resourcePlaner.findResource("Interrupt").setMessage("PI");
+                resourcePlaner.findResource("Interrupt").setFree(true);
+            } else if (SI > 0) {
 //                    SupervisorInterrupt
-                } else  {
+                resourcePlaner.findResource("Interrupt").setMessage("SI");
+                resourcePlaner.findResource("Interrupt").setFree(true);
+            } else  {
 //                    no interrupt, means VM still working
-                }
-//                free res for jobGov
+                resourcePlaner.findResource("Interrupt").setMessage("VM still working");
+                resourcePlaner.findResource("Interrupt").setFree(true);
             }
+//                free res for jobGov
+            resourcePlaner.findResource("Iš Interrupt").setMessage(resourcePlaner.findResource("Pertraukimas").getMessage());
+            resourcePlaner.findResource("Iš Interrupt").setFree(true);
         }
     }
 }

@@ -29,6 +29,7 @@ public class StartStop extends Process {
         this.createResourcesFromProcess(resourcePlaner,"InputOutput", true);
         this.createResourcesFromProcess(resourcePlaner,"Pertraukimas", true, false);
         this.createResourcesFromProcess(resourcePlaner,"Iš Interupt", true, false);
+        this.createResourcesFromProcess(resourcePlaner,"Interrupt", true, false);
         this.createResourcesFromProcess(resourcePlaner,"Programa parengta", true);
     }
 
