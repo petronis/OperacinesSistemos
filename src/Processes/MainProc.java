@@ -9,32 +9,29 @@ import com.company.ResourcePlaner;
  */
 public class MainProc extends Process {
 
-    JobGovernor jobGovernor;
+    JobGovernor jobGovernor = null;
 
     public MainProc(String name, int state, Process father, ResourcePlaner resourcePlaner) {
         super(name, state, father, resourcePlaner);
         this.ProcessNeedsResource(resourcePlaner.findResource("Programa parengta"));
     }
 
-    @Override
-    public void run() {
+    public void work(ProcessPlaner processPlaner){
         int timer = 0;
+        JobGovernor jobGovernor = new JobGovernor("JobGovernor", 3, this, getResourcePlaner());;
         while(true) {
-            if (this.ProcessHasAllResource()) {
+            if (this.ProcessHasAllResource(this)) {
                 if (timer == 0) {
                     timer++;
 //                    create jobGovernor
-//                    jobGovernor = new JobGovernor();
+                    jobGovernor = new JobGovernor("JobGovernor", 3, this, getResourcePlaner());
+                    processPlaner.addProcessToList(jobGovernor);
                 } else {
 //                    something went wrong in JobGovernor, so need to destroy JobGovernor and try again
-
+                    processPlaner.RemovingProcessesFromList(jobGovernor);
                     timer = 0;
                 }
             }
         }
-    }
-
-    public void work(ProcessPlaner processPlaner){
-
     }
 }

@@ -49,7 +49,7 @@ public class RM extends Machine {
     }
 
     @Override
-    void run() {
+    public void run() {
         instructions.check_machine_mode();
         Register ic = getRegister("IC"), ti = getRegister("TI");
         String command;
