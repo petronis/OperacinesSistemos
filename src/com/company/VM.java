@@ -49,7 +49,7 @@ public class VM extends Machine {
                     throw new TimerEnd("TI is 0");
                 }
             }
-    } catch (WrongAddress e){
+        } catch (WrongAddress e){
                 rm.getRegister("PI").setContent(1);
                 e.printStackTrace();
         } catch (BadOperationPlan e){

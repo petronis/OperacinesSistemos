@@ -25,7 +25,7 @@ public class Loader extends Process {
         while(true) {
             if (this.ProcessHasAllResource(this)) {
                 try {
-                    getRm().getRegister("PTR").setContent(0);
+//                    getRm().getRegister("PTR").setContent(0);
                     for (int i = 0; i < getRm().getExternal().getSize(); i++) {
                         try {
                             getRm().getData().put_block(i, getRm().getExternal().getBlock(i));

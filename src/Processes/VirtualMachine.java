@@ -22,5 +22,6 @@ public class VirtualMachine extends Process {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        processPlaner.RemovingProcessesFromList(this);
     }
 }
