@@ -16,13 +16,13 @@ public class JobGovernor extends Process {
         this.resourcePlaner = resourcePlaner;
         this.ProcessNeedsResource(resourcePlaner.findResource("Vartotojo atmintis"));
         this.ProcessNeedsResource(resourcePlaner.findResource("Pakrovimo paketas"));
-        this.ProcessNeedsResource(resourcePlaner.findResource("Loader complete"));
-        this.ProcessNeedsResource(resourcePlaner.findResource("Supervizorine atmintis"));
     }
 
 
     @Override
     public void work(ProcessPlaner processPlaner) {
+        this.ProcessNeedsResource(resourcePlaner.findResource("Loader complete"));
+        this.ProcessNeedsResource(resourcePlaner.findResource("Supervizorinės atminties"));
         System.out.println("Job Governor is working now");
         while(true){
             if(this.ProcessHasAllResource(this)){

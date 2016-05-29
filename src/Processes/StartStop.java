@@ -18,17 +18,17 @@ public class StartStop extends Process {
 
 
     public void createStaticResources(){
-        this.createResourcesFromProcess(resourcePlaner,"Supervizorinės atminties", false);
-        this.createResourcesFromProcess(resourcePlaner,"Užduotis supervizorinėje atminyje", false);
-        this.createResourcesFromProcess(resourcePlaner,"Užduoties duomenys supervizorinėje atmintyje", false);
-        this.createResourcesFromProcess(resourcePlaner,"Užduoties programa supervizorinėje atmintyje", false);
-        this.createResourcesFromProcess(resourcePlaner,"Kanalų įrenginys", false);
-        this.createResourcesFromProcess(resourcePlaner,"Vartotojo atmintis", false);
+        this.createResourcesFromProcess(resourcePlaner,"Supervizorinės atminties", true);
+        this.createResourcesFromProcess(resourcePlaner,"Užduotis supervizorinėje atminyje", true);
+        this.createResourcesFromProcess(resourcePlaner,"Užduoties duomenys supervizorinėje atmintyje", true);
+        this.createResourcesFromProcess(resourcePlaner,"Užduoties programa supervizorinėje atmintyje", true);
+        this.createResourcesFromProcess(resourcePlaner,"Kanalų įrenginys", true);
+        this.createResourcesFromProcess(resourcePlaner,"Vartotojo atmintis", true);
         this.createResourcesFromProcess(resourcePlaner,"Pakrovimo paketas", true);
-        this.createResourcesFromProcess(resourcePlaner,"Išorinė atmintis", false);
-        this.createResourcesFromProcess(resourcePlaner,"InputOutput", false);
-        this.createResourcesFromProcess(resourcePlaner,"Pertraukimas", false);
-        this.createResourcesFromProcess(resourcePlaner,"Programa parengta", false);
+        this.createResourcesFromProcess(resourcePlaner,"Išorinė atmintis", true);
+        this.createResourcesFromProcess(resourcePlaner,"InputOutput", true);
+        this.createResourcesFromProcess(resourcePlaner,"Pertraukimas", true);
+        this.createResourcesFromProcess(resourcePlaner,"Programa parengta", true);
     }
 
     public void createProcesses(ProcessPlaner processPlaner){
