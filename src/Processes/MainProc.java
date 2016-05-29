@@ -25,7 +25,7 @@ public class MainProc extends Process {
                     timer++;
 //                    create jobGovernor
                     jobGovernor = new JobGovernor("JobGovernor", 3, this, getResourcePlaner());
-                    processPlaner.addProcessToList(jobGovernor);
+                    processPlaner.AddingProcessesToReadyList(jobGovernor);
                 } else {
 //                    something went wrong in JobGovernor, so need to destroy JobGovernor and try again
                     processPlaner.RemovingProcessesFromList(jobGovernor);
