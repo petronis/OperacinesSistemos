@@ -56,6 +56,7 @@ public class JobGovernor extends Process {
                 } else {
                     try {
                         getRm().iterate();
+                        virtualMachine.work(processPlaner);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

@@ -36,6 +36,10 @@ public class RM extends Machine {
         init(vm_blocks, external_blocks, supervision_blocks);
     }
 
+    public VM getVm() {
+        return vm;
+    }
+
     public Instructions getInstructions() {
         return instructions;
     }
@@ -80,6 +84,7 @@ public class RM extends Machine {
     public void iterate() throws Exception{
         Register ic = getRegister("IC"), ti = getRegister("TI");
         String command;
+        instructions.change_mode();
         instructions.check_machine_mode();
         System.out.println("Supervisor iter");
         System.out.println(ic.getName() + " " + ic.getContentInt());

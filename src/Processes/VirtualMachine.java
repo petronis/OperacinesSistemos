@@ -9,6 +9,7 @@ import com.company.ResourcePlaner;
  */
 public class VirtualMachine extends Process {
     ResourcePlaner resourcePlaner;
+    boolean firsTime = true;
     public VirtualMachine(String name, int state, Process father, ResourcePlaner resourcePlaner) {
         super(name, state, father, resourcePlaner);
         this.resourcePlaner = resourcePlaner;
@@ -19,7 +20,12 @@ public class VirtualMachine extends Process {
         System.out.println("VirtualMachine is work");
         try {
             getRm().getInstructions().change_mode();
-            getRm().run();
+            if (firsTime) {
+                firsTime = false;
+                getRm().run();
+            } else  {
+                getRm().getVm().rerun();
+            }
             getResourcePlaner().freeResource("Pertraukimas");
             String msg = getFather().getProcessName();
             resourcePlaner.findResource("Pertraukimas").setMessage(msg);
