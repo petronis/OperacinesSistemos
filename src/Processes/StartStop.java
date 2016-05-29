@@ -27,7 +27,8 @@ public class StartStop extends Process {
         this.createResourcesFromProcess(resourcePlaner,"Pakrovimo paketas", true);
         this.createResourcesFromProcess(resourcePlaner,"Išorinė atmintis", true);
         this.createResourcesFromProcess(resourcePlaner,"InputOutput", true);
-        this.createResourcesFromProcess(resourcePlaner,"Pertraukimas", true);
+        this.createResourcesFromProcess(resourcePlaner,"Pertraukimas", true, false);
+        this.createResourcesFromProcess(resourcePlaner,"Iš Interupt", true, false);
         this.createResourcesFromProcess(resourcePlaner,"Programa parengta", true);
     }
 
@@ -43,8 +44,8 @@ public class StartStop extends Process {
         processPlaner.addProcessToList(processToAdd5);
         Loader processToAdd2 = new Loader("Loader", 3,this,resourcePlaner);
         processPlaner.addProcessToList(processToAdd2);
-        PrintLine processToAdd4 = new PrintLine("PrintLine", 3,this,resourcePlaner);
-        processPlaner.addProcessToList(processToAdd4);
+        Interrupt interrupt = new Interrupt("Interupt", 3,this,resourcePlaner);
+        processPlaner.addProcessToList(interrupt);
 
     }
 

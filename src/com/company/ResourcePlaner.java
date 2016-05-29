@@ -19,6 +19,9 @@ public class ResourcePlaner {
     public void createResource(String name, boolean multiuse, Process creator) {
         resources.add(new Resource(name, multiuse, creator));
     }
+    public void createResource(String name, boolean multiuse, boolean free, Process creator) {
+        resources.add(new Resource(name, multiuse, free, creator));
+    }
 
     public Resource findResource(String key){
         for (int i = 0; i < resources.size(); i++) {

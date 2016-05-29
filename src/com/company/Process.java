@@ -89,6 +89,9 @@ public class Process {
     public void createResourcesFromProcess(ResourcePlaner resourcePlaner, String resourcesName, boolean multiuse){
         resourcePlaner.createResource(resourcesName,multiuse,this);
     }
+    public void createResourcesFromProcess(ResourcePlaner resourcePlaner, String resourcesName, boolean multiuse, boolean free){
+        resourcePlaner.createResource(resourcesName,multiuse, free,this);
+    }
 
     public void work(ProcessPlaner processPlaner) {
     }
