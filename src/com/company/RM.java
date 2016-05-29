@@ -76,4 +76,16 @@ public class RM extends Machine {
         }
 
     }
+
+    void iterate() throws Exception{
+        Register ic = getRegister("IC"), ti = getRegister("TI");
+        String command;
+        instructions.check_machine_mode();
+        System.out.println("Supervisor iter");
+        System.out.println(ic.getName() + " " + ic.getContentInt());
+        command = new String(getData().getBlock(ic.getContentInt()));
+        instructions.interpreter(command);
+        ic.inc(1);
+        ti.inc(-1);
+    }
 }

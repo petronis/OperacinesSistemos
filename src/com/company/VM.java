@@ -14,8 +14,8 @@ public class VM extends Machine {
     private void init() {
         registers.addRegister(new Register("IC", 3, "000"));
         registers.addRegister(new Register("C", 1, "0"));
-        registers.addRegister(new Register("R", 5));
-        registers.addRegister(new Register("B", 2));
+        registers.addRegister(new Register("R", 5, "00000"));
+        registers.addRegister(new Register("B", 2, "00"));
     }
 
     VM(int blocks, RM rm, Register ptr) {
@@ -42,6 +42,11 @@ public class VM extends Machine {
 
     public void setInstructions(Instructions instructions) {
         this.instructions = instructions;
+    }
+
+    public void rerun() throws Exception{
+        loadReg();
+        run();
     }
 
     @Override
