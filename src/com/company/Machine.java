@@ -1,6 +1,8 @@
 package com.company;
 
 
+import Exceptions.WrongContentSize;
+
 /**
  * Created by Vik on 3/12/2016.
  */
@@ -14,7 +16,7 @@ public abstract class Machine {
     }
 
     /* runs machine using defined algorithm */
-    abstract void run();
+    abstract void run() throws WrongContentSize, Exception;
 
     public Memory getData() {
         return data;

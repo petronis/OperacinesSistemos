@@ -1,7 +1,7 @@
 package com.company;
 
-import Interrupts.SupervisorInterrupt;
-import Interrupts.TimerEnd;
+import Exceptions.WrongContentSize;
+import Interrupts.*;
 
 /**
  * Created by Vik on 3/12/2016.
@@ -30,7 +30,7 @@ public class VM extends Machine {
     }
 
     @Override
-    void run()  {
+    void run() throws Exception {
         instructions.check_machine_mode();
         Register ic = getRegister("IC"), ti = rm.getRegister("TI");
         String command;
@@ -48,7 +48,43 @@ public class VM extends Machine {
                     throw new TimerEnd("TI is 0");
                 }
             }
-    }catch (Exception exception) {
+    } catch (WrongAddress e){
+                rm.getRegister("PI").setContent(1);
+                e.printStackTrace();
+        } catch (BadOperationPlan e){
+                rm.getRegister("PI").setContent(2);
+                e.printStackTrace();
+        } catch (AssignError e){
+            rm.getRegister("PI").setContent(3);
+            e.printStackTrace();
+        } catch (InsufficientSpace e){
+                rm.getRegister("PI").setContent(5);
+                e.printStackTrace();
+        } catch (Output e){
+            rm.getRegister("SI").setContent(1);
+            e.printStackTrace();
+        } catch (Input e){
+            rm.getRegister("SI").setContent(2);
+            e.printStackTrace();
+        } catch (WriteToMemory e){
+            rm.getRegister("SI").setContent(3);
+            e.printStackTrace();
+        } catch (LoadFromMemory e){
+            rm.getRegister("SI").setContent(4);
+            e.printStackTrace();
+        } catch (SetTimer e){
+            rm.getRegister("SI").setContent(5);
+            e.printStackTrace();
+        } catch (SetPTR e){
+            rm.getRegister("SI").setContent(6);
+            e.printStackTrace();
+        } catch (Halt e){
+            rm.getRegister("SI").setContent(7);
+            e.printStackTrace();
+        } catch (ShutDown e){
+            rm.getRegister("SI").setContent(8);
+            e.printStackTrace();
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
