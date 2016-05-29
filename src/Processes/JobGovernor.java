@@ -56,6 +56,7 @@ public class JobGovernor extends Process {
                 if (getRm().getRegister("SI").getContentInt() == 8) {
                     resourcePlaner.findResource("OS darbo pabaiga").setFree(true);
                     this.changeState(3);
+                    processPlaner.RemovingProcessesFromList(this);
                     processPlaner.IsThereAnyReadyProcess();
                 } else {
                 }

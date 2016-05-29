@@ -54,12 +54,13 @@ public class StartStop extends Process {
         this.processPlaner = processPlaner;
         createStaticResources();
         createProcesses(processPlaner);
-        Resource startStopEnd = new Resource("OS darbo pabaiga", false, false, this);
-        this.ProcessNeedsResource(startStopEnd);
+        this.createResourcesFromProcess(resourcePlaner,"OS darbo pabaiga", true,false);
+        this.ProcessNeedsResource(resourcePlaner.findResource("OS darbo pabaiga"));
         processPlaner.AddingProcessesToList();
 //        processPlaner.PrintWaitingList();
         while(true) {
             if(this.ProcessHasAllResource(this)){
+                System.out.println("END OF START STOP");
                 System.exit(0);
 //                break;
             }
