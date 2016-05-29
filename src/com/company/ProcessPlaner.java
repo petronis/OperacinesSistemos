@@ -71,6 +71,12 @@ public class ProcessPlaner extends Thread {
             System.out.println("Process "+process+" was removed form ready list");
         }
     }
+
+    public void AddingProcessesToReadyList(Process process){
+        processesList.add(process);
+        readyProcessesList.add(0,process);
+    }
+
     public void AddingProcessesToList(){
         for(int i = 0; i < processesList.size(); i++) {
             if (processesList.get(i).getProcessState() == 0 || processesList.get(i).getProcessState() == 3) {
