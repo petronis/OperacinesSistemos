@@ -70,40 +70,40 @@ public class VM extends Machine {
             }
         } catch (WrongAddress e){
                 rm.getRegister("PI").setContent(1);
-                e.printStackTrace();
+                System.out.println("EXPT: "+e.getName());
         } catch (BadOperationPlan e){
                 rm.getRegister("PI").setContent(2);
-                e.printStackTrace();
+                System.out.println("EXPT: "+e.getName());
         } catch (AssignError e){
             rm.getRegister("PI").setContent(3);
-            e.printStackTrace();
+            System.out.println("EXPT: "+e.getName());
         } catch (InsufficientSpace e){
                 rm.getRegister("PI").setContent(5);
-                e.printStackTrace();
+                System.out.println("EXPT: "+e.getName());
         } catch (Output e){
             rm.getRegister("SI").setContent(1);
-            e.printStackTrace();
+            System.out.println("EXPT: "+e.getName());
         } catch (Input e){
             rm.getRegister("SI").setContent(2);
-            e.printStackTrace();
+            System.out.println("EXPT: "+e.getName());
         } catch (WriteToMemory e){
             rm.getRegister("SI").setContent(3);
-            e.printStackTrace();
+            System.out.println("EXPT: "+e.getName());
         } catch (LoadFromMemory e){
             rm.getRegister("SI").setContent(4);
-            e.printStackTrace();
+            System.out.println("EXPT: "+e.getName());
         } catch (SetTimer e){
             rm.getRegister("SI").setContent(5);
-            e.printStackTrace();
+            System.out.println("EXPT: "+e.getName());
         } catch (SetPTR e){
             rm.getRegister("SI").setContent(6);
-            e.printStackTrace();
+            System.out.println("EXPT: "+e.getName());
         } catch (Halt e){
             rm.getRegister("SI").setContent(7);
-            e.printStackTrace();
+            System.out.println("EXPT: "+e.getName());
         } catch (ShutDown e){
             rm.getRegister("SI").setContent(8);
-            e.printStackTrace();
+            System.out.println("EXPT: "+e.getName());
         } catch (Exception exception) {
             exception.printStackTrace();
         }

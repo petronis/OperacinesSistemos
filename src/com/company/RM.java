@@ -59,22 +59,22 @@ public class RM extends Machine {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        try {
-            instructions.check_machine_mode();
-            System.out.println("Supervisor");
-            while (instructions.check_MODE() && ti.getContentInt() > 0) {
-                System.out.println(ic.getName() + " " + ic.getContentInt());
-                command = new String(getData().getBlock(ic.getContentInt()));
-                instructions.interpreter(command);
-                ic.inc(1);
-                ti.inc(-1);
+        } else {
+            try {
+                instructions.check_machine_mode();
+                System.out.println("Supervisor");
+                while (instructions.check_MODE() && ti.getContentInt() > 0) {
+                    System.out.println(ic.getName() + " " + ic.getContentInt());
+                    command = new String(getData().getBlock(ic.getContentInt()));
+                    instructions.interpreter(command);
+                    ic.inc(1);
+                    ti.inc(-1);
 
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
-        } catch (Exception exception) {
-            exception.printStackTrace();
         }
-
     }
 
     void iterate() throws Exception{
