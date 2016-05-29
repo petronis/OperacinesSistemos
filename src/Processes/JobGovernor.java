@@ -54,7 +54,11 @@ public class JobGovernor extends Process {
                     processPlaner.RemovingProcessesFromList(this);
                     processPlaner.IsThereAnyReadyProcess();
                 } else {
-
+                    try {
+                        getRm().iterate();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
             } else {

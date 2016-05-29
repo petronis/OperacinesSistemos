@@ -77,7 +77,7 @@ public class RM extends Machine {
         }
     }
 
-    void iterate() throws Exception{
+    public void iterate() throws Exception{
         Register ic = getRegister("IC"), ti = getRegister("TI");
         String command;
         instructions.check_machine_mode();
