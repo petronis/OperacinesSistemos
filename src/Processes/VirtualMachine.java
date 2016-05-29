@@ -16,12 +16,11 @@ public class VirtualMachine extends Process {
 
     @Override
     public void work(ProcessPlaner processPlaner) {
-        System.out.println("VirtualMachine work");
+        System.out.println("VirtualMachine is work");
         try {
             getRm().getInstructions().change_mode();
             getRm().run();
             getResourcePlaner().freeResource("Pertraukimas");
-            System.out.println("Fathers name " + getFather().getProcessName());
             String msg = getFather().getProcessName();
             resourcePlaner.findResource("Pertraukimas").setMessage(msg);
             processPlaner.RemovingProcessesFromList(this);

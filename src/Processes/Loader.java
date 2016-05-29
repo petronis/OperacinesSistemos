@@ -21,7 +21,7 @@ public class Loader extends Process {
 
 
     public void work(ProcessPlaner processPlaner){
-        //System.out.println("Loader is working");
+        System.out.println("Loader is working");
         while(true) {
             if (this.ProcessHasAllResource(this)) {
                 try {
@@ -33,7 +33,6 @@ public class Loader extends Process {
                             wrongAddress.printStackTrace();
                         }
                     }
-                    System.out.println(getRm().getData().getBlock());
 
                 } catch (WrongContentSize wrongContentSize) {
                     wrongContentSize.printStackTrace();

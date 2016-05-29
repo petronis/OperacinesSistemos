@@ -24,7 +24,7 @@ public class JobGovernor extends Process {
         if (resourcePlaner.findResource("Iš Interupt").getMessage() != this.getProcessName()) {
             resourcePlaner.findResource("Pakrovimo paketas").setFree(true);
             if (firstTime) {
-                System.out.println("first time in JobGovernor");
+                System.out.println("JobGovernor needs Loader complete resource");
                 firstTime = false;
                 this.changeState(3);
                 processPlaner.RemovingProcessesFromList(this);
@@ -35,8 +35,6 @@ public class JobGovernor extends Process {
             this.ProcessNeedsResource(resourcePlaner.findResource("Supervizorinės atminties"));
             System.out.println("Job Governor is working now");
             if (this.ProcessHasAllResource(this)) {
-                // TODO: 2016-05-23 Create VM
-                System.out.println("JobGov has all res");
                 virtualMachine = new VirtualMachine("VirtualMachine", 3, this, resourcePlaner);
                 this.changeState(3);
 
@@ -46,12 +44,9 @@ public class JobGovernor extends Process {
                 processPlaner.AddingProcessesToWaitingList(virtualMachine, 1);
                 firstTime = true;
                 processPlaner.IsThereAnyReadyProcess();
-
-
-                // TODO: 2016-05-23 Stop VM
-                // TODO: 2016-05-23 What Interrupt is it if GD good, if not terminante JobGovernor with VM
             }
         } else {
+            System.out.println("JobGovernor after interrupt");
             if (resourcePlaner.findResource("Interrupt").getMessage().equals("SI")) {
                 if (getRm().getRegister("SI").getContentInt() == 8) {
                     resourcePlaner.findResource("OS darbo pabaiga").setFree(true);

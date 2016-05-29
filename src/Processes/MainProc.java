@@ -17,6 +17,7 @@ public class MainProc extends Process {
     }
 
     public void work(ProcessPlaner processPlaner){
+        System.out.println("Main Proc is working");
         int timer = 0;
         jobGovernor = new JobGovernor("JobGovernor", 3, this, getResourcePlaner());;
         while(true) {

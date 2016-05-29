@@ -20,10 +20,9 @@ public class Interrupt extends Process {
 
     @Override
     public void work(ProcessPlaner processPlaner) {
-        System.out.println("Interrupt");
+        System.out.println("Interrupt is working");
         int SI, PI, TI;
         if (this.ProcessHasAllResource(this)){
-            System.out.println("WE HAVE ALL RESOURCES");
             SI = getRm().getRegister("SI").getContentInt();
             PI = getRm().getRegister("PI").getContentInt();
             TI = getRm().getRegister("TI").getContentInt();

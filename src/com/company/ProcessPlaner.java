@@ -76,7 +76,6 @@ public class ProcessPlaner extends Thread {
     }
 
     public void AddingProcessesToWaitingList(Process process, int position){
-        System.out.println("Size " + this.waitingProcessesList.size());
         this.waitingProcessesList.add(position, process);
     }
 
@@ -114,7 +113,6 @@ public class ProcessPlaner extends Thread {
                 }
             } else {
                 for (int i = 0; i < waitingProcessesList.size(); i++) {
-                    System.out.println("Waiting list element " + waitingProcessesList.get(i).getProcessName());
                     if (waitingProcessesList.get(i).processWantResources.isAvailable()) {
                         ChangeListByState(waitingProcessesList.get(i));
                         break;
@@ -143,7 +141,6 @@ public class ProcessPlaner extends Thread {
                 for (int i = 0; i < waitingProcessesList.size(); i++){
                     if (waitingProcessesList.get(i).processWantResources.isAvailable()){
                         ChangeListByState(waitingProcessesList.get(i));
-                        System.out.println("After changing waiting list, its size is " + waitingProcessesList.size());
                     }
                 }
             }

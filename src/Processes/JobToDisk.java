@@ -23,7 +23,6 @@ public class JobToDisk extends Process {
         while(true) {
             this.ProcessNeedsResource(resourcePlaner.findResource("Kanalų įrenginys"));
             if (this.ProcessHasAllResource(this)) {
-                System.out.println(getRm().getSupervision().getSize());
                 for (int i = 0; i < getRm().getSupervision().getSize();i++){
                     try {
                         getRm().getExternal().put_block(i,getRm().getSupervision().getBlock(i));
@@ -33,8 +32,6 @@ public class JobToDisk extends Process {
                         wrongAddress.printStackTrace();
                     }
                 }
-                System.out.println(getRm().getSupervision().getBlock());
-                System.out.println(getRm().getExternal().getBlock());
                 this.releaseAllResource();
                 processPlaner.RemovingProcessesFromList(this);
                 processPlaner.addProcessToList(this);
