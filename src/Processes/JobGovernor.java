@@ -29,10 +29,15 @@ public class JobGovernor extends Process {
             if(this.ProcessHasAllResource(this)){
                 // TODO: 2016-05-23 Create VM
                 System.out.println("JobGov has all res");
-                virtualMachine = new VirtualMachine("VirtualMachine", 2, this, resourcePlaner);
+                virtualMachine = new VirtualMachine("VirtualMachine", 3, this, resourcePlaner);
+                this.changeState(3);
+
+                processPlaner.RemovingProcessesFromList(this);
+                processPlaner.AddingProcessesToWaitingList(this);
                 processPlaner.AddingProcessesToWaitingList(virtualMachine, 1);
                 processPlaner.IsThereAnyReadyProcess();
-//                this.ProcessNeedsResource(resourcePlaner.findResource("Interrupt"));
+
+
                 // TODO: 2016-05-23 Stop VM
                 // TODO: 2016-05-23 What Interrupt is it if GD good, if not terminante JobGovernor with VM
             }

@@ -91,7 +91,7 @@ public class ProcessPlaner extends Thread {
     }
 
     public void ChangeListByState(Process process){
-        if  (process.state == 0) { // Process is blocked need to be changed to ready
+        if  (process.state == 0 || process.state == 3) { // Process is blocked need to be changed to ready
             waitingProcessesList.remove(waitingProcessesList.indexOf(process));
             readyProcessesList.add(process);
             process.changeState(2);
