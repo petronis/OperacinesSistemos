@@ -52,7 +52,17 @@ public class JobGovernor extends Process {
                 // TODO: 2016-05-23 What Interrupt is it if GD good, if not terminante JobGovernor with VM
             }
         } else {
-            System.out.println("JOB GOBVERNOR AFTER INTERUPT");
+            if (resourcePlaner.findResource("Interrupt").getMessage().equals("SI")) {
+                if (getRm().getRegister("SI").getContentInt() == 8) {
+                    resourcePlaner.findResource("OS darbo pabaiga").setFree(true);
+                    this.changeState(3);
+                    processPlaner.IsThereAnyReadyProcess();
+                } else {
+                }
+
+            } else {
+                processPlaner.RemovingProcessesFromList(this);
+            }
         }
     }
 }

@@ -25,6 +25,21 @@ public class VM extends Machine {
         init();
     }
 
+    public void saveReg() throws Exception {
+        rm.getRegister("C").setContent(getRegister("C").getContentInt());
+        rm.getRegister("R").setContent(getRegister("R").getContentInt());
+        rm.getRegister("B").setContent(getRegister("B").getContentInt());
+        rm.getRegister("IC").setContent(rm.getData().getBlockInt(rm.getRegister("PTR").getContentInt()) + getRegister("IC").getContentInt());
+    }
+
+    public void loadReg() throws Exception {
+        this.getRegister("C").setContent(rm.getRegister("C").getContentInt());
+        this.getRegister("R").setContent(rm.getRegister("R").getContentInt());
+        this.getRegister("B").setContent(rm.getRegister("B").getContentInt());
+        this.getRegister("IC").setContent(rm.getData().getBlockInt(rm.getRegister("IC").getContentInt() - rm.getRegister("PTR").getContentInt()));
+
+    }
+
     public void setInstructions(Instructions instructions) {
         this.instructions = instructions;
     }
@@ -87,5 +102,6 @@ public class VM extends Machine {
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+        saveReg();
     }
 }
