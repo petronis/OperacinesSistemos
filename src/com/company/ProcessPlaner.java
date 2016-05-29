@@ -73,7 +73,6 @@ public class ProcessPlaner extends Thread {
     }
 
     public void AddingProcessesToReadyList(Process process){
-        processesList.add(process);
         readyProcessesList.add(0,process);
     }
 
