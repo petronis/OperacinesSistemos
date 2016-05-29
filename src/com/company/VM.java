@@ -32,6 +32,7 @@ public class VM extends Machine {
     @Override
     void run() throws Exception {
         instructions.check_machine_mode();
+        new java.util.Scanner(System.in).nextLine();
         Register ic = getRegister("IC"), ti = rm.getRegister("TI");
         String command;
         try {

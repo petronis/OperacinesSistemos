@@ -69,6 +69,7 @@ public class RM extends Machine {
                 instructions.interpreter(command);
                 ic.inc(1);
                 ti.inc(-1);
+
             }
         } catch (Exception exception) {
             exception.printStackTrace();

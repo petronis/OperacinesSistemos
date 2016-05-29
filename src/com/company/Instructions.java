@@ -90,6 +90,7 @@ public class Instructions {
         } else if (command.substring(0,5).contentEquals("SHUTD")) {
             shutDown();
         } else {
+            System.out.println("Printing out error " + command);
             throw new BadOperationPlan("no such operation");
         }
     }

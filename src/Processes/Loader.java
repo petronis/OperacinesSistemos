@@ -1,5 +1,6 @@
 package Processes;
 
+import Exceptions.WrongAddress;
 import Exceptions.WrongContentSize;
 import com.company.Process;
 import com.company.ProcessPlaner;
@@ -25,10 +26,18 @@ public class Loader extends Process {
             if (this.ProcessHasAllResource(this)) {
                 try {
                     getRm().getRegister("PTR").setContent(0);
+                    for (int i = 0; i < getRm().getExternal().getSize(); i++) {
+                        try {
+                            getRm().getData().put_block(i, getRm().getExternal().getBlock(i));
+                        } catch (WrongAddress wrongAddress) {
+                            wrongAddress.printStackTrace();
+                        }
+                    }
+
                 } catch (WrongContentSize wrongContentSize) {
                     wrongContentSize.printStackTrace();
                 }
-                this.createResourcesFromProcess(resourcePlaner,"Loader complete", false);
+                this.createResourcesFromProcess(resourcePlaner, "Loader complete", false);
                 this.releaseAllResource();
                 processPlaner.RemovingProcessesFromList(this);
                 processPlaner.AddingProcessesToWaitingList(this);
