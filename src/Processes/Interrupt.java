@@ -45,8 +45,8 @@ public class Interrupt extends Process {
                 resourcePlaner.findResource("Interrupt").setFree(true);
             }
 //                free res for jobGov
-            resourcePlaner.findResource("Iš Interrupt").setMessage(resourcePlaner.findResource("Pertraukimas").getMessage());
-            resourcePlaner.findResource("Iš Interrupt").setFree(true);
+            resourcePlaner.findResource("Iš Interupt").setMessage(resourcePlaner.findResource("Pertraukimas").getMessage());
+            resourcePlaner.findResource("Iš Interupt").setFree(true);
         }
         processPlaner.RemovingProcessesFromList(this);
         this.changeState(3);

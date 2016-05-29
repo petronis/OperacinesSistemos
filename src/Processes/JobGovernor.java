@@ -40,6 +40,7 @@ public class JobGovernor extends Process {
                 virtualMachine = new VirtualMachine("VirtualMachine", 3, this, resourcePlaner);
                 this.changeState(3);
 
+                this.releaseAllResource();
                 processPlaner.RemovingProcessesFromList(this);
                 processPlaner.AddingProcessesToWaitingList(this);
                 processPlaner.AddingProcessesToWaitingList(virtualMachine, 1);
@@ -51,7 +52,7 @@ public class JobGovernor extends Process {
                 // TODO: 2016-05-23 What Interrupt is it if GD good, if not terminante JobGovernor with VM
             }
         } else {
-
+            System.out.println("JOB GOBVERNOR AFTER INTERUPT");
         }
     }
 }
