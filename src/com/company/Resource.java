@@ -7,12 +7,22 @@ public class Resource {
     String name; //
     boolean multiuse, free;
     Process creator;
+    String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public Resource(String name, boolean multiuse, Process creator) {
         this.name = name;
         this.multiuse = multiuse;
         this.free = true;
         this.creator = creator;
+        this.message = "";
     }
 
     public Resource(String name, boolean multiuse, boolean free, Process creator) {

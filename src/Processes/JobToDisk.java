@@ -33,6 +33,8 @@ public class JobToDisk extends Process {
                         wrongAddress.printStackTrace();
                     }
                 }
+                System.out.println(getRm().getSupervision().getBlock());
+                System.out.println(getRm().getExternal().getBlock());
                 this.releaseAllResource();
                 processPlaner.RemovingProcessesFromList(this);
                 processPlaner.addProcessToList(this);

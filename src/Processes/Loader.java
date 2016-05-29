@@ -33,6 +33,7 @@ public class Loader extends Process {
                             wrongAddress.printStackTrace();
                         }
                     }
+                    System.out.println(getRm().getData().getBlock());
 
                 } catch (WrongContentSize wrongContentSize) {
                     wrongContentSize.printStackTrace();

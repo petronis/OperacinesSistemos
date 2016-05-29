@@ -24,6 +24,10 @@ public class Process {
         this.resourcePlaner = resourcePlaner;
     }
 
+    public Process getFather() {
+        return father;
+    }
+
     public static void setResourcePlaner(ResourcePlaner resourcePlaner) {
         Process.resourcePlaner = resourcePlaner;
     }
