@@ -14,6 +14,7 @@ public class VirtualMachine extends Process {
 
     @Override
     public void work(ProcessPlaner processPlaner) {
+        System.out.println("VirtualMachine work");
         try {
             getRm().getInstructions().change_mode();
             getRm().run();
