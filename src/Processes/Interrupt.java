@@ -33,6 +33,7 @@ public class Interrupt extends Process {
                 } else  {
 //                    no interrupt, means VM still working
                 }
+//                free res for jobGov
             }
         }
     }
