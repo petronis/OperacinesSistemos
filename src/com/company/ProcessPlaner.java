@@ -102,6 +102,10 @@ public class ProcessPlaner extends Thread {
     }
 
     public void IsThereAnyReadyProcess(){
+        /*if (this.resourcePlaner.findResource("InputOutput").getMessage() == ">>...") {
+            this.resourcePlaner.findResource("InputOutput").setFree(true);
+            this.readyProcessesList.clear();
+        }*/
         for (int i = 0; i < processesList.size(); i++) {
             if (processesList.get(i).getProcessState() == 1) {
                 processesList.get(i).work(this);
@@ -128,12 +132,12 @@ public class ProcessPlaner extends Thread {
 
     @Override
     public void run() {
-        for (int i = 0; i < processesList.size(); i++){
-            if(processesList.get(i).getProcessState() == 1){
-                processesList.get(i).work(this);
-            }
-        }
         while(true){
+            for (int i = 0; i < processesList.size(); i++){
+                if(processesList.get(i).getProcessState() == 1){
+                    processesList.get(i).work(this);
+                }
+            }
             if (!readyProcessesList.isEmpty()){
                 for (int i = 0; i < readyProcessesList.size();i++){
                     readyProcessesList.get(i).changeState(1);
@@ -145,6 +149,7 @@ public class ProcessPlaner extends Thread {
                 for (int i = 0; i < waitingProcessesList.size(); i++){
                     if (waitingProcessesList.get(i).processWantResources.isAvailable()){
                         ChangeListByState(waitingProcessesList.get(i));
+                        break;
                     }
                 }
             }

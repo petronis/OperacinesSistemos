@@ -29,21 +29,22 @@ public class JobGovernor extends Process {
                 this.changeState(3);
                 processPlaner.RemovingProcessesFromList(this);
                 processPlaner.AddingProcessesToWaitingList(this, 2);
-                processPlaner.IsThereAnyReadyProcess();
-            }
-            this.ProcessNeedsResource(resourcePlaner.findResource("Loader complete"));
-            this.ProcessNeedsResource(resourcePlaner.findResource("Supervizorinės atminties"));
-            System.out.println("Job Governor is working now");
-            if (this.ProcessHasAllResource(this)) {
-                virtualMachine = new VirtualMachine("VirtualMachine", 3, this, resourcePlaner);
-                this.changeState(3);
-                this.releaseAllResource();
-                this.ProcessNeedsResource(resourcePlaner.findResource("Vartotojo atmintis"));
-                processPlaner.RemovingProcessesFromList(this);
-                processPlaner.AddingProcessesToWaitingList(this);
-                processPlaner.AddingProcessesToWaitingList(virtualMachine, 1);
-                firstTime = true;
-                processPlaner.IsThereAnyReadyProcess();
+            } else {
+                this.ProcessNeedsResource(resourcePlaner.findResource("Loader complete"));
+                this.ProcessNeedsResource(resourcePlaner.findResource("Supervizorinės atminties"));
+                System.out.println("Job Governor is working now " + this.getProcessName());
+                if (this.getProcessName().equals("JobGovernor2"))
+                    System.out.println();
+                if (this.ProcessHasAllResource(this)) {
+                    virtualMachine = new VirtualMachine("VirtualMachine", 3, this, resourcePlaner);
+                    this.changeState(3);
+                    this.releaseAllResource();
+                    this.ProcessNeedsResource(resourcePlaner.findResource("Vartotojo atmintis"));
+                    processPlaner.RemovingProcessesFromList(this);
+                    processPlaner.AddingProcessesToWaitingList(this);
+                    processPlaner.AddingProcessesToWaitingList(virtualMachine, 1);
+                    firstTime = true;
+                }
             }
         } else {
             System.out.println("JobGovernor after interrupt");
@@ -53,7 +54,6 @@ public class JobGovernor extends Process {
                     resourcePlaner.findResource("OS darbo pabaiga").setFree(true);
                     this.changeState(3);
                     processPlaner.RemovingProcessesFromList(this);
-                    processPlaner.IsThereAnyReadyProcess();
                 } else if(getRm().getRegister("SI").getContentInt() == 7){
                     // TODO: 2016-05-30 JOB GOVERNOR SUNAIKINIMAS
                     System.out.println("LukoProcessPlannerSUCKS!!");
@@ -64,7 +64,6 @@ public class JobGovernor extends Process {
                     }
                     this.changeState(3);
                     processPlaner.RemovingProcessesFromList(this);
-                    processPlaner.IsThereAnyReadyProcess();
                 }
                 else {
                     try {

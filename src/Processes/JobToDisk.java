@@ -19,7 +19,7 @@ public class JobToDisk extends Process {
 
     public void work(ProcessPlaner processPlaner){
         System.out.println("Job To Disk is working now");
-        while(true) {
+
             this.ProcessNeedsResource(resourcePlaner.findResource("Kanalų įrenginys"));
             if (this.ProcessHasAllResource(this)) {
                 for (int i = 0; i < getRm().getSupervision().getSize();i++){
@@ -36,8 +36,7 @@ public class JobToDisk extends Process {
                 this.changeState(3);
                 processPlaner.RemovingProcessesFromList(this);
                 processPlaner.AddingProcessesToWaitingList(this);
-                processPlaner.IsThereAnyReadyProcess();
             }
-        }
+
     }
 }

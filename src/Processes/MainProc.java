@@ -20,25 +20,24 @@ public class MainProc extends Process {
         System.out.println("Main Proc is working");
         int timer = 0;
         jobGovernor = new JobGovernor("JobGovernor", 3, this, getResourcePlaner());;
-        while(true) {
-            if (this.ProcessHasAllResource(this)) {
-                if (timer == 0) {
-                    timer++;
+
+        if (this.ProcessHasAllResource(this)) {
+            if (timer == 0) {
+                timer++;
 //                    create jobGovernor
-                    jobGovernor = new JobGovernor("JobGovernor"+jobGovernorNumbering, 3, this, getResourcePlaner());
-                    jobGovernorNumbering++;
-                    processPlaner.RemovingProcessesFromList(this);
-                    processPlaner.addProcessToList(jobGovernor);
-                    processPlaner.AddingProcessesToWaitingList(jobGovernor, 1);
-                    this.changeState(3);
-                    processPlaner.AddingProcessesToWaitingList(this);
-                    processPlaner.IsThereAnyReadyProcess();
-                } else {
+                jobGovernor = new JobGovernor("JobGovernor"+jobGovernorNumbering, 3, this, getResourcePlaner());
+                jobGovernorNumbering++;
+                processPlaner.RemovingProcessesFromList(this);
+                processPlaner.addProcessToList(jobGovernor);
+                processPlaner.AddingProcessesToWaitingList(jobGovernor, 1);
+                this.changeState(3);
+                processPlaner.AddingProcessesToWaitingList(this);
+            } else {
 //                    something went wrong in JobGovernor, so need to destroy JobGovernor and try again
-                    processPlaner.RemovingProcessesFromList(jobGovernor);
-                    timer = 0;
-                }
+                processPlaner.RemovingProcessesFromList(jobGovernor);
+                timer = 0;
             }
         }
+
     }
 }

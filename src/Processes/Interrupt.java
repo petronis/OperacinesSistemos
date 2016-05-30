@@ -55,6 +55,5 @@ public class Interrupt extends Process {
             processPlaner.RemovingProcessesFromList(processPlaner.processesList.get(place));
             processPlaner.AddingProcessesToWaitingList(processPlaner.processesList.get(place),1);
         }
-        processPlaner.IsThereAnyReadyProcess();
     }
 }

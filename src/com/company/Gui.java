@@ -171,10 +171,15 @@ public class Gui extends JFrame {
                         }
                         else {
                             resourcePlaner.findResource("InputOutput").setFree(true);
+                            resourcePlaner.freeResource("InputOutput");
+                            resourcePlaner.freeResource("InputOutput");
+                            resourcePlaner.freeResource("InputOutput");
+                            resourcePlaner.freeResource("InputOutput");
+                            resourcePlaner.findResource("InputOutput").setMessage(">>...");
                             if (processPlaner.readyProcessesList.size() > 0){
                                 processPlaner.readyProcessesList.clear();
                             }
-                            processPlaner.IsThereAnyReadyProcess();
+//                            processPlaner.IsThereAnyReadyProcess();
                         }
                     } catch (Exception e1){
                         e1.printStackTrace();

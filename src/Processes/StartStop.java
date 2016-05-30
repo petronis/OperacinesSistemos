@@ -57,13 +57,14 @@ public class StartStop extends Process {
             this.ProcessNeedsResource(resourcePlaner.findResource("OS darbo pabaiga"));
             processPlaner.AddingProcessesToList();
         }
-        while(true) {
-            if(this.ProcessHasAllResource(this)){
-                System.out.println("END OF OPERATING SYSTEM");
-                System.exit(0);
-            }
-            else{
-                processPlaner.IsThereAnyReadyProcess();
+        else {
+            while (true) {
+                if (this.ProcessHasAllResource(this)) {
+                    System.out.println("END OF OPERATING SYSTEM");
+                    System.exit(0);
+                } else {
+                    //processPlaner.IsThereAnyReadyProcess();
+                }
             }
         }
     }
