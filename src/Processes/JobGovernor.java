@@ -56,7 +56,7 @@ public class JobGovernor extends Process {
                     processPlaner.IsThereAnyReadyProcess();
                 } else if(getRm().getRegister("SI").getContentInt() == 7){
                     // TODO: 2016-05-30 JOB GOVERNOR SUNAIKINIMAS
-                    System.out.println("LukoProcessPalnnerSUCKS!!");
+                    System.out.println("LukoProcessPlannerSUCKS!!");
                     this.changeState(3);
                     processPlaner.RemovingProcessesFromList(this);
                     processPlaner.IsThereAnyReadyProcess();
