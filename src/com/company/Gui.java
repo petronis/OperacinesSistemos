@@ -87,9 +87,12 @@ public class Gui extends JFrame {
 /* End of Virtual machine UI Items */
 
     ProcessPlaner processPlaner;
+    ResourcePlaner resourcePlaner;
+    boolean notFirstTime = false;
 
     public Gui(RM rm) {
-        processPlaner = new ProcessPlaner(rm);
+        this.processPlaner = new ProcessPlaner(rm);
+        this.resourcePlaner = processPlaner.resourcePlaner;
         this.rm = rm;
         data = rm.getData();
         createView();
@@ -162,7 +165,17 @@ public class Gui extends JFrame {
                 e -> {
                     try {
                         processPlaner.setReadingFileName(readInputFileTextFieldInput.getText());
-                        processPlaner.start();
+                        if  (!notFirstTime) {
+                            notFirstTime = true;
+                            processPlaner.start();
+                        }
+                        else {
+                            resourcePlaner.findResource("InputOutput").setFree(true);
+                            if (processPlaner.readyProcessesList.size() > 0){
+                                processPlaner.readyProcessesList.clear();
+                            }
+                            processPlaner.IsThereAnyReadyProcess();
+                        }
                     } catch (Exception e1){
                         e1.printStackTrace();
                     }

@@ -49,7 +49,7 @@ public class ReadFromInterface extends Process {
                 resourcePlaner.findResource("Užduoties duomenys supervizorinėje atmintyje").setFree(true);
                 this.changeState(3); // blocked stopped
                 processPlaner.RemovingProcessesFromList(this);
-                processPlaner.addProcessToList(this);
+                processPlaner.AddingProcessesToWaitingList(this);
                 processPlaner.IsThereAnyReadyProcess();
             }
             else{

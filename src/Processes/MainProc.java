@@ -31,7 +31,7 @@ public class MainProc extends Process {
                     processPlaner.addProcessToList(jobGovernor);
                     processPlaner.AddingProcessesToWaitingList(jobGovernor, 1);
                     this.changeState(3);
-                    processPlaner.addProcessToList(this);
+                    processPlaner.AddingProcessesToWaitingList(this);
                     processPlaner.IsThereAnyReadyProcess();
                 } else {
 //                    something went wrong in JobGovernor, so need to destroy JobGovernor and try again

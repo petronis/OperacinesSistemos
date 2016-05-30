@@ -35,7 +35,7 @@ public class JobToDisk extends Process {
                 resourcePlaner.findResource("Programa parengta").setFree(true);
                 this.changeState(3);
                 processPlaner.RemovingProcessesFromList(this);
-                processPlaner.addProcessToList(this);
+                processPlaner.AddingProcessesToWaitingList(this);
                 processPlaner.IsThereAnyReadyProcess();
             }
         }
