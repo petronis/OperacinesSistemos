@@ -63,7 +63,8 @@ public class Gui extends JFrame {
             textFieldR, textFieldPI, textFieldSI, textFieldTI,
             textFieldCH1, textFieldCH2, textFieldCH3, textFieldMODE};
 
-    JButton updateButton, closeButton, modeButton, exteriorMemoryButton;
+    JTextField readInputFileTextField, readInputFileTextFieldInput;
+    JButton updateButton, closeButton, modeButton, exteriorMemoryButton, readInputFileButton;
 
 /* End of Real machine UI Items */
 /* Virtual machine UI Items */
@@ -85,9 +86,11 @@ public class Gui extends JFrame {
 
 /* End of Virtual machine UI Items */
 
+    ProcessPlaner processPlaner;
 
-    public Gui(ProcessPlaner processPlaner) {
-        this.rm = processPlaner.rm;
+    public Gui(RM rm) {
+        processPlaner = new ProcessPlaner(rm);
+        this.rm = rm;
         data = rm.getData();
         createView();
         setTitle("Real Machine");
@@ -144,6 +147,35 @@ public class Gui extends JFrame {
                     }
                 }
         );
+
+        readInputFileTextField = new JTextField("Enter input file");
+        readInputFileTextField.setEditable(false);
+        readInputFileTextFieldInput = new JTextField();
+        readInputFileTextFieldInput.setEditable(true);
+        readInputFileTextFieldInput.setColumns(10);
+
+
+
+
+        readInputFileButton = new JButton("Enter");
+        readInputFileButton.addActionListener(
+                e -> {
+                    try {
+                        processPlaner.setReadingFileName(readInputFileTextFieldInput.getText());
+                        processPlaner.start();
+                    } catch (Exception e1){
+                        e1.printStackTrace();
+                    }
+                }
+        );
+        panel.add(readInputFileTextField);
+        panel.add(readInputFileTextFieldInput);
+        panel.add(readInputFileButton);
+
+
+
+
+
         //groupLayoutPanel.add(updateButton);
 
         closeButton = new JButton();

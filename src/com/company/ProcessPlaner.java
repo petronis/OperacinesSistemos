@@ -12,7 +12,11 @@ public class ProcessPlaner extends Thread {
     StartStop startStop;
     ResourcePlaner resourcePlaner;
     RM rm;
+    public String readingFileName = "";
 
+    public void setReadingFileName(String readingFileName) {
+        this.readingFileName = readingFileName;
+    }
 
     public ProcessPlaner(RM rm){
         this.rm = rm;

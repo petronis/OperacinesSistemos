@@ -9,9 +9,9 @@ public class Main {
         //SwingUtilities.invokeLater(() -> new Gui(rm).setVisible(true));
         Memory data = rm.getData();
         try {
-            ProcessPlaner processPlaner = new ProcessPlaner(rm);
-            SwingUtilities.invokeLater(() -> new Gui(processPlaner).setVisible(true));
-            processPlaner.start();
+//            ProcessPlaner processPlaner = new ProcessPlaner(rm);
+            SwingUtilities.invokeLater(() -> new Gui(rm).setVisible(true));
+//            processPlaner.start();
             /*
             data.put_block(10, "00034");
             data.put_block(5, "00025");

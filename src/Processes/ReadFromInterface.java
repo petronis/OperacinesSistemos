@@ -29,7 +29,7 @@ public class ReadFromInterface extends Process {
         while(true) {
             this.ProcessNeedsResource(resourcePlaner.findResource("Supervizorinės atminties"));
             if (this.ProcessHasAllResource(this)) {
-                try (BufferedReader br = new BufferedReader(new FileReader("code.txt"))) {
+                try (BufferedReader br = new BufferedReader(new FileReader(processPlaner.readingFileName))) {
                     String line = br.readLine();
                     int i = 0;
                     while (line != null) {
