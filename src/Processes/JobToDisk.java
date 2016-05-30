@@ -14,7 +14,6 @@ public class JobToDisk extends Process {
         super(name, state, father,resourcePlaner);
         this.resourcePlaner = resourcePlaner;
         this.ProcessNeedsResource(resourcePlaner.findResource("Užduoties duomenys supervizorinėje atmintyje"));
-        this.ProcessNeedsResource(resourcePlaner.findResource("Užduoties programa supervizorinėje atmintyje"));
     }
 
 
@@ -32,7 +31,9 @@ public class JobToDisk extends Process {
                         wrongAddress.printStackTrace();
                     }
                 }
-                this.releaseAllResource();
+                resourcePlaner.findResource("Kanalų įrenginys").setFree(true);
+                resourcePlaner.findResource("Programa parengta").setFree(true);
+                this.changeState(3);
                 processPlaner.RemovingProcessesFromList(this);
                 processPlaner.addProcessToList(this);
                 processPlaner.IsThereAnyReadyProcess();

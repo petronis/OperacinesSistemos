@@ -30,8 +30,8 @@ public class MainProc extends Process {
                     processPlaner.RemovingProcessesFromList(this);
                     processPlaner.addProcessToList(jobGovernor);
                     processPlaner.AddingProcessesToWaitingList(jobGovernor, 1);
+                    this.changeState(3);
                     processPlaner.addProcessToList(this);
-                    this.changeState(2);
                     processPlaner.IsThereAnyReadyProcess();
                 } else {
 //                    something went wrong in JobGovernor, so need to destroy JobGovernor and try again

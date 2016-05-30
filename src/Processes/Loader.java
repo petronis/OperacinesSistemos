@@ -25,7 +25,6 @@ public class Loader extends Process {
         while(true) {
             if (this.ProcessHasAllResource(this)) {
                 try {
-//                    getRm().getRegister("PTR").setContent(0);
                     for (int i = 0; i < getRm().getExternal().getSize(); i++) {
                         try {
                             getRm().getData().put_block(i, getRm().getExternal().getBlock(i));
@@ -38,13 +37,12 @@ public class Loader extends Process {
                     wrongContentSize.printStackTrace();
                 }
                 this.createResourcesFromProcess(resourcePlaner, "Loader complete", false);
-                this.releaseAllResource();
+                resourcePlaner.findResource("Kanalų įrenginys").setFree(true);
+                this.ProcessNeedsResource(resourcePlaner.findResource("Kanalų įrenginys"));
                 processPlaner.RemovingProcessesFromList(this);
                 processPlaner.AddingProcessesToWaitingList(this);
                 this.changeState(3);
                 processPlaner.IsThereAnyReadyProcess();
-                // TODO: 2016-05-29 Ptr nustatyti pagal tai kur yra musu atmintis ir sukurti Loader complete resursa
-                // TODO: 2016-05-23 Programa uzloadina i vartotojo atminti
             }
         }
     }

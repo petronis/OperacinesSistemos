@@ -105,7 +105,6 @@ public class ProcessPlaner extends Thread {
         }
         while(true) {
             if (!readyProcessesList.isEmpty()) {
-                //TODO Vykdyti procesa
                 for (int i = 0; i < readyProcessesList.size(); i++) {
                     Process workingProcess = readyProcessesList.get(i);
                     workingProcess.changeState(1);
@@ -113,6 +112,7 @@ public class ProcessPlaner extends Thread {
                 }
             } else {
                 for (int i = 0; i < waitingProcessesList.size(); i++) {
+//                    System.out.println("Waiting list size " + waitingProcessesList.size());
                     if (waitingProcessesList.get(i).processWantResources.isAvailable()) {
                         ChangeListByState(waitingProcessesList.get(i));
                         break;

@@ -37,8 +37,8 @@ public class JobGovernor extends Process {
             if (this.ProcessHasAllResource(this)) {
                 virtualMachine = new VirtualMachine("VirtualMachine", 3, this, resourcePlaner);
                 this.changeState(3);
-
                 this.releaseAllResource();
+                this.ProcessNeedsResource(resourcePlaner.findResource("Vartotojo atmintis"));
                 processPlaner.RemovingProcessesFromList(this);
                 processPlaner.AddingProcessesToWaitingList(this);
                 processPlaner.AddingProcessesToWaitingList(virtualMachine, 1);
@@ -49,11 +49,15 @@ public class JobGovernor extends Process {
             System.out.println("JobGovernor after interrupt");
             if (resourcePlaner.findResource("Interrupt").getMessage().equals("SI")) {
                 if (getRm().getRegister("SI").getContentInt() == 8) {
+                    this.releaseAllResource();
                     resourcePlaner.findResource("OS darbo pabaiga").setFree(true);
                     this.changeState(3);
                     processPlaner.RemovingProcessesFromList(this);
                     processPlaner.IsThereAnyReadyProcess();
-                } else {
+                } else if(getRm().getRegister("SI").getContentInt() == 6){
+                    // TODO: 2016-05-30 JOB GOVERNOR SUNAIKINIMAS 
+                }
+                else {
                     try {
                         getRm().iterate();
                         virtualMachine.work(processPlaner);
@@ -61,7 +65,6 @@ public class JobGovernor extends Process {
                         e.printStackTrace();
                     }
                 }
-
             } else {
                 processPlaner.RemovingProcessesFromList(this);
             }
