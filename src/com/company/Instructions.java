@@ -269,12 +269,11 @@ public class Instructions {
     }
 
     public void halt() throws Exception {
-        vm.getRegister("SI").setContent(6);
         throw new Halt("Halt process");
     }
 
     public void stopP() throws Exception {
-        if (!check_MODE()) {
+        if (check_MODE()) {
             Register ptr = rm.getRegister("PTR");
             ptr.inc(1);
             String dataSize = new Integer(vm.getData().getSize()).toString();
