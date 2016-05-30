@@ -35,7 +35,8 @@ public class JobGovernor extends Process {
                 System.out.println("Job Governor is working now " + this.getProcessName());
                 if (this.getProcessName().equals("JobGovernor2"))
                     System.out.println();
-                if (this.ProcessHasAllResource(this)) {
+                getProcessWantResources().occupy();
+//                if (this.ProcessHasAllResource(this)) {
                     virtualMachine = new VirtualMachine("VirtualMachine", 3, this, resourcePlaner);
                     this.changeState(3);
                     this.releaseAllResource();
@@ -44,7 +45,7 @@ public class JobGovernor extends Process {
                     processPlaner.AddingProcessesToWaitingList(this);
                     processPlaner.AddingProcessesToWaitingList(virtualMachine, 1);
                     firstTime = true;
-                }
+//                }
             }
         } else {
             System.out.println("JobGovernor after interrupt");
