@@ -108,7 +108,12 @@ public class VM extends Machine {
         } catch (ShutDown e){
             rm.getRegister("SI").setContent(8);
             System.out.println("EXPT: "+e.getName());
-        } catch (Exception exception) {
+        } catch (StopProcess e){
+            rm.getRegister("SI").setContent(7);
+            System.out.println("EXPT: "+e.getName());
+        }
+
+        catch (Exception exception) {
             exception.printStackTrace();
         }
         saveReg();

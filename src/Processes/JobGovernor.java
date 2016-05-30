@@ -54,8 +54,9 @@ public class JobGovernor extends Process {
                     this.changeState(3);
                     processPlaner.RemovingProcessesFromList(this);
                     processPlaner.IsThereAnyReadyProcess();
-                } else if(getRm().getRegister("SI").getContentInt() == 6){
-                    // TODO: 2016-05-30 JOB GOVERNOR SUNAIKINIMAS 
+                } else if(getRm().getRegister("SI").getContentInt() == 7){
+                    // TODO: 2016-05-30 JOB GOVERNOR SUNAIKINIMAS
+                    System.out.println("!!!");
                 }
                 else {
                     try {
