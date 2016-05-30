@@ -282,6 +282,7 @@ public class Instructions {
                 dataSize = "0" + dataSize;
             }
             rm.data.put_block(ptr.getContentInt(), dataSize);
+            rm.getRegister("TI").setContent(30);
         } else {
             throw new StopProcess("stop process");
         }

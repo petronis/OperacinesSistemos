@@ -24,10 +24,16 @@ public class Loader extends Process {
         System.out.println("Loader is working");
         while(true) {
             if (this.ProcessHasAllResource(this)) {
+                int ptr = 1;
+                try {
+                     ptr = getRm().getData().getBlockInt(getRm().getRegister("PTR").getContentInt());
+                } catch (WrongAddress wrongAddress) {
+                    wrongAddress.printStackTrace();
+                }
                 try {
                     for (int i = 0; i < getRm().getExternal().getSize(); i++) {
                         try {
-                            getRm().getData().put_block(i, getRm().getExternal().getBlock(i));
+                            getRm().getData().put_block(ptr + i, getRm().getExternal().getBlock(i));
                         } catch (WrongAddress wrongAddress) {
                             wrongAddress.printStackTrace();
                         }
