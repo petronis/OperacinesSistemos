@@ -86,8 +86,8 @@ public class Gui extends JFrame {
 /* End of Virtual machine UI Items */
 
 
-    public Gui(RM rm) {
-        this.rm = rm;
+    public Gui(ProcessPlaner processPlaner) {
+        this.rm = processPlaner.rm;
         data = rm.getData();
         createView();
         setTitle("Real Machine");

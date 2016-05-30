@@ -52,6 +52,7 @@ public class Interrupt extends Process {
         processPlaner.AddingProcessesToWaitingList(this);
         int place = processPlaner.getProcessFromListByName(resourcePlaner.findResource("Pertraukimas").getMessage());
         if (place > -1){
+            processPlaner.RemovingProcessesFromList(processPlaner.processesList.get(place));
             processPlaner.AddingProcessesToWaitingList(processPlaner.processesList.get(place),1);
         }
         processPlaner.IsThereAnyReadyProcess();

@@ -38,7 +38,7 @@ public class Loader extends Process {
                 }
                 this.createResourcesFromProcess(resourcePlaner, "Loader complete", false);
                 resourcePlaner.findResource("Kanalų įrenginys").setFree(true);
-                this.ProcessNeedsResource(resourcePlaner.findResource("Kanalų įrenginys"));
+//                this.ProcessNeedsResource(resourcePlaner.findResource("Kanalų įrenginys"));
                 processPlaner.RemovingProcessesFromList(this);
                 processPlaner.AddingProcessesToWaitingList(this);
                 this.changeState(3);

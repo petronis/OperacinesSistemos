@@ -22,8 +22,8 @@ public class JobGovernor extends Process {
     @Override
     public void work(ProcessPlaner processPlaner) {
         if (resourcePlaner.findResource("Iš Interupt").getMessage() != this.getProcessName()) {
-            resourcePlaner.findResource("Pakrovimo paketas").setFree(true);
             if (firstTime) {
+                resourcePlaner.findResource("Pakrovimo paketas").setFree(true);
                 System.out.println("JobGovernor needs Loader complete resource");
                 firstTime = false;
                 this.changeState(3);

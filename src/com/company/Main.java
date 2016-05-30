@@ -10,6 +10,7 @@ public class Main {
         Memory data = rm.getData();
         try {
             ProcessPlaner processPlaner = new ProcessPlaner(rm);
+            SwingUtilities.invokeLater(() -> new Gui(processPlaner).setVisible(true));
             processPlaner.start();
             /*
             data.put_block(10, "00034");
