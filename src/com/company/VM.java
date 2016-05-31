@@ -39,8 +39,9 @@ public class VM extends Machine {
         this.getRegister("C").setContent(rm.getRegister("C").getContentInt());
         this.getRegister("R").setContent(rm.getRegister("R").getContentInt());
         this.getRegister("B").setContent(rm.getRegister("B").getContentInt());
+        System.out.println("WTF    "+rm.getData().getBlockInt(ptr));
         if (rm.getData().getBlockInt(ptr) != 0){
-            this.getRegister("IC").setContent(rm.getData().getBlockInt(ptr) - rm.getRegister("IC").getContentInt());
+            this.getRegister("IC").setContent(rm.getRegister("IC").getContentInt() - rm.getData().getBlockInt(ptr));
         } else{
             this.getRegister("IC").setContent(rm.getRegister("IC").getContentInt());
         }

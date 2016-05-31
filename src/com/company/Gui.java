@@ -170,6 +170,7 @@ public class Gui extends JFrame {
                             processPlaner.start();
                         }
                         else {
+                            rm.resetI();
                             rm.getRegister("IC").setContent(000);
                             resourcePlaner.findResource("InputOutput").setFree(true);
                             resourcePlaner.freeResource("InputOutput");

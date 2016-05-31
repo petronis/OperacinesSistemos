@@ -1,5 +1,7 @@
 package com.company;
 
+import Exceptions.WrongContentSize;
+
 /**
  * Created by Vik on 3/12/2016.
  */
@@ -96,6 +98,16 @@ public class RM extends Machine {
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
+        }
+    }
+
+    public void resetI()  {
+        try {
+            getRegister("SI").setContent(0);
+            getRegister("PI").setContent(0);
+            getRegister("TI").setContent(30);
+        } catch (WrongContentSize wrongContentSize) {
+            wrongContentSize.printStackTrace();
         }
     }
 
