@@ -31,8 +31,10 @@ public class JobToDisk extends Process {
                         wrongAddress.printStackTrace();
                     }
                 }
+                new java.util.Scanner(System.in).nextLine();
                 resourcePlaner.findResource("Kanalų įrenginys").setFree(true);
                 resourcePlaner.findResource("Programa parengta").setFree(true);
+                processPlaner.setTimer(0);
                 this.changeState(3);
                 processPlaner.RemovingProcessesFromList(this);
                 processPlaner.AddingProcessesToWaitingList(this);

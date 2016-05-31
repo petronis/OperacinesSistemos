@@ -13,10 +13,7 @@ public class ProcessPlaner extends Thread {
     ResourcePlaner resourcePlaner;
     RM rm;
     public String readingFileName = "";
-
-    public void setReadingFileName(String readingFileName) {
-        this.readingFileName = readingFileName;
-    }
+    int timer;
 
     public ProcessPlaner(RM rm){
         this.rm = rm;
@@ -34,6 +31,19 @@ public class ProcessPlaner extends Thread {
         IsThereAnyReadyProcess();
         //startStop.createStaticResources();
     }*/
+
+
+    public void setTimer(int timer) {
+        this.timer = timer;
+    }
+
+    public int getTimer() {
+        return timer;
+    }
+
+    public void setReadingFileName(String readingFileName) {
+        this.readingFileName = readingFileName;
+    }
 
     public void addProcessToList(Process processToAdd){
         processesList.add(processToAdd);
@@ -133,6 +143,16 @@ public class ProcessPlaner extends Thread {
     @Override
     public void run() {
         while(true){
+            if (readingFileName.equals("sut.txt")) {
+                int a = 0;
+                try {
+                    if  (rm.getInstructions().check_MODE()) {
+//                        rm.getInstructions().change_mode();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             for (int i = 0; i < processesList.size(); i++){
                 if(processesList.get(i).getProcessState() == 1){
                     processesList.get(i).work(this);

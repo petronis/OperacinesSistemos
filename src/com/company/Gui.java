@@ -170,6 +170,7 @@ public class Gui extends JFrame {
                             processPlaner.start();
                         }
                         else {
+                            rm.getRegister("IC").setContent(000);
                             resourcePlaner.findResource("InputOutput").setFree(true);
                             resourcePlaner.freeResource("InputOutput");
                             resourcePlaner.freeResource("InputOutput");
@@ -627,8 +628,10 @@ public class Gui extends JFrame {
     private void updateEXTable(JTable vmTable, Object[][] row) throws Exception {
         int tmpInt = 0;
         Memory data = rm.getExternal();
-        int size = data.getSize();
-        String tmp = data.mem2();
+        int size = rm.getExternal().getSize();
+        String tmp = rm.getExternal().mem2();
+        //int size = data.getSize();
+        //String tmp = data.mem2();
         //rm.run();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < 5; j++) {
@@ -645,8 +648,6 @@ public class Gui extends JFrame {
         }
         int tmpInt = 0;
         Memory data = rm.getData();
-        data.put_block(10, "00034");
-        data.put_block(11, "00025");
         String tmp = rm.getData().mem2();
         //rm.run();
         for (int i = 0; i < 1000; i++) {

@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
         System.out.println("Program start point");
-        RM rm = new RM(1000,100,64,50);
+        RM rm = new RM(1000,100,64,64);
         //SwingUtilities.invokeLater(() -> new Gui(rm).setVisible(true));
         Memory data = rm.getData();
         try {

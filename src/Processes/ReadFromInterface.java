@@ -1,5 +1,6 @@
 package Processes;
 
+import Exceptions.WrongAddress;
 import Exceptions.WrongContentSize;
 import com.company.*;
 import com.company.Process;
@@ -17,6 +18,7 @@ public class ReadFromInterface extends Process {
     Instructions instructions;
     ResourcePlaner resourcePlaner;
     ProcessPlaner processPlaner;
+    static int counterOfLines = 0;
     public ReadFromInterface(String name, int state, Process father, ResourcePlaner resourcePlaner) {
         super(name, state, father,resourcePlaner);
         this.ProcessNeedsResource(resourcePlaner.findResource("InputOutput"));
@@ -29,13 +31,29 @@ public class ReadFromInterface extends Process {
         this.ProcessNeedsResource(resourcePlaner.findResource("Supervizorinės atminties"));
         if (this.ProcessHasAllResource(this)) {
             try (BufferedReader br = new BufferedReader(new FileReader(processPlaner.readingFileName))) {
+                System.out.println("Reading from file "+processPlaner.readingFileName);
                 String line = br.readLine();
                 int i = 0;
-                while (line != null) {
-                    getRm().getSupervision().put_block(i, line);
-                    i++;
-                    line = br.readLine();
-                }
+                //if(counterOfLines == 0) {
+                    while (line != null) {
+                        getRm().getSupervision().put_block(i, line);
+                        i++;
+                        counterOfLines++;
+                        line = br.readLine();
+                    }
+                    System.out.println("SIZE OF " + getRm().getSupervision().getSize());
+//                new java.util.Scanner(System.in).nextLine();
+                /*}else{
+                    int tmp = counterOfLines;
+                    counterOfLines = 0;
+                    while (line != null) {
+                        getRm().getSupervision().put_block(i+tmp, line);
+                        i++;
+                        counterOfLines++;
+                        line = br.readLine();
+                    }
+                    counterOfLines = tmp + counterOfLines;
+                }*/
             }
             catch (FileNotFoundException e) {
                 e.printStackTrace();

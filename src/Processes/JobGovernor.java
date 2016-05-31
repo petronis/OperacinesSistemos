@@ -1,5 +1,6 @@
 package Processes;
 
+import Exceptions.WrongContentSize;
 import com.company.Process;
 import com.company.ProcessPlaner;
 import com.company.ResourcePlaner;
@@ -28,7 +29,11 @@ public class JobGovernor extends Process {
                 firstTime = false;
                 this.changeState(3);
                 processPlaner.RemovingProcessesFromList(this);
-                processPlaner.AddingProcessesToWaitingList(this, 2);
+                processPlaner.AddingProcessesToWaitingList(this);
+//                processPlaner.AddingProcessesToWaitingList(this, 2);
+                int place = processPlaner.getProcessFromListByName("Loader");
+                processPlaner.RemovingProcessesFromList(processPlaner.processesList.get(place));
+                processPlaner.AddingProcessesToWaitingList(processPlaner.processesList.get(place),1);
             } else {
                 this.ProcessNeedsResource(resourcePlaner.findResource("Loader complete"));
                 this.ProcessNeedsResource(resourcePlaner.findResource("Supervizorinės atminties"));
@@ -53,29 +58,65 @@ public class JobGovernor extends Process {
                 if (getRm().getRegister("SI").getContentInt() == 8) {
                     this.releaseAllResource();
                     resourcePlaner.findResource("OS darbo pabaiga").setFree(true);
+                    new java.util.Scanner(System.in).nextLine();
                     this.changeState(3);
                     processPlaner.RemovingProcessesFromList(this);
                 } else if(getRm().getRegister("SI").getContentInt() == 7){
                     // TODO: 2016-05-30 JOB GOVERNOR SUNAIKINIMAS
-                    System.out.println("LukoProcessPlannerSUCKS!!");
+                    resourcePlaner.findResource("Programa parengta").setFree(true);
+                    processPlaner.setTimer(1);
+//
                     try {
-                        getRm().iterate();
+                        getRm().getVm().getRegister("IC").setContent(0);
+                    } catch (WrongContentSize wrongContentSize) {
+                        wrongContentSize.printStackTrace();
+                    }
+                    getRm().setNeedToChangeMyMODE(true);
+                    if (getRm().getInstructions().check_MODE()){
+                        try {
+                            getRm().getInstructions().change_mode();
+                            getRm().getInstructions().check_machine_mode();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    try {
+//                        getRm().iterate();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     this.changeState(3);
                     processPlaner.RemovingProcessesFromList(this);
+                    getRm().setNeedToChangeMyMODE(true);
                 }
                 else {
                     try {
+                        changeState(3);
                         getRm().iterate();
                         virtualMachine.work(processPlaner);
+                        processPlaner.AddingProcessesToWaitingList(this);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             } else {
-                processPlaner.RemovingProcessesFromList(this);
+                if (resourcePlaner.findResource("Interrupt").getMessage().equals("TI")) {
+                    if (getRm().getRegister("TI").getContentInt() == 0){
+                        try {
+                            getRm().getRegister("TI").setContent(30);
+                        } catch (WrongContentSize wrongContentSize) {
+                            wrongContentSize.printStackTrace();
+                        }
+                        this.changeState(3);
+                        processPlaner.RemovingProcessesFromList(this);
+                        processPlaner.AddingProcessesToWaitingList(this);
+                        resourcePlaner.findResource("Interrupt").getMessage().equals("");
+                        resourcePlaner.findResource("Iš Interupt").setMessage("");
+                        getRm().setNeedToChangeMyMODE(true);
+                    }
+                } else {
+                    processPlaner.RemovingProcessesFromList(this);
+                }
             }
         }
     }

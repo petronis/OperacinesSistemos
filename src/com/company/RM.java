@@ -10,6 +10,7 @@ public class RM extends Machine {
     Instructions instructions;
     Object input;
     Object output;
+    boolean needToChangeMyMODE;
 
     private void init(int vm_blocks, int external_blocks, int supervision_blocks) {
         registers.addRegister(new Register("PTR", 3, "090"));
@@ -34,6 +35,15 @@ public class RM extends Machine {
     RM(int rm_blocks, int vm_blocks, int external_blocks, int supervision_blocks) {
         super(rm_blocks);
         init(vm_blocks, external_blocks, supervision_blocks);
+        this.needToChangeMyMODE = false;
+    }
+
+    public void setNeedToChangeMyMODE(boolean needToChangeMyMODE) {
+        this.needToChangeMyMODE = needToChangeMyMODE;
+    }
+
+    public boolean getNeedToChangeMyMODE() {
+        return needToChangeMyMODE;
     }
 
     public VM getVm() {
@@ -54,6 +64,15 @@ public class RM extends Machine {
 
     @Override
     public void run() {
+        System.out.println("IC VALUE __________ " +getRegister("IC").getContentInt());
+        if (getNeedToChangeMyMODE()){
+            try {
+                instructions.change_mode();
+                setNeedToChangeMyMODE(false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         instructions.check_machine_mode();
         Register ic = getRegister("IC"), ti = getRegister("TI");
         String command;

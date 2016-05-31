@@ -25,18 +25,27 @@ public class Loader extends Process {
         if (this.ProcessHasAllResource(this)) {
             int ptr = 1;
             try {
-                 ptr = getRm().getData().getBlockInt(getRm().getRegister("PTR").getContentInt());
+                ptr = getRm().getRegister("PTR").getContentInt();
+                ptr = getRm().getData().getBlockInt(getRm().getRegister("PTR").getContentInt());
+                System.out.println("------------PTR--------- " + ptr);
+                System.out.println("----PTR THE REAL ONE---- " + getRm().getRegister("PTR").getContentInt());
             } catch (WrongAddress wrongAddress) {
                 wrongAddress.printStackTrace();
             }
             try {
+                System.out.println("EXTERNAL SIZE " + getRm().getExternal().getSize());
+
+                System.out.println("IC VALUE " + getRm().getRegister("IC").getContentInt());
                 for (int i = 0; i < getRm().getExternal().getSize(); i++) {
                     try {
+//                        getRm().getData().put_block(ptr + i, getRm().getExternal().getBlock(i));
                         getRm().getData().put_block(ptr + i, getRm().getExternal().getBlock(i));
                     } catch (WrongAddress wrongAddress) {
                         wrongAddress.printStackTrace();
                     }
                 }
+//                new java.util.Scanner(System.in).nextLine();
+                System.out.println("IC VALUE " + getRm().getRegister("IC").getContentInt());
 
             } catch (WrongContentSize wrongContentSize) {
                 wrongContentSize.printStackTrace();
