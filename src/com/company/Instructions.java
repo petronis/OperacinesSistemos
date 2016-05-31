@@ -99,6 +99,10 @@ public class Instructions {
         throw new ShutDown("turn off");
     }
 
+    public void setVm(VM vm) {
+        this.vm = vm;
+    }
+
     // instructions list
     private String IntToHex(int n, int size) throws Error {
         String temp = Integer.toHexString(n);

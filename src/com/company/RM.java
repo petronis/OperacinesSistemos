@@ -25,11 +25,10 @@ public class RM extends Machine {
         registers.addRegister(new Register("CH2", 1, "0"));
         registers.addRegister(new Register("CH3", 1, "0"));
         registers.addRegister(new Register("MODE", 1, "S"));
-        vm = new VM(vm_blocks, this, getRegister("PTR"));
+//        vm = new VM(vm_blocks, this, getRegister("PTR"));
         external = new Memory(external_blocks);
         supervision = new Memory(supervision_blocks);
         instructions = new Instructions(this, vm);
-        vm.setInstructions(instructions);
     }
 
     RM(int rm_blocks, int vm_blocks, int external_blocks, int supervision_blocks) {
@@ -103,7 +102,9 @@ public class RM extends Machine {
     public void iterate() throws Exception{
         Register ic = getRegister("IC"), ti = getRegister("TI");
         String command;
-        instructions.change_mode();
+        if (this.getRegister("MODE").getContentStr().contentEquals("U")) {
+            this.getInstructions().change_mode();
+        }
         instructions.check_machine_mode();
         System.out.println("Supervisor iter");
         System.out.println(ic.getName() + " " + ic.getContentInt());
@@ -111,5 +112,23 @@ public class RM extends Machine {
         instructions.interpreter(command);
         ic.inc(1);
         ti.inc(-1);
+    }
+
+    public VM createVm(){
+        try {
+            vm = new VM(100, this, getRegister("PTR"));
+            vm.setInstructions(instructions);
+            Register ptr = this.getRegister("PTR");
+            ptr.inc(1);
+            String dataSize = new Integer(vm.getData().getSize()).toString();
+            int size = dataSize.length();
+            for (int i = 0; i < 5 - size; i++) {
+                dataSize = "0" + dataSize;
+            }
+            this.data.put_block(ptr.getContentInt(), dataSize);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return vm;
     }
 }

@@ -8,18 +8,18 @@ import Exceptions.WrongContentSize;
  */
 public class VirtualMemory extends Memory {
 
-    Register ptr;
+    int ptr;
     Memory old;
 
     VirtualMemory(char block[], int size, Register ptr, Memory old) {
         super(block, size);
-        this.ptr = ptr;
+        this.ptr = ptr.getContentInt();
         this.old = old;
     }
 
     public String getBlock(int n) throws WrongAddress {
         if (n >= 0 && n < size) {
-            n = n + old.getBlockInt(ptr.getContentInt());
+            n = n + old.getBlockInt(ptr);
             String temp = new String();
             for (int i = 0; i < getBlockSize(); i++) {
                 temp += block[n * getBlockSize() + i];
@@ -36,7 +36,7 @@ public class VirtualMemory extends Memory {
 
     public char getCell(int n) throws WrongAddress {
         if (n >= 0 && n < size * getBlockSize()) {
-            return block[old.getBlockInt(ptr.getContentInt()) + n];
+            return block[old.getBlockInt(ptr) + n];
         } else {
             throw new WrongAddress("wrong cell address");
         }

@@ -22,7 +22,9 @@ public class JobGovernor extends Process {
 
     @Override
     public void work(ProcessPlaner processPlaner) {
+        System.out.println(this.getProcessName() + " is working");
         if (resourcePlaner.findResource("Iš Interupt").getMessage() != this.getProcessName()) {
+            System.out.println(getProcessName() + " very first time");
             if (firstTime) {
                 resourcePlaner.findResource("Pakrovimo paketas").setFree(true);
                 System.out.println("JobGovernor needs Loader complete resource");
@@ -49,17 +51,19 @@ public class JobGovernor extends Process {
                     processPlaner.RemovingProcessesFromList(this);
                     processPlaner.AddingProcessesToWaitingList(this);
                     processPlaner.AddingProcessesToWaitingList(virtualMachine, 1);
-                    firstTime = true;
+//                    firstTime = true;
 //                }
             }
         } else {
             System.out.println("JobGovernor after interrupt");
+            System.out.println("Press Enter...");
+            new java.util.Scanner(System.in).nextLine();
             if (resourcePlaner.findResource("Interrupt").getMessage().equals("SI")) {
                 if (getRm().getRegister("SI").getContentInt() == 8) {
                     this.releaseAllResource();
                     resourcePlaner.findResource("OS darbo pabaiga").setFree(true);
-                    System.out.println("Press Enter...");
-                    new java.util.Scanner(System.in).nextLine();
+//                    System.out.println("Press Enter...");
+//                    new java.util.Scanner(System.in).nextLine();
                     this.changeState(3);
                     processPlaner.RemovingProcessesFromList(this);
                 } else if(getRm().getRegister("SI").getContentInt() == 7){
@@ -67,11 +71,11 @@ public class JobGovernor extends Process {
                     resourcePlaner.findResource("Programa parengta").setFree(true);
                     processPlaner.setTimer(1);
 //
-                    try {
-                        getRm().getVm().getRegister("IC").setContent(0);
-                    } catch (WrongContentSize wrongContentSize) {
-                        wrongContentSize.printStackTrace();
-                    }
+//                    try {
+//                        getRm().getVm().getRegister("IC").setContent(0);
+//                    } catch (WrongContentSize wrongContentSize) {
+//                        wrongContentSize.printStackTrace();
+//                    }
                     getRm().setNeedToChangeMyMODE(true);
                     if (getRm().getInstructions().check_MODE()){
                         try {
@@ -116,6 +120,7 @@ public class JobGovernor extends Process {
                         getRm().setNeedToChangeMyMODE(true);
                     }
                 } else {
+                    this.changeState(3);
                     processPlaner.RemovingProcessesFromList(this);
                 }
             }

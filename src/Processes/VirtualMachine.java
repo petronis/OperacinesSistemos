@@ -3,12 +3,14 @@ package Processes;
 import com.company.Process;
 import com.company.ProcessPlaner;
 import com.company.ResourcePlaner;
+import com.company.VM;
 
 /**
  * Created by Vik on 5/29/2016.
  */
 public class VirtualMachine extends Process {
     ResourcePlaner resourcePlaner;
+    VM vm;
     boolean firsTime = true;
     public VirtualMachine(String name, int state, Process father, ResourcePlaner resourcePlaner) {
         super(name, state, father, resourcePlaner);
@@ -19,12 +21,17 @@ public class VirtualMachine extends Process {
     public void work(ProcessPlaner processPlaner) {
         System.out.println("VirtualMachine is work");
         try {
-            getRm().getInstructions().change_mode();
+            if (getRm().getRegister("MODE").getContentStr().contentEquals("S")) {
+                getRm().getInstructions().change_mode();
+            }
             if (firsTime) {
                 firsTime = false;
-                getRm().run();
+                vm = getRm().createVm();
+                vm.getInstructions().setVm(vm);
+                vm.run();
             } else  {
-                getRm().getVm().rerun();
+                vm.getInstructions().setVm(vm);
+                vm.rerun();
             }
             getResourcePlaner().freeResource("Pertraukimas");
             String msg = getFather().getProcessName();
