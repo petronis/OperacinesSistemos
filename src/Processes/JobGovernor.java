@@ -58,6 +58,7 @@ public class JobGovernor extends Process {
                 if (getRm().getRegister("SI").getContentInt() == 8) {
                     this.releaseAllResource();
                     resourcePlaner.findResource("OS darbo pabaiga").setFree(true);
+                    System.out.println("Press Enter...");
                     new java.util.Scanner(System.in).nextLine();
                     this.changeState(3);
                     processPlaner.RemovingProcessesFromList(this);

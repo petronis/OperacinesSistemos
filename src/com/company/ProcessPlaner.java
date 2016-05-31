@@ -167,6 +167,7 @@ public class ProcessPlaner extends Thread {
                 }
             } else {
                 for (int i = 0; i < waitingProcessesList.size(); i++){
+//                    System.out.println("Waiting for processes resources...");
                     if (waitingProcessesList.get(i).processWantResources.isAvailable()){
                         ChangeListByState(waitingProcessesList.get(i));
                         break;
